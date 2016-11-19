@@ -143,7 +143,7 @@ Lasso回归算法： 坐标轴下降法与最小角回归法小结
 <meta property="og:image" content="http://yoursite.com/img/15.png">
 <meta property="og:image" content="http://yoursite.com/img/16.png">
 <meta property="og:image" content="http://yoursite.com/img/17.png">
-<meta property="og:updated_time" content="2016-11-19T12:09:41.494Z">
+<meta property="og:updated_time" content="2016-11-19T15:03:16.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性回归">
 <meta name="twitter:description" content="抄袭/参考资料
@@ -496,15 +496,13 @@ Lasso回归算法： 坐标轴下降法与最小角回归法小结
 <h2 id="模型表达"><a href="#模型表达" class="headerlink" title="模型表达"></a>模型表达</h2><h3 id="线性模型基本形式"><a href="#线性模型基本形式" class="headerlink" title="线性模型基本形式"></a>线性模型基本形式</h3><p>$$<br>y(x,w)=w_0+w_1x_1+⋯+w_nx_n<br>$$</p>
 <p>其中，$x_1,x_2,⋯,x_n$表示自变量（集合）；$y$是因变量；$w$为参数向量；$w_i$表示对应自变量（特征）的权重，$w_0$是偏倚项（又称为截距$b$）</p>
 <h3 id="线性模型向量形式"><a href="#线性模型向量形式" class="headerlink" title="线性模型向量形式"></a>线性模型向量形式</h3><p>如果令$x_0=1$,   $y(x,w)=h_w(x)$, 可以将公式写成向量形式，即</p>
-<p>$$<br>h_{w}(x)=\sum_{i-0}^{m}w_{i}x_{i}=w^{T}x<br>$$</p>
+<p>$$<br>h_{w}(x)=\sum_{i=0}^{m}w_{i}x_{i}=w^{T}x<br>$$</p>
 <p>其中，$w=(w_0,w_1,⋯,w_n)$，$x=(1,x_1,x_2,⋯,x_n)$ 均为<strong>行向量</strong>，$w^T$为$w$的转置。</p>
 <p>在一些应用场景中，需要<strong>将输入空间映射到特征空间</strong>，然后建模. 定义映射函数为$\phi (x)$，因此我们可以把公式写成更通用的表达方式：<br>$$<br>h_{w}(x)=w^{T}\phi (x)<br>$$</p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2\\<br>\underset{w}{min}J(w)<br>$$</p>
 <p>注意：$w$是$n+1$维的，而每个$x$是$n$维的，样本数量为$m$.      系数1/2只是为后续求导方便计算，而1/m可有可无（但还是前后文统一吧）。</p>
-<p>选择使用 <strong>误差平方损失极小化</strong> 作为优化目标，其实还可以从<strong>概率的角度解释（极大似然估计）</strong>，看下面网址，这里就不写了</p>
-<p><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/</a></p>
-<p>进一步使用矩阵形式表达损失函数</p>
-<p>$$<br>J(w)=\frac{1}{2}\left | Xw^T-Y \right |^2 = \frac{1}{2}(Xw^T-Y)^2(Xw^2-Y)<br>$$</p>
+<p>选择使用 <strong>误差平方损失极小化</strong> 作为优化目标，其实还可以从<strong>概率的角度解释（极大似然估计）</strong>，看下面网址，这里就不写了<br><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/</a></p>
+<p>进一步使用矩阵形式表达损失函数<br>$$<br>J(w)=\frac{1}{2}\left | Xw^T-Y \right |^2 = \frac{1}{2}(Xw^T-Y)^2(Xw^2-Y)<br>$$</p>
 <p><img src="/img/14.png" alt="14"></p>
 <hr>
 <h1 id="优化方法（极小化损失函数）"><a href="#优化方法（极小化损失函数）" class="headerlink" title="优化方法（极小化损失函数）"></a>优化方法（极小化损失函数）</h1><h2 id="最小二乘-OLS"><a href="#最小二乘-OLS" class="headerlink" title="最小二乘 OLS"></a>最小二乘 OLS</h2><p>矩阵法（对损失函数进行$w$ 求导，再令其为0解得$w$）：</p>
@@ -534,10 +532,8 @@ Lasso回归算法： 坐标轴下降法与最小角回归法小结
 <p>但是，当样本特征很多且样本数有限时，按照上面公式求得的参数w容易使得模型陷入过拟合。为了缓解过拟合问题，可引入正则化项。</p>
 <p>引入$L_1$范数正则化：Lasso<br>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2+\lambda \left | w \right |_1<br>$$<br>引入$L_2$范数正则化：Ridge<br>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2+\lambda \left | w \right |_2^2<br>$$</p>
 <p>注：<br><strong>$\lambda$ 为正则项系数/惩罚项系数</strong><br>$L_1$范数与$L_2$范数正则化都有助于降低过拟合风险，但L1还会带来一个额外的好处，就是<strong>$L_1$正则化更易于获得“稀疏”（sparse）解，即它求得的参数w会有更少的非零分量。</strong> （原因如下图）<br><img src="/img/16.png" alt="16"><br><img src="/img/17.png" alt="17"></p>
-<p><strong>Lasso解法</strong>：</p>
-<p>因为Lasso所带的$L_1$范数正则项<strong>不是连续可导</strong>的，所以最小二乘与梯度下降这些方法将失效，所以需要使用其他求极值的算法：<strong>坐标轴下降法</strong>（coordinate descent）和 <strong>最小角回归法</strong>（ Least Angle Regression， LARS）。</p>
-<p><strong>Ridge解法</strong>：</p>
-<p>同普通线性回归模型一样，加上$L_2$范数正则项依旧连续可导，所以继续使用 <strong>最小二乘</strong> 与 <strong>梯度下降</strong>。</p>
+<p><strong>Lasso解法</strong>：<br>因为Lasso所带的$L_1$范数正则项<strong>不是连续可导</strong>的，所以最小二乘与梯度下降这些方法将失效，所以需要使用其他求极值的算法：<strong>坐标轴下降法</strong>（coordinate descent）和 <strong>最小角回归法</strong>（ Least Angle Regression， LARS）。</p>
+<p><strong>Ridge解法</strong>：<br>同普通线性回归模型一样，加上$L_2$范数正则项依旧连续可导，所以继续使用 <strong>最小二乘</strong> 与 <strong>梯度下降</strong>。</p>
 
       
     </div>
@@ -579,6 +575,10 @@ Lasso回归算法： 坐标轴下降法与最小角回归法小结
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/19/Logistic回归/" rel="prev" title="Logistic回归">
+                Logistic回归 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -646,7 +646,7 @@ Lasso回归算法： 坐标轴下降法与最小角回归法小结
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
