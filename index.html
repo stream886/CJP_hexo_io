@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -123,7 +123,7 @@
 
 
 
-  <title> 还没决定 </title>
+  <title> 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -144,7 +144,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left 
    page-home 
  ">
     <div class="headband"></div>
@@ -324,48 +324,19 @@
       
         
           
-            <h1 id="计算学习原理"><a href="#计算学习原理" class="headerlink" title="计算学习原理"></a>计算学习原理</h1><p>标签：  机器学习</p>
-<hr>
-<p>$$\x_j^{(i)}\$$<br>$$\x_j^{(i)}\$$<br>$\x_j^{(i)}\$<br>$\x_j^{(i)}\$</p>
-<p>$$ \mathbf{X}<em>{n,p} = \mathbf{A}</em>{n,k} \mathbf{B}_{k,p} $$</p>
-<p> <img src="images/01.png" alt="01"></p>
-<hr>
-<h2 id="编写提纲"><a href="#编写提纲" class="headerlink" title="编写提纲"></a>编写提纲</h2><ol>
-<li><ul>
-<li>[x] Hoeffiding不等式</li>
-</ul>
-</li>
-<li><ul>
-<li>[x] 与学习的联系：单个假设</li>
-</ul>
-</li>
-<li><ul>
-<li>[x] 与学习的联系：多个假设</li>
-</ul>
-</li>
-<li><ul>
-<li>[x] 学习的可行性：两个核心条件</li>
-</ul>
-</li>
-<li><ul>
-<li>[x] Growth Function</li>
-</ul>
-</li>
-<li><ul>
-<li>[ ] Break Point 和 Shatter</li>
-</ul>
-</li>
-<li><ul>
-<li>[ ] VC Bound</li>
-</ul>
-</li>
-<li><ul>
-<li>[ ] VC Dimension</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="一、Hoefiding不等式"><a href="#一、Hoefiding不等式" class="headerlink" title="一、Hoefiding不等式"></a>一、Hoefiding不等式</h2><p>\N\：样本量<br>\v\：样本均值<br>$u$：总体均值</p>
+            <h2 id="一、Hoefiding不等式"><a href="#一、Hoefiding不等式" class="headerlink" title="一、Hoefiding不等式"></a>一、Hoefiding不等式</h2><p>$N$：样本量<br>$v$：样本均值<br>$u$：总体均值</p>
+<p>$$\iota  (w,b,\alpha )=\frac{1}{2}\left | w \right |^2+\sum_{i=1}^{N}{\alpha _{i}\left ( 1-y_{i}(w^{T}x_{i}+b) \right )}$$</p>
+<p>$$\begin{aligned}\dot{x} &amp; = \sigma(y-x) \\\dot{y} &amp; = \rho x - y - xz\dot{z} &amp; = -\beta z + xy\end{aligned}$$</p>
+<p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \\<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \\<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \\<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$</p>
+<p>$$\mathop {\min }\limits_w J(w)$$</p>
+<p>$$a^2 + b^2 = c^2$$</p>
+<p>$$<br>\mathop {\min }\limits_w J(w) = \frac{1}{2}\sum_{i=1}^{m}\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2+\lambda\left | w \right |_2^2<br>$$</p>
+<p>$$<br>\mathop {\min }\limits_w J(w)<br>$$</p>
+<p>$$<br>\frac{1}{2}\sum_{i=1}^{m}\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2<br>$$</p>
+<p>$$\sum_{i=1}^{m} {\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2}$$</p>
+<p>$$h_w(x)=\sum_{i=1}^m$$</p>
+<p>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta = 2 \cos^2 \theta - 1$</p>
+<p>$$\prod_{4}^{2}\left ( \bigcap_{1}^{2} \right )\div 7\tfrac{1}{2}-\eta \kappa^7 $$</p>
 
           
         
@@ -720,6 +691,45 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
 
   
 
