@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习," />
+  <meta name="keywords" content="机器学习 学习可行性," />
 
 
 
@@ -84,22 +84,50 @@
 
 
 
-<meta name="description" content="一、Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值
-$$\iota  (w,b,\alpha )=\frac{1}{2}\left | w \right |^2+\sum_{i=1}^{N}{\alpha _{i}\left ( 1-y_{i}(w^{T}x_{i}+b) \right )}$$
-$$\begin{aligned}\dot{x} &amp;amp; = \sigma">
+<meta name="description" content="抄袭/参考资料
+
+台湾大学《机器学习基石头》
+VC维的来龙去脉
+
+
+目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC Dimension
+
+Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\lef">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算学习原理">
 <meta property="og:url" content="http://yoursite.com/2016/11/18/计算学习原理/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:description" content="一、Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值
-$$\iota  (w,b,\alpha )=\frac{1}{2}\left | w \right |^2+\sum_{i=1}^{N}{\alpha _{i}\left ( 1-y_{i}(w^{T}x_{i}+b) \right )}$$
-$$\begin{aligned}\dot{x} &amp;amp; = \sigma">
-<meta property="og:updated_time" content="2016-11-19T04:48:05.647Z">
+<meta property="og:description" content="抄袭/参考资料
+
+台湾大学《机器学习基石头》
+VC维的来龙去脉
+
+
+目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC Dimension
+
+Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\lef">
+<meta property="og:image" content="http://yoursite.com/img/01.png">
+<meta property="og:image" content="http://yoursite.com/img/02.png">
+<meta property="og:image" content="http://yoursite.com/img/03.png">
+<meta property="og:image" content="http://yoursite.com/img/04.png">
+<meta property="og:image" content="http://yoursite.com/img/05.png">
+<meta property="og:image" content="http://yoursite.com/img/06.png">
+<meta property="og:image" content="http://yoursite.com/img/07.png">
+<meta property="og:image" content="http://yoursite.com/img/08.png">
+<meta property="og:image" content="http://yoursite.com/img/22.png">
+<meta property="og:updated_time" content="2016-11-19T09:13:28.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算学习原理">
-<meta name="twitter:description" content="一、Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值
-$$\iota  (w,b,\alpha )=\frac{1}{2}\left | w \right |^2+\sum_{i=1}^{N}{\alpha _{i}\left ( 1-y_{i}(w^{T}x_{i}+b) \right )}$$
-$$\begin{aligned}\dot{x} &amp;amp; = \sigma">
+<meta name="twitter:description" content="抄袭/参考资料
+
+台湾大学《机器学习基石头》
+VC维的来龙去脉
+
+
+目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC Dimension
+
+Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\lef">
+<meta name="twitter:image" content="http://yoursite.com/img/01.png">
 
 
 
@@ -327,19 +355,129 @@ $$\begin{aligned}\dot{x} &amp;amp; = \sigma">
       
 
       
-        <h2 id="一、Hoefiding不等式"><a href="#一、Hoefiding不等式" class="headerlink" title="一、Hoefiding不等式"></a>一、Hoefiding不等式</h2><p>$N$：样本量<br>$v$：样本均值<br>$u$：总体均值</p>
-<p>$$\iota  (w,b,\alpha )=\frac{1}{2}\left | w \right |^2+\sum_{i=1}^{N}{\alpha _{i}\left ( 1-y_{i}(w^{T}x_{i}+b) \right )}$$</p>
-<p>$$\begin{aligned}\dot{x} &amp; = \sigma(y-x) \\\dot{y} &amp; = \rho x - y - xz\dot{z} &amp; = -\beta z + xy\end{aligned}$$</p>
-<p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \\<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \\<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \\<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$</p>
-<p>$$\mathop {\min }\limits_w J(w)$$</p>
-<p>$$a^2 + b^2 = c^2$$</p>
-<p>$$<br>\mathop {\min }\limits_w J(w) = \frac{1}{2}\sum_{i=1}^{m}\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2+\lambda\left | w \right |_2^2<br>$$</p>
-<p>$$<br>\mathop {\min }\limits_w J(w)<br>$$</p>
-<p>$$<br>\frac{1}{2}\sum_{i=1}^{m}\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2<br>$$</p>
-<p>$$\sum_{i=1}^{m} {\left ( h_{w}(y^{(i)})-y^{(i)} \right )^2}$$</p>
-<p>$$h_w(x)=\sum_{i=1}^m$$</p>
-<p>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta = 2 \cos^2 \theta - 1$</p>
-<p>$$\prod_{4}^{2}\left ( \bigcap_{1}^{2} \right )\div 7\tfrac{1}{2}-\eta \kappa^7 $$</p>
+        <p>抄袭/参考资料</p>
+<ul>
+<li>台湾大学《机器学习基石头》</li>
+<li><a href="http://www.flickering.cn/machine_learning/2015/04/vc%E7%BB%B4%E7%9A%84%E6%9D%A5%E9%BE%99%E5%8E%BB%E8%84%89/" target="_blank" rel="external">VC维的来龙去脉</a></li>
+</ul>
+<hr>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>1.Hoeffiding不等式<br>2.与学习的联系：单个假设<br>3.与学习的联系：多个假设<br>4.学习的可行性：两个核心条件<br>5.Growth Function<br>6.Break Point 和 Shatter<br>7.VC Bound<br>8.VC Dimension</p>
+<hr>
+<h1 id="Hoefiding不等式"><a href="#Hoefiding不等式" class="headerlink" title="Hoefiding不等式"></a>Hoefiding不等式</h1><p>$N$：样本量<br>$v$：样本均值<br>$u$：总体均值<br>$$<br>P\left [ v-u\geqslant \varepsilon  \right ]\leqslant e^{-2\varepsilon ^{2}N}\\<br>P\left [ |v-u|\geqslant \varepsilon  \right ]\leqslant 2e^{-2\varepsilon ^{2}N}<br>$$</p>
+<hr>
+<h1 id="学习的联系：单个假设"><a href="#学习的联系：单个假设" class="headerlink" title="学习的联系：单个假设"></a>学习的联系：单个假设</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:left">描述说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$H$</td>
+<td style="text-align:left">该机器学习方法的假设空间</td>
+</tr>
+<tr>
+<td style="text-align:center">$g$</td>
+<td style="text-align:left">表示我们求解的用来预测的假设($g$属于$H$)</td>
+</tr>
+<tr>
+<td style="text-align:center">$f$</td>
+<td style="text-align:left">理想的方案(可以是一个函数，也可以是一个分布)</td>
+</tr>
+<tr>
+<td style="text-align:center">$D$</td>
+<td style="text-align:left">样本集</td>
+</tr>
+<tr>
+<td style="text-align:center">$N$</td>
+<td style="text-align:left">样本量</td>
+</tr>
+<tr>
+<td style="text-align:center">$A$</td>
+<td style="text-align:left">算法</td>
+</tr>
+</tbody>
+</table>
+<p>机器学习的过程就是：通过算法 $A$，在假设空间 $H$ 中，根据样本集 $D$，选择最好的假设作为 $g$ ，选择标准是 $g$ 近似于 $f$<br> <img src="/img/01.png" alt="01"></p>
+<p>设定，$h(x)$是我们预估得到的某一个目标函数，$h(x)$是假设空间$H$中的一个假说。</p>
+<ul>
+<li>${E_{out}}(h)$：(out-of-sample)<strong>总体损失期望</strong></li>
+<li>${E_{in}}(h)$：(in-of-sample)<strong>样本损失期望</strong></li>
+</ul>
+<p><strong>基于hoeffding不等式，可得到下面公式，当样本量$N$足够大时，${E_{out}}(h)$和${E_{in}}(h)$将非常接近</strong></p>
+<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant e^{-2\varepsilon ^{2}N}<br>$$</p>
+<hr>
+<h1 id="学习的联系：多个假设"><a href="#学习的联系：多个假设" class="headerlink" title="学习的联系：多个假设"></a>学习的联系：多个假设</h1><p>注意在上面推导中，我们是针对某一个特定的解$h(x)$。在我们的假设空间$H$中，往往有很多个假设函数(甚至于无穷多个)</p>
+<p>让我们先来理解下<strong>单个假设$h$</strong>的上限，其公式中的$2e^{-2\varepsilon ^{2}N}$（<strong>超出我们设定的 $\varepsilon$ 的样本集就是坏样本</strong>）就是这个假设h<strong>遇上坏样本</strong>的上限（上限只是最快的打算，大部分情况不会达到上限 ）</p>
+<p><img src="/img/02.png" alt="01"></p>
+<p>当多个假设存在，我们希望任意选择一个$h$都是每问题的，此时就需要标注出所有的坏数据集情况（对任意一个$h$是坏的，我就标注它是坏的）。那么我们任意选择一个$h$后 <strong>遇上坏样本</strong>的上限：就是<strong>所有$h$遇上坏样本的上限的<u>并集</u></strong>。</p>
+<p><img src="/img/03.png" alt="01"></p>
+<p>任意选择一个$h$后 <strong>遇上坏样本</strong>的上限 如下图所示，但有个新问题，就是我们没法计算<strong>交集部分的大小</strong>（反正我不会）</p>
+<p>注：<strong>灰色部分</strong>是每个$h$遇上坏样本的上限，而彩色部分是实际的概率</p>
+<p><img src="/img/04.png" alt="01"></p>
+<p>既然无法计算，但我们却知道每个单独的$h$遇上坏样本的上限：$2e^{-2\varepsilon ^{2}N}$，既然这样，我们只能计算其上限的上限了，交集就只剩简单的加法了</p>
+<p><img src="/img/05.png" alt="01"></p>
+<p>好，公式推导如下</p>
+<p><img src="/img/06.png" alt="01"></p>
+<p>我们根据样本集$D$，随机从假设空间$H$(假设有$M$个假设)中选取一个$h$，都会满足下面的公式</p>
+<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant Me^{-2\varepsilon ^{2}N}<br>$$</p>
+<hr>
+<h1 id="学习的可行性：两个核心条件"><a href="#学习的可行性：两个核心条件" class="headerlink" title="学习的可行性：两个核心条件"></a>学习的可行性：两个核心条件</h1><p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant Me^{-2\varepsilon ^{2}N}<br>$$</p>
+<p>根据上一节得到的公式，我们得到学习可行的两个条件：</p>
+<ul>
+<li>如果假设空间$H$的size $M$是有限的，当$N$足够大时，那么对假设空间中任意一个$g$，${E_{out}}(h)$约等于${E_{in}}(h)$.</li>
+<li>利用算法$A$从假设空间$H$中，挑选出一个$g$，使得${E_{in}}(h)$接近于0，${E_{out}}(h)$也接近为0.</li>
+</ul>
+<p>上面这两个核心条件，也正好对应着test和train这两个过程。train过程希望损失期望(即${E_{in}}(h)$ )尽可能小；test过程希望在真实环境中的损失期望也尽可能小，即${E_{in}}(h)$接近于${E_{out}}(h)$</p>
+<hr>
+<h1 id="Growth-Function"><a href="#Growth-Function" class="headerlink" title="Growth Function"></a>Growth Function</h1><p>证明了学习的可行后（满足两个核心条件），新问题又来了：<strong>$M$的大小！</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:left">条件一</th>
+<th>条件二</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$M$太小</td>
+<td style="text-align:left">容易满足${E_{out}}(h)$约等于${E_{in}}(h)$</td>
+<td>不容易找到一个${E_{in}}(h)$足够小的</td>
+</tr>
+<tr>
+<td style="text-align:center">$M$太大</td>
+<td style="text-align:left">不同意满足</td>
+<td>选择多了，容易找到${E_{in}}(h)$足够小的</td>
+</tr>
+</tbody>
+</table>
+<p>对于一个假设空间，$M$可能是无穷大的。要能够继续推导下去，那么有一个直观的思路，能否找到一个有限的因子 $m_H$ 来替代不等式bound中的$M$.</p>
+<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2 m_{H}e^{-2\varepsilon ^{2}N}<br>$$</p>
+<p>在第三节中，我们把每个假设的代价都做了独立分离，但实际它们都是有重叠的部分，其中有一些甚至是完全重叠，我们可以<strong>把几乎重叠的假设归为一类</strong>，但把所有假设归类后，我们就能得到<strong>有效的假设数量</strong>Effective Number of Hypotheses——$m_H$</p>
+<p><img src="/img/07.png" alt="01"></p>
+<p><img src="/img/08.png" alt="01"></p>
+<p>将所有假设进行分类的依据又是什么呢？答案就在样本集$D$，例如在$H$有两个假设（$M$中的两个，废话），它们作用于样本集后，得出的结果一致，我们就可以将它们两归为一类；反过来讲，根据样本集$D$我们能得出这一类的假设（$m_H$的一个）。</p>
+<p>所以，$m_H$是一个比M小很多的数，而且它会是个根据样本集$D$数量$N$呈<strong>多项式增长</strong>的数，它的增长公式称为<em>*成长公式Growth Function</em></p>
+<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2\cdot  {effective}(N) e^{-2\varepsilon ^{2}N}<br>$$</p>
+<p><del>成长公式的解释还没想好，就这样，next.</del></p>
+<p>反正随着$N$增长，遇上坏样本的上限$2\cdot  {effective}(N) e^{-2\varepsilon ^{2}N}$中一个是跟着多项式增长，一个跟着指数下降，指数必然打败多项式，所以总的来说随着$N$的增长，我们遇上坏样本的概率就会越来越低，${E_{out}}(h)$也就会越接近${E_{in}}(h)$. That’s good！</p>
+<hr>
+<h1 id="Break-Point-和-Shatter"><a href="#Break-Point-和-Shatter" class="headerlink" title="Break Point 和 Shatter"></a>Break Point 和 Shatter</h1><p>先切断一些，看看两个概念：shatter 和 break point.</p>
+<p><strong>Shatter的概念</strong>：当假设空间$H$作用于$N$个样本时，产生的<strong>dichotomies数量（二分类）</strong>等于这$N$个点总的组合数$2N$ 时，就称：这$N$个样本被$H$给shatter.掉了。<br>要注意到 shatter 的原意是“打碎”，在此指“$N$个点的所有(碎片般的)可能情形都被$H$产生了”。所以${m_H}(N)=2N$ 的情形是即为“shatter”。</p>
+<p><strong>Break Point的概念</strong>：对于给定的成长函数${m_H}(N)$，从$N=1$出发，$N$慢慢变大，当增大到$k$时，出现${m_H}(N)&lt;2k$的情形，则我们说k是该成长函数的break poin.</p>
+<p>当$N$的数量大于$k$时，$H$都没有办法再shatter他们了。</p>
+<hr>
+<h1 id="VC-Bound"><a href="#VC-Bound" class="headerlink" title="VC Bound"></a>VC Bound</h1><p>有了Break Point的概念后，如果break point存在（有限的正整数），对与任意的样本集，我们都可以得到成长函数的上界，经过推导可得：</p>
+<p>$$<br>m_{H}(N)=\sum_{i=0}^{k-1}\binom{N}{i}<br>$$</p>
+<p>多项式增长！ 多项式的最高幂次项为：$N^{k–1}$.<br>很开心，终于圆会Growth Function那一节的结论。</p>
+<p>阶段性成果：能否用<strong>${m_H}(N)$直接替换M?</strong></p>
+<p>既然得到了m(N)的多项式上界，我们希望对之前的不等式中M 进行替换，用m_H(N)来替换M。这样替换后，当break point存在时，N足够大时，该上界是有限的。</p>
+<p>然而直接替换是存在问题的，主要问题是：Ein的可能取值是有限个的，但$E_{out}$的可能取值是无限的。可以通过将$E_{out}$替换为验证集(verification set) 的$E_{in}$ 来解决这个问题。 下面是推导过程：</p>
+<p><img src="/img/22.png" alt="01"></p>
+<hr>
+<h1 id="VC-Dimension"><a href="#VC-Dimension" class="headerlink" title="VC Dimension"></a>VC Dimension</h1><p>最后，VC维！暂时不想写，再理理！</p>
 
       
     </div>
@@ -363,7 +501,7 @@ $$\begin{aligned}\dot{x} &amp;amp; = \sigma">
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/机器学习-学习可行性/" rel="tag"># 机器学习 学习可行性</a>
           
         </div>
       
@@ -493,7 +631,7 @@ $$\begin{aligned}\dot{x} &amp;amp; = \sigma">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Hoefiding不等式"><span class="nav-number">1.</span> <span class="nav-text">一、Hoefiding不等式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hoefiding不等式"><span class="nav-number">2.</span> <span class="nav-text">Hoefiding不等式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习的联系：单个假设"><span class="nav-number">3.</span> <span class="nav-text">学习的联系：单个假设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习的联系：多个假设"><span class="nav-number">4.</span> <span class="nav-text">学习的联系：多个假设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习的可行性：两个核心条件"><span class="nav-number">5.</span> <span class="nav-text">学习的可行性：两个核心条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Growth-Function"><span class="nav-number">6.</span> <span class="nav-text">Growth Function</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Break-Point-和-Shatter"><span class="nav-number">7.</span> <span class="nav-text">Break Point 和 Shatter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VC-Bound"><span class="nav-number">8.</span> <span class="nav-text">VC Bound</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VC-Dimension"><span class="nav-number">9.</span> <span class="nav-text">VC Dimension</span></a></li></ol></div>
             
 
           </div>
