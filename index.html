@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -97,8 +97,8 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -251,7 +251,7 @@
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Chen_JC">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="/images/avatar.png">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -297,6 +297,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -324,51 +342,16 @@
       
         
           
-            <h1 id="什么是Logistic回归"><a href="#什么是Logistic回归" class="headerlink" title="什么是Logistic回归"></a>什么是Logistic回归</h1><p>回顾一下，一般化的广义线性回归形式是：</p>
-<p>$$<br>g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)<br>$$<br>这个函数$g(.)$我们通常称为联系函数。<br>现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一个最常用的广义线性回归——Logistic回归<br><strong>sigmoid函数：</strong></p>
-<p>$$<br>{\rm{g}}(z) = {1 \over {1 + {e^{ - z}}}}<br>$$</p>
-<p>它是一个可导函数，定义域为$(−∞,+∞)$，值域为$[0, 1]$，其导数为：</p>
-<p>$$<br>g′(z)=g(z)(1−g(z))<br>$$</p>
-<p><strong>线性回归基本模型</strong>（区别就在$w_0$和b）</p>
-<p>$$<br>h_{w}(x)=\sum_{i=0}^{m}w_{i}x_{i}=w^{T}x=w_0+w_1x_1+⋯+w_nx_n \\<br>h_{w}(x)=\sum_{i=1}^{m}w_{i}x_{i}+b=w^{T}x+b=w_1x_1+w_2x_2+⋯+w_nx_n+b<br>$$</p>
-<p><strong>Logistic回归模型</strong>：</p>
-<p>$$<br>{h_w}(x) = g(w^Tx)={1 \over {1 + {e^{ - {w^T}x}}}}<br>$$</p>
-<p>其中x为样本输入，$h_w(x)$为模型输出，可以理解为某一分类的概率大小。而$w$为分类模型的要求出的模型参数。对于模型输出$h_w(x)$，我们让它和我们的二元样本输出$y$（假设为0和1）有这样的对应关系:</p>
-<ul>
-<li>如果$h_w(x)&gt;0.5$，即$w^Tx&gt;0$, 则$y$为1</li>
-<li>如果$h_w(x)&lt;0.5$，即$w^Tx&lt;0$, 则$y$为0</li>
-<li>$h_w(x)=0.5$是临界情况，此时$w^Tx=0$， 从逻辑回归模型本身无法确定分类</li>
-</ul>
-<hr>
-<h1 id="为什么叫对数几率函数"><a href="#为什么叫对数几率函数" class="headerlink" title="为什么叫对数几率函数"></a>为什么叫对数几率函数</h1><p>假设我们的样本输出是0或者1两类。那么我们有：</p>
-<p>$$<br>P(y=1|x,w)=h_w(x)\\<br>P(y=0|x,w)=1−h_w(x)<br>$$</p>
-<p>我们利用Logistic回归模型${h_w}(x) = {1 \over {1 + {e^{ - {w^T}x}}}}$求出的既是样本为<strong>正类的概率</strong> ！</p>
-<p>什么是<strong>几率（odds）</strong>？<br>一个事件的几率是指该事件发生的概率与该事件不发生的概率的比值。<br>很显然Logistic回归可以轻易的转化出<strong>对数几率</strong>（又变回线性回归模型的值）<br>$$<br>ln\frac{P(y=1|x)}{P(y=0|x)}=\frac{h_w(x)}{1-h_w(x)}=w^Tx<br>$$</p>
-<hr>
-<h1 id="损失函数-优化目标"><a href="#损失函数-优化目标" class="headerlink" title="损失函数/优化目标"></a>损失函数/优化目标</h1><p>首先，讲$P(y=1|x,w)$和$P(y=0|x,w)$合并：</p>
-<p>$$<br>P(y|x)=h_w(x)^y(1−h_w(x))^{1−y}<br>$$</p>
-<p>根据上面的式子，给定一定的样本之后，我们可以构造出似然函数，然后可以使用极大似然估计MLE的思想来求解参数。但是，为了满足最小化风险理论，我们可以将MLE的思想转化为最小化风险化理论，最大化似然函数其实就等价于最小化负的似然函数。</p>
-<p>对于MLE，<strong>就是利用已知的样本分布，找到最有可能（即最大概率）导致这种分布的参数值；或者说是什么样的参数才能使我们观测到目前这组数据的概率最大</strong>。使用MLE推导LR的loss function的过程如下</p>
-<p>首先，根据上面的假设，写出相应的极大似然函数（假定有m个样本）：</p>
-<p>$$<br>L(w)=\prod_{i=1}^{m}P(y^{(i)}|x^{(i)};w)  \\<br>        =\prod_{i=1}^{m}h_w(x^{(i)})^{y^{(i)}}(1-h_w(x^{(i)}))^{1-y^{(i)}}<br>$$<br>直接对上面的式子求导会不方便，因此，为了便于计算，我们可以<strong>对似然函数取对数</strong>，经过化简可以得到下式的推导结果：<br>$$<br>\log L(w)  =\sum_{i=1}^{m}\log\left [ h_w\left(x^{(i)}\right)^{y^{(i)}}\left(1-h_w(x^{(i)})\right)^{1-y^{(i)}} \right ] \\<br>           =\sum_{i=1}^{m}\left [{y^{(i)}} \log{h_w(x^{(i)})}+{(1-y^{(i)})}\log\left(1-h_w(x^{(i)})\right) \right ]<br>$$<br>因此，<strong>损失函数</strong>可以通过<strong>最小化负的似然函数</strong>得到，即下式：<br>$$<br>J(w)=-\frac{1}{m}\sum_{i=1}^{m}\left [{y^{(i)}} \log{h_w(x^{(i)})}+{(1-y^{(i)})}\log\left(1-h_w(x^{(i)})\right) \right ]<br>$$</p>
-<hr>
-<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h2 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h2><p>梯度下降法又叫做最速下降法，为了求解使损失函数$J(w)$最小时的参数$w$，这里就以<strong>梯度下降</strong>为例进行求解，其迭代公式的推导过程如下：<br>$$<br>\frac{\partial }{\partial w_j}J(w)=-\frac{1}{m}\sum_{i=1}^{m}\left [{y^{(i)}} \left(1-h_w(x^{(i)})\right)\cdot (x^{(i)}_j)+{(1-y^{(i)})}h_w(x^{(i)})\cdot (-x^{(i)}_j)   \right] \\<br>  =-\frac{1}{m}\sum_{i=1}^{m}({y^{(i)}} - h_w(x^{(i)})\cdot (x^{(i)}_j) \\<br>  =\frac{1}{m}\sum_{i=1}^{m}(h_w(x^{(i)})-{y^{(i)}})\cdot (x^{(i)}_j)<br>$$<br>通过上面结果，可以得到最后的迭代式子（<strong>其中$α$是步长</strong>）：<br>$$<br>{w_j} = {w_j} - \alpha  \cdot \frac{1}{m}\sum_{i=1}^{m}(h_w(x^{(i)})-{y^{(i)}})\cdot (x^{(i)}_j)<br>$$<br>该式子与线性回归模型的平方损失函数求导后非常相似，当两者是不同的，因为${h_w}({x^{(i)})}$ 是完全不同的。</p>
-<p>最优化算法并不限于梯度下降，还有：</p>
-<ul>
-<li>Newton Method（牛顿法）</li>
-<li>Conjugate gradient method(共轭梯度法)</li>
-<li>Quasi-Newton Method(拟牛顿法)</li>
-<li>BFGS Method</li>
-<li>L-BFGS(Limited-memory BFGS)</li>
-</ul>
-<p>参考：<a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/</a></p>
-<hr>
-<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><p>线性回归可以通过加正则项避免过拟合，Logistic回归属于广义线性回归，同样可以加上相同的正则项，加入正则项相当于对参数加入了一个先验分布，常用的有L1和L2正则。</p>
-<blockquote>
-<p>正则化项本质上是一种先验信息，整个最优化问题从贝叶斯观点来看是一种<strong>贝叶斯最大后验估计</strong>，其中正则化项对应后验估计中的先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式，如果将这个贝叶斯最大后验估计的形式取对数，即进行极大似然估计，你就会发现问题立马变成了损失函数+正则化项的最优化问题形式。</p>
-</blockquote>
-
-          
+          什么是Logistic回归回顾一下，一般化的广义线性回归形式是：
+$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一个最常用的广义线性回归——Logistic回归sigmoid函数：
+          ...
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/19/Logistic回归/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -410,7 +393,7 @@
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Chen_JC">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="/images/avatar.png">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -456,6 +439,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -483,143 +484,31 @@
       
         
           
-            <p>抄袭/参考资料</p>
-<ul>
-<li>台湾大学 《机器学习基石》视频</li>
-<li>Ng 《机器学习》视频</li>
-<li>周志华《机器学习》</li>
-<li><a href="http://www.cnblogs.com/pinard/p/6004041.html" target="_blank" rel="external">线性回归原理小结</a></li>
-<li><a href="http://www.cnblogs.com/pinard/p/6018889.html" target="_blank" rel="external">Lasso回归算法： 坐标轴下降法与最小角回归法小结</a></li>
-</ul>
-<hr>
-<p>[TOC]</p>
-<hr>
-<h1 id="写作提纲"><a href="#写作提纲" class="headerlink" title="写作提纲"></a>写作提纲</h1><ol>
-<li>基础线性回归模型&amp;损失函数</li>
-<li>优化方法（极小化损失函数）<ol>
-<li>最小二乘法 OLS<ul>
-<li>代数法解法</li>
-<li>矩阵法解法</li>
-</ul>
-</li>
-<li>梯度下降 Gradient Descent</li>
-</ol>
-</li>
-<li>线性回归的推广<ol>
-<li>多项式回归</li>
-<li>广义线性回归</li>
-</ol>
-</li>
-<li>正则化<ol>
-<li>L1：Lasso<ul>
-<li>坐标轴下降法</li>
-<li>最小角回归法</li>
-</ul>
-</li>
-<li>L2：Ridge<ul>
-<li>最小二乘法</li>
-<li>梯度下降</li>
-</ul>
-</li>
-<li>L1+L2：弹性网<ul>
-<li>坐标轴下降法</li>
-<li>最小角回归法</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<hr>
-<h1 id="基础线性回归模型-amp-损失函数"><a href="#基础线性回归模型-amp-损失函数" class="headerlink" title="基础线性回归模型&amp;损失函数"></a>基础线性回归模型&amp;损失函数</h1><table>
-<thead>
-<tr>
-<th style="text-align:left">符号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$x_j$</td>
-<td>第$j$维特征</td>
-</tr>
-<tr>
-<td style="text-align:left">$x$</td>
-<td>一条样本中的特征向量，$x=(1,x_1,x_2,⋯,x_n)$</td>
-</tr>
-<tr>
-<td style="text-align:left">${x^{(i)}}$</td>
-<td>第$i$条样本</td>
-</tr>
-<tr>
-<td style="text-align:left">$x_j^{(i)}$</td>
-<td>第$i$条样本的第$j$维特征</td>
-</tr>
-<tr>
-<td style="text-align:left">${y^{(i)}}$</td>
-<td>第$i$条样本的结果（label）</td>
-</tr>
-<tr>
-<td style="text-align:left">$X$</td>
-<td>所有样本的特征全集，即$X=(x^{(1)},x^{(2)},⋯,x^{(m)})^T$</td>
-</tr>
-<tr>
-<td style="text-align:left">$Y$</td>
-<td>所有样本的label全集，即$Y=(y^{(1)},y^{(2)},⋯,y^{(m)})^T$</td>
-</tr>
-<tr>
-<td style="text-align:left">$w$</td>
-<td>参数向量，即$w=(w_0,w_1,⋯,w_n)$</td>
-</tr>
-<tr>
-<td style="text-align:left">$w_j$</td>
-<td>第$j$维参数</td>
-</tr>
-</tbody>
-</table>
-<p><img src="/img/13.png" alt="13"></p>
-<h2 id="模型表达"><a href="#模型表达" class="headerlink" title="模型表达"></a>模型表达</h2><h3 id="线性模型基本形式"><a href="#线性模型基本形式" class="headerlink" title="线性模型基本形式"></a>线性模型基本形式</h3><p>$$<br>y(x,w)=w_0+w_1x_1+⋯+w_nx_n<br>$$</p>
-<p>其中，$x_1,x_2,⋯,x_n$表示自变量（集合）；$y$是因变量；$w$为参数向量；$w_i$表示对应自变量（特征）的权重，$w_0$是偏倚项（又称为截距$b$）</p>
-<h3 id="线性模型向量形式"><a href="#线性模型向量形式" class="headerlink" title="线性模型向量形式"></a>线性模型向量形式</h3><p>如果令$x_0=1$,   $y(x,w)=h_w(x)$, 可以将公式写成向量形式，即</p>
-<p>$$<br>h_{w}(x)=\sum_{i=0}^{m}w_{i}x_{i}=w^{T}x<br>$$</p>
-<p>其中，$w=(w_0,w_1,⋯,w_n)$，$x=(1,x_1,x_2,⋯,x_n)$ 均为<strong>行向量</strong>，$w^T$为$w$的转置。</p>
-<p>在一些应用场景中，需要<strong>将输入空间映射到特征空间</strong>，然后建模. 定义映射函数为$\phi (x)$，因此我们可以把公式写成更通用的表达方式：<br>$$<br>h_{w}(x)=w^{T}\phi (x)<br>$$</p>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2\\<br>\underset{w}{min}J(w)<br>$$</p>
-<p>注意：$w$是$n+1$维的，而每个$x$是$n$维的，样本数量为$m$.      系数1/2只是为后续求导方便计算，而1/m可有可无（但还是前后文统一吧）。</p>
-<p>选择使用 <strong>误差平方损失极小化</strong> 作为优化目标，其实还可以从<strong>概率的角度解释（极大似然估计）</strong>，看下面网址，这里就不写了<br><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/</a></p>
-<p>进一步使用矩阵形式表达损失函数<br>$$<br>J(w)=\frac{1}{2}\left | Xw^T-Y \right |^2 = \frac{1}{2}(Xw^T-Y)^2(Xw^2-Y)<br>$$</p>
-<p><img src="/img/14.png" alt="14"></p>
-<hr>
-<h1 id="优化方法（极小化损失函数）"><a href="#优化方法（极小化损失函数）" class="headerlink" title="优化方法（极小化损失函数）"></a>优化方法（极小化损失函数）</h1><h2 id="最小二乘-OLS"><a href="#最小二乘-OLS" class="headerlink" title="最小二乘 OLS"></a>最小二乘 OLS</h2><p>矩阵法（对损失函数进行$w$ 求导，再令其为0解得$w$）：</p>
-<p>$$<br>X^TXw=X^TY\\<br>w=(X^TX)^{-1}X^TY<br>$$</p>
-<h2 id="梯度下降-GD"><a href="#梯度下降-GD" class="headerlink" title="梯度下降 GD"></a>梯度下降 GD</h2><p>注：梯度下降不一定能够找到全局的最优解，有可能是一个局部最优解。当然，如果损失函数是凸函数，梯度下降法得到的解就一定是全局最优解</p>
-<p><img src="/img/15.png" alt="15"></p>
-<p>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2<br>$$</p>
-<p>首先，我们对上面的目标函数进行每个参数的单独求导，得到：</p>
-<p>$$<br>\frac{\partial }{\partial w_j}J(w)=\frac{1}{m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )\cdot ( x^{(i)}_j )<br>$$</p>
-<p>通过求导结果，可以得到最后的迭代式子：</p>
-<p>$$<br>w_j = w_j-\alpha \cdot \frac{1}{m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )\cdot ( x^{(i)}_j )<br>$$</p>
-<p>其中α是步长<br>注：梯度下降是对每个参数不断的下降，每个参数下降一次需要动用所有样本，所以计算量也蛮大的。有n+1个参数（n+1维），m个样本。</p>
-<hr>
-<h1 id="线性回归的推广"><a href="#线性回归的推广" class="headerlink" title="线性回归的推广"></a>线性回归的推广</h1><h2 id="多项式回归"><a href="#多项式回归" class="headerlink" title="多项式回归"></a>多项式回归</h2><p>回到我们开始的线性模型，$y(x,w)=w_0+w_1x_1+⋯+w_nx_n$, 如果这里不仅仅是x的一次方，比如增加二次方，那么模型就变成了多项式回归。这里写一个只有两个特征的 p 次方多项式回归的模型：</p>
-<p>$$<br>h_θ(x1,x2)=θ_0+θ_1x_1+θ_2x_2+θ_3(x_1)^2+θ_4(x_2)^2+θ_5(x_1x_2)<br>$$</p>
-<p>我们令$x_0=1,x_1=x_1,x_2=x_2,x_3=(x_1)^2,x_4=(x_2)^2,x_5=(x_1x_2)$,这样我们就得到了下式：</p>
-<p>$$<br>h_θ(x1,x2)=θ_0+θ_1x_1+θ_2x_2+θ_3x_3+θ_4x_5+θ_5x_5<br>$$</p>
-<p>可以发现，我们又重新回到了线性回归，这是一个五元线性回归，可以用线性回归的方法来完成算法。对于每个二元样本特征$(x_1,x_2)$,我们得到一个五元样本特征$(1,x_1,x_2,(x_1)^2,(x_2)^2,(x_1x_2))$，通过这个改进的五元样本特征，我们重新把不是线性回归的函数变回线性回归。</p>
-<h2 id="广义线性回归"><a href="#广义线性回归" class="headerlink" title="广义线性回归"></a>广义线性回归</h2><p>在上一节的线性回归的推广中，我们对样本特征端做了推广，这里我们对于特征 $y$ 做推广。比如我们的输出$Y$不满足和$X$的线性关系，但是$lnY$ 和$X$满足线性关系，模型函数如下：</p>
-<p>$$<br>lnY=Xw^T<br>$$</p>
-<p>这样对与每个样本的输入y，我们用 lny去对应， 从而仍然可以用线性回归的算法去处理这个问题。我们把 Iny一般化，假设这个函数是单调可微函数g(.)g(.),则一般化的广义线性回归形式是：</p>
-<p>$$<br>g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)<br>$$</p>
-<p>这个函数$g(.)$我们通常称为联系函数。</p>
-<hr>
-<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><p>线性模型优化目标如下：</p>
-<p>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2<br>$$</p>
-<p>但是，当样本特征很多且样本数有限时，按照上面公式求得的参数w容易使得模型陷入过拟合。为了缓解过拟合问题，可引入正则化项。</p>
-<p>引入$L_1$范数正则化：Lasso<br>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2+\lambda \left | w \right |_1<br>$$<br>引入$L_2$范数正则化：Ridge<br>$$<br>J(w)=\frac{1}{2m}\sum_{i=1}^{m}\left ( h_{w}({x^{i}})-y^{(i)} \right )^2+\lambda \left | w \right |_2^2<br>$$</p>
-<p>注：<br><strong>$\lambda$ 为正则项系数/惩罚项系数</strong><br>$L_1$范数与$L_2$范数正则化都有助于降低过拟合风险，但L1还会带来一个额外的好处，就是<strong>$L_1$正则化更易于获得“稀疏”（sparse）解，即它求得的参数w会有更少的非零分量。</strong> （原因如下图）<br><img src="/img/16.png" alt="16"><br><img src="/img/17.png" alt="17"></p>
-<p><strong>Lasso解法</strong>：<br>因为Lasso所带的$L_1$范数正则项<strong>不是连续可导</strong>的，所以最小二乘与梯度下降这些方法将失效，所以需要使用其他求极值的算法：<strong>坐标轴下降法</strong>（coordinate descent）和 <strong>最小角回归法</strong>（ Least Angle Regression， LARS）。</p>
-<p><strong>Ridge解法</strong>：<br>同普通线性回归模型一样，加上$L_2$范数正则项依旧连续可导，所以继续使用 <strong>最小二乘</strong> 与 <strong>梯度下降</strong>。</p>
+          抄袭/参考资料
 
-          
+台湾大学 《机器学习基石》视频
+Ng 《机器学习》视频
+周志华《机器学习》
+线性回归原理小结
+Lasso回归算法： 坐标轴下降法与最小角回归法小结
+
+
+[TOC]
+
+写作提纲
+基础线性回归模型&amp;损失函数
+优化方法（极小化损失函数）
+最小二乘法 OLS
+代数法解法
+矩阵法解法
+          ...
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/19/线性回归/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -661,7 +550,7 @@
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Chen_JC">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="/images/avatar.png">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -707,6 +596,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -734,131 +641,21 @@
       
         
           
-            <p>抄袭/参考资料</p>
-<ul>
-<li>台湾大学 《机器学习基石》视频</li>
-<li><a href="http://www.flickering.cn/machine_learning/2015/04/vc%E7%BB%B4%E7%9A%84%E6%9D%A5%E9%BE%99%E5%8E%BB%E8%84%89/" target="_blank" rel="external">VC维的来龙去脉</a></li>
-</ul>
-<hr>
-<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>1.Hoeffiding不等式<br>2.与学习的联系：单个假设<br>3.与学习的联系：多个假设<br>4.学习的可行性：两个核心条件<br>5.Growth Function<br>6.Break Point 和 Shatter<br>7.VC Bound<br>8.VC Dimension</p>
-<hr>
-<h1 id="Hoefiding不等式"><a href="#Hoefiding不等式" class="headerlink" title="Hoefiding不等式"></a>Hoefiding不等式</h1><p>$N$：样本量<br>$v$：样本均值<br>$u$：总体均值<br>$$<br>P\left [ v-u\geqslant \varepsilon  \right ]\leqslant e^{-2\varepsilon ^{2}N}\\<br>P\left [ |v-u|\geqslant \varepsilon  \right ]\leqslant 2e^{-2\varepsilon ^{2}N}<br>$$</p>
-<hr>
-<h1 id="学习的联系：单个假设"><a href="#学习的联系：单个假设" class="headerlink" title="学习的联系：单个假设"></a>学习的联系：单个假设</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">符号</th>
-<th style="text-align:left">描述说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">$H$</td>
-<td style="text-align:left">该机器学习方法的假设空间</td>
-</tr>
-<tr>
-<td style="text-align:center">$g$</td>
-<td style="text-align:left">表示我们求解的用来预测的假设($g$属于$H$)</td>
-</tr>
-<tr>
-<td style="text-align:center">$f$</td>
-<td style="text-align:left">理想的方案(可以是一个函数，也可以是一个分布)</td>
-</tr>
-<tr>
-<td style="text-align:center">$D$</td>
-<td style="text-align:left">样本集</td>
-</tr>
-<tr>
-<td style="text-align:center">$N$</td>
-<td style="text-align:left">样本量</td>
-</tr>
-<tr>
-<td style="text-align:center">$A$</td>
-<td style="text-align:left">算法</td>
-</tr>
-</tbody>
-</table>
-<p>机器学习的过程就是：通过算法 $A$，在假设空间 $H$ 中，根据样本集 $D$，选择最好的假设作为 $g$ ，选择标准是 $g$ 近似于 $f$<br> <img src="/img/01.png" alt="01"></p>
-<p>设定，$h(x)$是我们预估得到的某一个目标函数，$h(x)$是假设空间$H$中的一个假说。</p>
-<ul>
-<li>${E_{out}}(h)$：(out-of-sample)<strong>总体损失期望</strong></li>
-<li>${E_{in}}(h)$：(in-of-sample)<strong>样本损失期望</strong></li>
-</ul>
-<p><strong>基于hoeffding不等式，可得到下面公式，当样本量$N$足够大时，${E_{out}}(h)$和${E_{in}}(h)$将非常接近</strong></p>
-<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant e^{-2\varepsilon ^{2}N}<br>$$</p>
-<hr>
-<h1 id="学习的联系：多个假设"><a href="#学习的联系：多个假设" class="headerlink" title="学习的联系：多个假设"></a>学习的联系：多个假设</h1><p>注意在上面推导中，我们是针对某一个特定的解$h(x)$。在我们的假设空间$H$中，往往有很多个假设函数(甚至于无穷多个)</p>
-<p>让我们先来理解下<strong>单个假设$h$</strong>的上限，其公式中的$2e^{-2\varepsilon ^{2}N}$（<strong>超出我们设定的 $\varepsilon$ 的样本集就是坏样本</strong>）就是这个假设h<strong>遇上坏样本</strong>的上限（上限只是最快的打算，大部分情况不会达到上限 ）</p>
-<p><img src="/img/02.png" alt="01"></p>
-<p>当多个假设存在，我们希望任意选择一个$h$都是每问题的，此时就需要标注出所有的坏数据集情况（对任意一个$h$是坏的，我就标注它是坏的）。那么我们任意选择一个$h$后 <strong>遇上坏样本</strong>的上限：就是<strong>所有$h$遇上坏样本的上限的<u>并集</u></strong>。</p>
-<p><img src="/img/03.png" alt="01"></p>
-<p>任意选择一个$h$后 <strong>遇上坏样本</strong>的上限 如下图所示，但有个新问题，就是我们没法计算<strong>交集部分的大小</strong>（反正我不会）</p>
-<p>注：<strong>灰色部分</strong>是每个$h$遇上坏样本的上限，而彩色部分是实际的概率</p>
-<p><img src="/img/04.png" alt="01"></p>
-<p>既然无法计算，但我们却知道每个单独的$h$遇上坏样本的上限：$2e^{-2\varepsilon ^{2}N}$，既然这样，我们只能计算其上限的上限了，交集就只剩简单的加法了</p>
-<p><img src="/img/05.png" alt="01"></p>
-<p>好，公式推导如下</p>
-<p><img src="/img/06.png" alt="01"></p>
-<p>我们根据样本集$D$，随机从假设空间$H$(假设有$M$个假设)中选取一个$h$，都会满足下面的公式</p>
-<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant Me^{-2\varepsilon ^{2}N}<br>$$</p>
-<hr>
-<h1 id="学习的可行性：两个核心条件"><a href="#学习的可行性：两个核心条件" class="headerlink" title="学习的可行性：两个核心条件"></a>学习的可行性：两个核心条件</h1><p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant Me^{-2\varepsilon ^{2}N}<br>$$</p>
-<p>根据上一节得到的公式，我们得到学习可行的两个条件：</p>
-<ul>
-<li>如果假设空间$H$的size $M$是有限的，当$N$足够大时，那么对假设空间中任意一个$g$，${E_{out}}(h)$约等于${E_{in}}(h)$.</li>
-<li>利用算法$A$从假设空间$H$中，挑选出一个$g$，使得${E_{in}}(h)$接近于0，${E_{out}}(h)$也接近为0.</li>
-</ul>
-<p>上面这两个核心条件，也正好对应着test和train这两个过程。train过程希望损失期望(即${E_{in}}(h)$ )尽可能小；test过程希望在真实环境中的损失期望也尽可能小，即${E_{in}}(h)$接近于${E_{out}}(h)$</p>
-<hr>
-<h1 id="Growth-Function"><a href="#Growth-Function" class="headerlink" title="Growth Function"></a>Growth Function</h1><p>证明了学习的可行后（满足两个核心条件），新问题又来了：<strong>$M$的大小！</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:left">条件一</th>
-<th>条件二</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">$M$太小</td>
-<td style="text-align:left">容易满足${E_{out}}(h)$约等于${E_{in}}(h)$</td>
-<td>不容易找到一个${E_{in}}(h)$足够小的</td>
-</tr>
-<tr>
-<td style="text-align:center">$M$太大</td>
-<td style="text-align:left">不同意满足</td>
-<td>选择多了，容易找到${E_{in}}(h)$足够小的</td>
-</tr>
-</tbody>
-</table>
-<p>对于一个假设空间，$M$可能是无穷大的。要能够继续推导下去，那么有一个直观的思路，能否找到一个有限的因子 $m_H$ 来替代不等式bound中的$M$.</p>
-<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2 m_{H}e^{-2\varepsilon ^{2}N}<br>$$</p>
-<p>在第三节中，我们把每个假设的代价都做了独立分离，但实际它们都是有重叠的部分，其中有一些甚至是完全重叠，我们可以<strong>把几乎重叠的假设归为一类</strong>，但把所有假设归类后，我们就能得到<strong>有效的假设数量</strong>Effective Number of Hypotheses——$m_H$</p>
-<p><img src="/img/07.png" alt="01"></p>
-<p><img src="/img/08.png" alt="01"></p>
-<p>将所有假设进行分类的依据又是什么呢？答案就在样本集$D$，例如在$H$有两个假设（$M$中的两个，废话），它们作用于样本集后，得出的结果一致，我们就可以将它们两归为一类；反过来讲，根据样本集$D$我们能得出这一类的假设（$m_H$的一个）。</p>
-<p>所以，$m_H$是一个比M小很多的数，而且它会是个根据样本集$D$数量$N$呈<strong>多项式增长</strong>的数，它的增长公式称为<em>*成长公式Growth Function</em></p>
-<p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2\cdot  {effective}(N) e^{-2\varepsilon ^{2}N}<br>$$</p>
-<p><del>成长公式的解释还没想好，就这样，next.</del></p>
-<p>反正随着$N$增长，遇上坏样本的上限$2\cdot  {effective}(N) e^{-2\varepsilon ^{2}N}$中一个是跟着多项式增长，一个跟着指数下降，指数必然打败多项式，所以总的来说随着$N$的增长，我们遇上坏样本的概率就会越来越低，${E_{out}}(h)$也就会越接近${E_{in}}(h)$. That’s good！</p>
-<hr>
-<h1 id="Break-Point-和-Shatter"><a href="#Break-Point-和-Shatter" class="headerlink" title="Break Point 和 Shatter"></a>Break Point 和 Shatter</h1><p>先切断一些，看看两个概念：shatter 和 break point.</p>
-<p><strong>Shatter的概念</strong>：当假设空间$H$作用于$N$个样本时，产生的<strong>dichotomies数量（二分类）</strong>等于这$N$个点总的组合数$2N$ 时，就称：这$N$个样本被$H$给shatter.掉了。<br>要注意到 shatter 的原意是“打碎”，在此指“$N$个点的所有(碎片般的)可能情形都被$H$产生了”。所以${m_H}(N)=2N$ 的情形是即为“shatter”。</p>
-<p><strong>Break Point的概念</strong>：对于给定的成长函数${m_H}(N)$，从$N=1$出发，$N$慢慢变大，当增大到$k$时，出现${m_H}(N)&lt;2k$的情形，则我们说k是该成长函数的break poin.</p>
-<p>当$N$的数量大于$k$时，$H$都没有办法再shatter他们了。</p>
-<hr>
-<h1 id="VC-Bound"><a href="#VC-Bound" class="headerlink" title="VC Bound"></a>VC Bound</h1><p>有了Break Point的概念后，如果break point存在（有限的正整数），对与任意的样本集，我们都可以得到成长函数的上界，经过推导可得：</p>
-<p>$$<br>m_{H}(N)=\sum_{i=0}^{k-1}\binom{N}{i}<br>$$</p>
-<p>多项式增长！ 多项式的最高幂次项为：$N^{k–1}$.<br>很开心，终于圆会Growth Function那一节的结论。</p>
-<p>阶段性成果：能否用<strong>${m_H}(N)$直接替换M?</strong></p>
-<p>既然得到了m(N)的多项式上界，我们希望对之前的不等式中M 进行替换，用m_H(N)来替换M。这样替换后，当break point存在时，N足够大时，该上界是有限的。</p>
-<p>然而直接替换是存在问题的，主要问题是：Ein的可能取值是有限个的，但$E_{out}$的可能取值是无限的。可以通过将$E_{out}$替换为验证集(verification set) 的$E_{in}$ 来解决这个问题。 下面是推导过程：</p>
-<p><img src="/img/22.png" alt="01"></p>
-<hr>
-<h1 id="VC-Dimension"><a href="#VC-Dimension" class="headerlink" title="VC Dimension"></a>VC Dimension</h1><p>最后，VC维！暂时不想写，再理理！</p>
+          抄袭/参考资料
 
-          
+台湾大学 《机器学习基石》视频
+VC维的来龙去脉
+
+
+目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC D
+          ...
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/18/计算学习原理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -919,7 +716,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/avatar.png"
                alt="Chen_JC" />
           <p class="site-author-name" itemprop="name">Chen_JC</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -932,6 +729,13 @@
             </a>
           </div>
 
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
           
 
           
@@ -992,7 +796,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -1058,6 +862,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
 
   
 

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -106,16 +106,16 @@ VC维的来龙去脉
 目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC Dimension
 
 Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
-<meta property="og:image" content="http://yoursite.com/img/01.png">
-<meta property="og:image" content="http://yoursite.com/img/02.png">
-<meta property="og:image" content="http://yoursite.com/img/03.png">
-<meta property="og:image" content="http://yoursite.com/img/04.png">
-<meta property="og:image" content="http://yoursite.com/img/05.png">
-<meta property="og:image" content="http://yoursite.com/img/06.png">
-<meta property="og:image" content="http://yoursite.com/img/07.png">
-<meta property="og:image" content="http://yoursite.com/img/08.png">
-<meta property="og:image" content="http://yoursite.com/img/22.png">
-<meta property="og:updated_time" content="2016-11-19T12:09:18.948Z">
+<meta property="og:image" content="http://yoursite.com/images/01.png">
+<meta property="og:image" content="http://yoursite.com/images/02.png">
+<meta property="og:image" content="http://yoursite.com/images/03.png">
+<meta property="og:image" content="http://yoursite.com/images/04.png">
+<meta property="og:image" content="http://yoursite.com/images/05.png">
+<meta property="og:image" content="http://yoursite.com/images/06.png">
+<meta property="og:image" content="http://yoursite.com/images/07.png">
+<meta property="og:image" content="http://yoursite.com/images/08.png">
+<meta property="og:image" content="http://yoursite.com/images/22.png">
+<meta property="og:updated_time" content="2016-11-20T01:56:29.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算学习原理">
 <meta name="twitter:description" content="抄袭/参考资料
@@ -127,7 +127,7 @@ VC维的来龙去脉
 目录1.Hoeffiding不等式2.与学习的联系：单个假设3.与学习的联系：多个假设4.学习的可行性：两个核心条件5.Growth Function6.Break Point 和 Shatter7.VC Bound8.VC Dimension
 
 Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
-<meta name="twitter:image" content="http://yoursite.com/img/01.png">
+<meta name="twitter:image" content="http://yoursite.com/images/01.png">
 
 
 
@@ -135,8 +135,8 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -287,7 +287,7 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Chen_JC">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="/images/avatar.png">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -329,6 +329,24 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
             
           </span>
 
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -399,7 +417,7 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 </tr>
 </tbody>
 </table>
-<p>机器学习的过程就是：通过算法 $A$，在假设空间 $H$ 中，根据样本集 $D$，选择最好的假设作为 $g$ ，选择标准是 $g$ 近似于 $f$<br> <img src="/img/01.png" alt="01"></p>
+<p>机器学习的过程就是：通过算法 $A$，在假设空间 $H$ 中，根据样本集 $D$，选择最好的假设作为 $g$ ，选择标准是 $g$ 近似于 $f$<br> <img src="/images/01.png" alt="01"></p>
 <p>设定，$h(x)$是我们预估得到的某一个目标函数，$h(x)$是假设空间$H$中的一个假说。</p>
 <ul>
 <li>${E_{out}}(h)$：(out-of-sample)<strong>总体损失期望</strong></li>
@@ -410,16 +428,16 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 <hr>
 <h1 id="学习的联系：多个假设"><a href="#学习的联系：多个假设" class="headerlink" title="学习的联系：多个假设"></a>学习的联系：多个假设</h1><p>注意在上面推导中，我们是针对某一个特定的解$h(x)$。在我们的假设空间$H$中，往往有很多个假设函数(甚至于无穷多个)</p>
 <p>让我们先来理解下<strong>单个假设$h$</strong>的上限，其公式中的$2e^{-2\varepsilon ^{2}N}$（<strong>超出我们设定的 $\varepsilon$ 的样本集就是坏样本</strong>）就是这个假设h<strong>遇上坏样本</strong>的上限（上限只是最快的打算，大部分情况不会达到上限 ）</p>
-<p><img src="/img/02.png" alt="01"></p>
+<p><img src="/images/02.png" alt="01"></p>
 <p>当多个假设存在，我们希望任意选择一个$h$都是每问题的，此时就需要标注出所有的坏数据集情况（对任意一个$h$是坏的，我就标注它是坏的）。那么我们任意选择一个$h$后 <strong>遇上坏样本</strong>的上限：就是<strong>所有$h$遇上坏样本的上限的<u>并集</u></strong>。</p>
-<p><img src="/img/03.png" alt="01"></p>
+<p><img src="/images/03.png" alt="01"></p>
 <p>任意选择一个$h$后 <strong>遇上坏样本</strong>的上限 如下图所示，但有个新问题，就是我们没法计算<strong>交集部分的大小</strong>（反正我不会）</p>
 <p>注：<strong>灰色部分</strong>是每个$h$遇上坏样本的上限，而彩色部分是实际的概率</p>
-<p><img src="/img/04.png" alt="01"></p>
+<p><img src="/images/04.png" alt="01"></p>
 <p>既然无法计算，但我们却知道每个单独的$h$遇上坏样本的上限：$2e^{-2\varepsilon ^{2}N}$，既然这样，我们只能计算其上限的上限了，交集就只剩简单的加法了</p>
-<p><img src="/img/05.png" alt="01"></p>
+<p><img src="/images/05.png" alt="01"></p>
 <p>好，公式推导如下</p>
-<p><img src="/img/06.png" alt="01"></p>
+<p><img src="/images/06.png" alt="01"></p>
 <p>我们根据样本集$D$，随机从假设空间$H$(假设有$M$个假设)中选取一个$h$，都会满足下面的公式</p>
 <p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant Me^{-2\varepsilon ^{2}N}<br>$$</p>
 <hr>
@@ -456,8 +474,8 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 <p>对于一个假设空间，$M$可能是无穷大的。要能够继续推导下去，那么有一个直观的思路，能否找到一个有限的因子 $m_H$ 来替代不等式bound中的$M$.</p>
 <p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2 m_{H}e^{-2\varepsilon ^{2}N}<br>$$</p>
 <p>在第三节中，我们把每个假设的代价都做了独立分离，但实际它们都是有重叠的部分，其中有一些甚至是完全重叠，我们可以<strong>把几乎重叠的假设归为一类</strong>，但把所有假设归类后，我们就能得到<strong>有效的假设数量</strong>Effective Number of Hypotheses——$m_H$</p>
-<p><img src="/img/07.png" alt="01"></p>
-<p><img src="/img/08.png" alt="01"></p>
+<p><img src="/images/07.png" alt="01"></p>
+<p><img src="/images/08.png" alt="01"></p>
 <p>将所有假设进行分类的依据又是什么呢？答案就在样本集$D$，例如在$H$有两个假设（$M$中的两个，废话），它们作用于样本集后，得出的结果一致，我们就可以将它们两归为一类；反过来讲，根据样本集$D$我们能得出这一类的假设（$m_H$的一个）。</p>
 <p>所以，$m_H$是一个比M小很多的数，而且它会是个根据样本集$D$数量$N$呈<strong>多项式增长</strong>的数，它的增长公式称为<em>*成长公式Growth Function</em></p>
 <p>$$<br>P\left [ |{E_{out}}(h)-{E_{in}}(h)|\geqslant \varepsilon  \right ]\leqslant 2\cdot  {effective}(N) e^{-2\varepsilon ^{2}N}<br>$$</p>
@@ -475,7 +493,7 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 <p>阶段性成果：能否用<strong>${m_H}(N)$直接替换M?</strong></p>
 <p>既然得到了m(N)的多项式上界，我们希望对之前的不等式中M 进行替换，用m_H(N)来替换M。这样替换后，当break point存在时，N足够大时，该上界是有限的。</p>
 <p>然而直接替换是存在问题的，主要问题是：Ein的可能取值是有限个的，但$E_{out}$的可能取值是无限的。可以通过将$E_{out}$替换为验证集(verification set) 的$E_{in}$ 来解决这个问题。 下面是推导过程：</p>
-<p><img src="/img/22.png" alt="01"></p>
+<p><img src="/images/22.png" alt="01"></p>
 <hr>
 <h1 id="VC-Dimension"><a href="#VC-Dimension" class="headerlink" title="VC Dimension"></a>VC Dimension</h1><p>最后，VC维！暂时不想写，再理理！</p>
 
@@ -578,7 +596,7 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/avatar.png"
                alt="Chen_JC" />
           <p class="site-author-name" itemprop="name">Chen_JC</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -591,6 +609,13 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
             </a>
           </div>
 
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
           
 
           
@@ -667,7 +692,7 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -733,6 +758,13 @@ Hoefiding不等式$N$：样本量$v$：样本均值$u$：总体均值$$P\l">
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
