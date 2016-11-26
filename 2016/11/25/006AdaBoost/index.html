@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -84,13 +84,52 @@
 
 
 
+<meta name="description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+李航《统计学习方法》
+周志华《机器学习》
+深入浅出ML之Boosting家族
+Adaboost - 新的角度理解权值更新策略
+
+
+Adaboost算法是Boosting集成框架下的一种具体实现，在分类问题中的主要特点：通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类性能。
+先回顾下Boosting两个问题：
+
+在每一轮学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AdaBoost">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/006AdaBoost/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:updated_time" content="2016-11-25T14:31:03.087Z">
+<meta property="og:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+李航《统计学习方法》
+周志华《机器学习》
+深入浅出ML之Boosting家族
+Adaboost - 新的角度理解权值更新策略
+
+
+Adaboost算法是Boosting集成框架下的一种具体实现，在分类问题中的主要特点：通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类性能。
+先回顾下Boosting两个问题：
+
+在每一轮学习">
+<meta property="og:updated_time" content="2016-11-26T05:22:22.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost">
+<meta name="twitter:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+李航《统计学习方法》
+周志华《机器学习》
+深入浅出ML之Boosting家族
+Adaboost - 新的角度理解权值更新策略
+
+
+Adaboost算法是Boosting集成框架下的一种具体实现，在分类问题中的主要特点：通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类性能。
+先回顾下Boosting两个问题：
+
+在每一轮学习">
 
 
 
@@ -302,6 +341,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -327,7 +384,44 @@
       
 
       
-        
+        <p>抄袭/参考资料</p>
+<ul>
+<li>台湾大学《机器学习技法》视频</li>
+<li>李航《统计学习方法》</li>
+<li>周志华《机器学习》</li>
+<li><a href="http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/" target="_blank" rel="external">深入浅出ML之Boosting家族</a></li>
+<li><a href="http://www.csuldw.com/2016/08/28/2016-08-28-adaboost-algorithm-theory/" target="_blank" rel="external">Adaboost - 新的角度理解权值更新策略</a></li>
+</ul>
+<hr>
+<p>Adaboost算法是Boosting集成框架下的一种具体实现，在分类问题中的主要特点：<strong>通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类性能。</strong></p>
+<p>先回顾下Boosting两个问题：</p>
+<ol>
+<li><p>在每一轮学习之前，如何改变训练数据的权值分布？ </p>
+<blockquote>
+<p><strong>提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值。</strong></p>
+</blockquote>
+</li>
+<li><p>如何将一组弱分类器组合成一个强分类器？</p>
+<blockquote>
+<p>弱分类器的组合，AdaBoost采取<strong>加权多数表决</strong>的方法。</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h1 id="AdaBoost算法"><a href="#AdaBoost算法" class="headerlink" title="AdaBoost算法"></a>AdaBoost算法</h1><p>（一）、假设训练数据集具有均匀（相同）的权值分布，即每个训练样本在基本分类器的学习中作用相同。这一假设保证第一步能够在原始数据上学习基本分类器$G_1(x)$<br>$$<br>D_1 = (w_{1i},w_{12},…w_{1M})\\<br>w_{1i}=\frac{1}{M}<br>$$</p>
+<p>（二）、AdaBoost反复学习基本分类器，在每一轮$k=1,2,⋯,K$顺序地执行下列操作：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">1. </span>学习基本分类器：使用当前分布加权的训练数据集，学习基本分类器；</div></pre></td></tr></table></figure>
+<p>$$<br>G_k(x): \mathcal{X} \rightarrow \{-1, +1\}<br>$$</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">2. </span>计算当前训练数据集上的分类误差率</div></pre></td></tr></table></figure>
+<p>$$<br>e_k = P(G_k(x^{(i)}) \not= y^{(i)}) = \sum_{i=1}^{M} w_{ki}I(G_k(x^{(i)}) \not= y^{(i)})<br>$$</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">3. </span>计算本次学习到的分类器的系数/权重</div></pre></td></tr></table></figure>
+<p>$$<br>\alpha_k = \frac{1}{2} \log \frac{1-e_k}{e_k} \quad(e是自然对数)<br>$$</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">4. </span>更新训练数据集的权值分布，为学习下个分类器做准备</div></pre></td></tr></table></figure>
+<p>$$<br>D_{k+1} = (w_{k+1,1}, w_{k+1,2}, \cdots, w_{k+1,M})\ <br>      w_{k+1,i} = \frac{w_{k,i}}{Z_k} \exp(-\alpha_k y^{(i)} G_k(x^{(i)})), \quad i=1,2,\cdots,M<br>$$</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">5. </span>构建基本分类器的线性组合</div></pre></td></tr></table></figure>
+<p>$$<br>   f(x) = \sum_{k=1}^{K} \alpha_k G_k(x)<br>$$</p>
+<p>（三）、得到最终的分类器<br>$$<br>G(x) = sign (f(x)) = sign \left(\sum_{k=1}^{K} \alpha_k G_k(x) \right)<br>$$</p>
+
       
     </div>
 
@@ -348,6 +442,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -363,7 +463,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/25/201sklearn-特征选择/" rel="prev" title="sklearn-特征选择">
+              <a href="/2016/11/25/sklearn-特征选择/" rel="prev" title="sklearn-特征选择">
                 sklearn-特征选择 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -412,8 +512,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -424,7 +533,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -466,6 +575,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AdaBoost算法"><span class="nav-number">1.</span> <span class="nav-text">AdaBoost算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -572,24 +697,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
 
 
 
@@ -611,6 +719,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 

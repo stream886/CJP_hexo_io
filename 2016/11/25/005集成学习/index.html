@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -84,13 +84,103 @@
 
 
 
+<meta name="description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+使用sklearn进行集成学习——理论
+机器学习-组合算法总结
+深入浅出ML之Boosting家族
+
+
+
+
+
+集成框架
+特点
+优点
+实现
+
+
+
+
+Bagging
+Bootstraping、均等投票
+组合强模型，降低方差，防止过拟合
+随机森林(改进的Bagging)
+
+
+Boosting
+“知错就改”、linear组合(有权重)
+组合弱模型，降低偏差，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集成学习">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/005集成学习/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:updated_time" content="2016-11-25T14:30:48.536Z">
+<meta property="og:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+使用sklearn进行集成学习——理论
+机器学习-组合算法总结
+深入浅出ML之Boosting家族
+
+
+
+
+
+集成框架
+特点
+优点
+实现
+
+
+
+
+Bagging
+Bootstraping、均等投票
+组合强模型，降低方差，防止过拟合
+随机森林(改进的Bagging)
+
+
+Boosting
+“知错就改”、linear组合(有权重)
+组合弱模型，降低偏差，">
+<meta property="og:image" content="http://yoursite.com/images/27.png">
+<meta property="og:image" content="http://yoursite.com/images/28.png">
+<meta property="og:image" content="http://yoursite.com/images/24.png">
+<meta property="og:image" content="http://yoursite.com/images/25.png">
+<meta property="og:image" content="http://yoursite.com/images/26.png">
+<meta property="og:updated_time" content="2016-11-26T05:28:29.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习">
+<meta name="twitter:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+使用sklearn进行集成学习——理论
+机器学习-组合算法总结
+深入浅出ML之Boosting家族
+
+
+
+
+
+集成框架
+特点
+优点
+实现
+
+
+
+
+Bagging
+Bootstraping、均等投票
+组合强模型，降低方差，防止过拟合
+随机森林(改进的Bagging)
+
+
+Boosting
+“知错就改”、linear组合(有权重)
+组合弱模型，降低偏差，">
+<meta name="twitter:image" content="http://yoursite.com/images/27.png">
 
 
 
@@ -302,6 +392,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -327,7 +435,79 @@
       
 
       
-        
+        <p>抄袭/参考资料</p>
+<ul>
+<li>台湾大学《机器学习技法》视频</li>
+<li><a href="http://www.cnblogs.com/jasonfreak/p/5657196.html" target="_blank" rel="external">使用sklearn进行集成学习——理论</a></li>
+<li><a href="http://www.csuldw.com/2015/07/22/2015-07-22%20%20ensemble/" target="_blank" rel="external">机器学习-组合算法总结</a></li>
+<li><a href="http://www.52caml.com/head_first_ml/ml-chapter6-boosting-family/" target="_blank" rel="external">深入浅出ML之Boosting家族</a></li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>集成框架</th>
+<th>特点</th>
+<th>优点</th>
+<th>实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bagging</td>
+<td>Bootstraping、均等投票</td>
+<td>组合强模型，降低方差，防止过拟合</td>
+<td>随机森林(改进的Bagging)</td>
+</tr>
+<tr>
+<td>Boosting</td>
+<td>“知错就改”、linear组合(有权重)</td>
+<td>组合弱模型，降低偏差，提高准确度</td>
+<td>Adaboost、Gradient Tree Boosting/GBRT</td>
+</tr>
+<tr>
+<td>Stacking</td>
+<td>组合不同模型</td>
+<td>组合强模型</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="偏差与方差"><a href="#偏差与方差" class="headerlink" title="偏差与方差"></a>偏差与方差</h1><p>在统计学中，一个模型好坏，是根据偏差和方差来衡量的，所以我们先来普及一下偏差(bias)和方差(variance)：</p>
+<ul>
+<li>偏差：描述的是预测值（估计值）的期望$E’$与真实值$Y$之间的差距。偏差越大，越偏离真实数据<br>$$<br>Bias [\hat{f}(x)] = E [\hat{f}(x)] - f(x)<br>$$</li>
+</ul>
+<ul>
+<li>方差：描述的是预测值$P$的变化范围，离散程度，是预测值的方差，也就是离其期望值$E$的距离。方差越大，数据的分布越分散。<br>$$<br>Var [\hat{f}(x)] = E [(\hat{f}(x) - E[\hat{f}(x)])^2]<br>$$</li>
+</ul>
+<p> <img src="/images/27.png" alt="27"></p>
+<p>说直白点，模型的偏差和方差来描述其在训练集上的准确度和防止过拟合的能力</p>
+<ul>
+<li>高方差：过拟合</li>
+<li>高偏差：预测不精准</li>
+<li>弱模型（低复杂度）：高偏差&amp;低方差</li>
+<li><p>强模型（高复杂度）：低偏差&amp;高方差</p>
+<p><img src="/images/28.png" alt="28"></p>
+</li>
+</ul>
+<h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p><strong>Bootstraping</strong></p>
+<p>在了解Bagging之前，需先了解Bootstraping，称为自助法，它是一种有放回的抽样方法</p>
+<p>Bagging其实是bootstrap appregating的缩写，依靠bootstrap抽取多个数据集，训练出多个不同模型，再有这些模型进行投票</p>
+<p><img src="/images/24.png" alt="24"></p>
+<hr>
+<h1 id="Boosting-提升"><a href="#Boosting-提升" class="headerlink" title="Boosting/提升"></a>Boosting/提升</h1><p>给定训练数据集，求一个弱学习算法要比求一个强学习算法要容易的多。Boosting方法就是从弱学习算法出发，反复学习，得到一系列弱分类器，然后组合弱分类器，得到一个强分类器。Boosting方法在学习过程中通过<strong>改变训练数据的权值分布</strong>，针对不同的数据分布调用弱学习算法得到一系列弱分类器。</p>
+<blockquote>
+<p>具体不同的boosting实现，主要区别在弱学习算法本身和下面两个问题的回答上。</p>
+</blockquote>
+<ol>
+<li>在每一轮学习之前，如何改变训练数据的权值分布？</li>
+<li>如何将一组弱分类器组合成一个强分类器？<img src="/images/25.png" alt="25"></li>
+</ol>
+<hr>
+<h1 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h1><p>将训练好的所有基模型对训练基进行预测，第j个基模型对第i个训练样本的预测值将作为新的训练集中第i个样本的第j个特征值，最后基于新的训练集进行训练。同理，预测的过程也要先经过所有基模型的预测形成新的测试集，最后再对测试集进行预测：</p>
+<p><img src="/images/26.png" alt="26"></p>
+
       
     </div>
 
@@ -347,6 +527,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
       
 
       
@@ -412,8 +598,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -424,7 +619,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -466,6 +661,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#偏差与方差"><span class="nav-number">1.</span> <span class="nav-text">偏差与方差</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bagging"><span class="nav-number">2.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Boosting-提升"><span class="nav-number">3.</span> <span class="nav-text">Boosting/提升</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stacking"><span class="nav-number">4.</span> <span class="nav-text">Stacking</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -572,24 +783,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
 
 
 
@@ -611,6 +805,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 

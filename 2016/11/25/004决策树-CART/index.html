@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -84,13 +84,57 @@
 
 
 
+<meta name="description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(下)
+深入浅出ML之Tree-Based家族
+
+
+  分类与回归树（Classification And Regression Tree, 简称CART）模型在Tree家族中是应用最广泛的学习方法之一。它既可以用于分类也可以用于回归。
+
+二叉树结构
+分类树：基尼值
+回归数：平方误差最小二乘CA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="决策树-CART">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/004决策树-CART/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:updated_time" content="2016-11-25T14:30:13.088Z">
+<meta property="og:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(下)
+深入浅出ML之Tree-Based家族
+
+
+  分类与回归树（Classification And Regression Tree, 简称CART）模型在Tree家族中是应用最广泛的学习方法之一。它既可以用于分类也可以用于回归。
+
+二叉树结构
+分类树：基尼值
+回归数：平方误差最小二乘CA">
+<meta property="og:image" content="http://yoursite.com/images/29.png">
+<meta property="og:updated_time" content="2016-11-26T05:31:24.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="决策树-CART">
+<meta name="twitter:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(下)
+深入浅出ML之Tree-Based家族
+
+
+  分类与回归树（Classification And Regression Tree, 简称CART）模型在Tree家族中是应用最广泛的学习方法之一。它既可以用于分类也可以用于回归。
+
+二叉树结构
+分类树：基尼值
+回归数：平方误差最小二乘CA">
+<meta name="twitter:image" content="http://yoursite.com/images/29.png">
 
 
 
@@ -302,6 +346,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -327,7 +389,43 @@
       
 
       
-        
+        <p>抄袭/参考资料</p>
+<ul>
+<li>台湾大学《机器学习技法》视频</li>
+<li>周志华《机器学习》</li>
+<li>李航《统计学习方法》</li>
+<li><a href="http://www.cnblogs.com/pinard/p/6053344.html" target="_blank" rel="external">决策树算法原理(下)</a></li>
+<li><a href="http://www.52caml.com/head_first_ml/ml-chapter3-tree-based-family/" target="_blank" rel="external">深入浅出ML之Tree-Based家族</a></li>
+</ul>
+<hr>
+<p>  分类与回归树（Classification And Regression Tree, 简称CART）模型在Tree家族中是应用最广泛的学习方法之一。它既可以用于分类也可以用于回归。</p>
+<ul>
+<li>二叉树结构</li>
+<li>分类树：基尼值</li>
+<li>回归数：平方误差最小二乘<br>CART最大的特点就是只做二分，大大的减少了计算量，而且效果相当好，在实现了分类功能上，很轻松的转换到回归功能。</li>
+</ul>
+<hr>
+<h1 id="基尼值"><a href="#基尼值" class="headerlink" title="基尼值"></a>基尼值</h1><p>​    在ID3算法中我们使用了信息增益来选择特征，信息增益大的优先选择。在C4.5算法中，采用了信息增益比来选择特征，以减少信息增益容易选择特征值多的特征的问题。但是无论是ID3还是C4.5,都是基于信息论的熵模型的，这里面会涉及大量的对数运算。能不能简化模型同时也不至于完全丢失熵模型的优点呢？有！CART分类树算法使用基尼系数来代替信息增益比，<strong>基尼系数代表了模型的不纯度，基尼系数越小，则不纯度越低，特征越好。</strong></p>
+<p>具体的，在分类问题中，假设有$K$个类别，第$k$个类别的概率为$p_k$, 则基尼系数的表达式为：<br>$$<br>Gini(p) = \sum\limits_{k=1}^{K}p_k(1-p_k) = 1- \sum\limits_{k=1}^{K}p_k^2\\<br>二分类的情况：Gini(p) = 2p(1-p)<br>$$<br>对于个给定的样本$D$,假设有$K$个类别, 第$k$个类别的数量为$C_k$,则样本$D$的基尼系数表达式为：<br>$$<br>Gini(D) = 1-\sum\limits_{k=1}^{K}(\frac{|C_k|}{|D|})^2<br>$$<br>特别的，对于样本$D$,如果根据特征$A$的某个值$a$,把$D$分成$D_1$和$D_2$两部分，则在特征$A$的条件下，$D$的基尼系数表达式为：<br>$$<br>Gini(D,A) = \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2)<br>$$<br>​    大家可以比较下基尼系数表达式和熵模型的表达式，二次运算是不是比对数简单很多？尤其是二类分类的计算，更加简单。但是简单归简单，和熵模型的度量方式比，基尼系数对应的误差有多大呢？对于二类分类，基尼系数和熵之半的曲线如下：<br> <img src="/images/29.png" alt="29"></p>
+<p>​    从上图可以看出，基尼系数和熵之半的曲线非常接近，仅仅在45度角附近误差稍大。因此，基尼系数可以做为熵模型的一个近似替代。而CART分类树算法就是使用的基尼系数来选择决策树的特征。同时，为了进一步简化，<strong>CART分类树算法每次仅仅对某个特征的值进行二分</strong>，而不是多分，这样CART分类树算法建立起来的是二叉树，而不是多叉树。这样一可以进一步<strong>简化基尼系数的计算$Gini(p) = 2p(1-p)$</strong>，二可以建立一个更加优雅的二叉树模型。</p>
+<hr>
+<h1 id="分类树只做二分的思路"><a href="#分类树只做二分的思路" class="headerlink" title="分类树只做二分的思路"></a>分类树只做二分的思路</h1><p>相比ID3 和 C4.5的多叉树，CART只对特征做二分，需要对应的思路：</p>
+<ul>
+<li><p>对离散值的二分处理<br>采用的思路是<strong>不停的二分离散特征</strong>。<br>举个例子，CART分类树会考虑把A分成${A1}和(A2,A3)$， ${A2}和(A1,A3)$， ${A3}和(1,A2)$ 三种情况，找到基尼系数最小的组合，比如${A2}和(1,A3)$然后建立二叉树节点，一个节点是$A2$对应的样本，另一个节点是$(A1,A3)$对应的节点。从描述可以看出，如果离散特征$A$有$n$个取值，则可能的组合有$n(n-1)/2$种。同时，由于这次没有把特征A的取值完全分开，后面我们还有机会在子节点继续选择到特征$A$来划分$A1$和$A3$.</p>
+</li>
+<li><p>对连续特征的二分处理<br>思路同C4.5相近，划分$m-1$个点，之后采用不停的二分离散特征的做法，找到基尼值最小的点进行切分。</p>
+</li>
+</ul>
+<hr>
+<h1 id="回归树"><a href="#回归树" class="headerlink" title="回归树"></a>回归树</h1><p>CART回归树和CART分类树的建立方式是一直的，只不过改动了下面两点</p>
+<ul>
+<li>连续值的处理方法不同<br>对于连续值的处理，我们知道CART分类树采用的是用基尼系数的大小来度量特征的各个划分点的优劣情况。这比较适合分类模型，但是对于回归模型，我们使用了常见的均方差的度量方式，CART回归树的度量目标是，对于任意划分特征$A$，对应的任意划分点$s$两边划分成的数据集$D_1$和$D_2$，求出使$D_1$和$D_2$各自集合的均方差最小，同时$D_1$和$D_2$的均方差之和最小所对应的特征和特征值划分点。表达式为：<br>$$<br>\underbrace{min}_{A,s}\Bigg[\underbrace{min}_{c_1}\sum\limits_{x_i \in D_1(A,s)}(y_i - c_1)^2 + \underbrace{min}_{c_2}\sum\limits_{x_i \in D_2(A,s)}(y_i - c_2)^2\Bigg]<br>$$</li>
+</ul>
+<ul>
+<li>决策树建立后做预测的方式不同。<br>对于决策树建立后做预测的方式，上面讲到了CART分类树采用叶子节点里概率最大的类别作为当前节点的预测类别。而回归树输出不是类别，它采用的是用<strong>最终叶子的均值或者中位数来预测输出结果</strong>。</li>
+</ul>
+<hr>
+<h1 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h1>
       
     </div>
 
@@ -347,6 +445,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
       
 
       
@@ -412,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -424,7 +537,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -466,6 +579,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基尼值"><span class="nav-number">1.</span> <span class="nav-text">基尼值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类树只做二分的思路"><span class="nav-number">2.</span> <span class="nav-text">分类树只做二分的思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回归树"><span class="nav-number">3.</span> <span class="nav-text">回归树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#剪枝"><span class="nav-number">4.</span> <span class="nav-text">剪枝</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -572,24 +701,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
 
 
 
@@ -611,6 +723,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 

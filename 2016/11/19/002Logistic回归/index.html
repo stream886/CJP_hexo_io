@@ -84,52 +84,40 @@
 
 
 
-<meta name="description" content="什么是Logistic回归抄袭/参考资料
+<meta name="description" content="抄袭/参考资料
 
 台湾大学《机器学习技法》视频
-
 李航《统计学习方法》
-
 深入浅出ML之Regression家族
-
 Logistic Regression Theory
 
 
-
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
+什么是Logistic回归回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Logistic回归">
 <meta property="og:url" content="http://yoursite.com/2016/11/19/002Logistic回归/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:description" content="什么是Logistic回归抄袭/参考资料
+<meta property="og:description" content="抄袭/参考资料
 
 台湾大学《机器学习技法》视频
-
 李航《统计学习方法》
-
 深入浅出ML之Regression家族
-
 Logistic Regression Theory
 
 
-
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
-<meta property="og:updated_time" content="2016-11-21T13:08:21.607Z">
+什么是Logistic回归回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一">
+<meta property="og:updated_time" content="2016-11-26T05:24:04.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic回归">
-<meta name="twitter:description" content="什么是Logistic回归抄袭/参考资料
+<meta name="twitter:description" content="抄袭/参考资料
 
 台湾大学《机器学习技法》视频
-
 李航《统计学习方法》
-
 深入浅出ML之Regression家族
-
 Logistic Regression Theory
 
 
-
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
+什么是Logistic回归回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一">
 
 
 
@@ -384,19 +372,15 @@ Logistic Regression Theory
       
 
       
-        <h1 id="什么是Logistic回归"><a href="#什么是Logistic回归" class="headerlink" title="什么是Logistic回归"></a>什么是Logistic回归</h1><p>抄袭/参考资料</p>
+        <p>抄袭/参考资料</p>
 <ul>
-<li><p>台湾大学《机器学习技法》视频</p>
-</li>
-<li><p>李航《统计学习方法》</p>
-</li>
-<li><p><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">深入浅出ML之Regression家族</a></p>
-</li>
-<li><p><a href="http://www.csuldw.com/2016/09/19/2016-09-19-logistic-regression-theory/" target="_blank" rel="external">Logistic Regression Theory</a></p>
-</li>
+<li>台湾大学《机器学习技法》视频</li>
+<li>李航《统计学习方法》</li>
+<li><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">深入浅出ML之Regression家族</a></li>
+<li><a href="http://www.csuldw.com/2016/09/19/2016-09-19-logistic-regression-theory/" target="_blank" rel="external">Logistic Regression Theory</a></li>
 </ul>
 <hr>
-<p>回顾一下，一般化的广义线性回归形式是：<br>$$<br>g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)<br>$$<br>这个函数$g(.)$我们通常称为联系函数。<br>现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一个最常用的广义线性回归——Logistic回归<br><strong>sigmoid函数：</strong></p>
+<h1 id="什么是Logistic回归"><a href="#什么是Logistic回归" class="headerlink" title="什么是Logistic回归"></a>什么是Logistic回归</h1><p>回顾一下，一般化的广义线性回归形式是：<br>$$<br>g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)<br>$$<br>这个函数$g(.)$我们通常称为联系函数。<br>现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一个最常用的广义线性回归——Logistic回归<br><strong>sigmoid函数：</strong></p>
 <p>$$<br>{\rm{g}}(z) = {1 \over {1 + {e^{ - z}}}}<br>$$</p>
 <p>它是一个可导函数，定义域为$(−∞,+∞)$，值域为$[0, 1]$，其导数为：</p>
 <p>$$<br>g′(z)=g(z)(1−g(z))<br>$$</p>
@@ -550,7 +534,7 @@ Logistic Regression Theory
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

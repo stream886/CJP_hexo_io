@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -84,13 +84,63 @@
 
 
 
+<meta name="description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(上)
+深入浅出ML之Tree-Based家族
+
+
+决策树学习三步骤：
+
+特征选择
+决策树的生成
+决策树的剪枝
+
+常用的决策树算法有ID3，C4.5和CART。它们都是采用贪心（即非回溯的）方法，自顶向下递归的分治方法构造。这几个算法选择属性划分的方法各不相同，ID3使用的是信息增益，C4.5使">
 <meta property="og:type" content="article">
 <meta property="og:title" content="决策树-ID3、C4.5">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/003决策树-ID3、C4-5/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:updated_time" content="2016-11-25T14:29:57.873Z">
+<meta property="og:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(上)
+深入浅出ML之Tree-Based家族
+
+
+决策树学习三步骤：
+
+特征选择
+决策树的生成
+决策树的剪枝
+
+常用的决策树算法有ID3，C4.5和CART。它们都是采用贪心（即非回溯的）方法，自顶向下递归的分治方法构造。这几个算法选择属性划分的方法各不相同，ID3使用的是信息增益，C4.5使">
+<meta property="og:image" content="http://yoursite.com/images/23.png">
+<meta property="og:updated_time" content="2016-11-26T05:30:12.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="决策树-ID3、C4.5">
+<meta name="twitter:description" content="抄袭/参考资料
+
+台湾大学《机器学习技法》视频
+周志华《机器学习》
+李航《统计学习方法》
+决策树算法原理(上)
+深入浅出ML之Tree-Based家族
+
+
+决策树学习三步骤：
+
+特征选择
+决策树的生成
+决策树的剪枝
+
+常用的决策树算法有ID3，C4.5和CART。它们都是采用贪心（即非回溯的）方法，自顶向下递归的分治方法构造。这几个算法选择属性划分的方法各不相同，ID3使用的是信息增益，C4.5使">
+<meta name="twitter:image" content="http://yoursite.com/images/23.png">
 
 
 
@@ -302,6 +352,24 @@
           </span>
 
           
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -327,7 +395,99 @@
       
 
       
-        
+        <p>抄袭/参考资料</p>
+<ul>
+<li>台湾大学《机器学习技法》视频</li>
+<li>周志华《机器学习》</li>
+<li>李航《统计学习方法》</li>
+<li><a href="http://www.cnblogs.com/pinard/p/6050306.html" target="_blank" rel="external">决策树算法原理(上)</a></li>
+<li><a href="http://www.52caml.com/head_first_ml/ml-chapter3-tree-based-family/" target="_blank" rel="external">深入浅出ML之Tree-Based家族</a></li>
+</ul>
+<hr>
+<p>决策树学习三步骤：</p>
+<ul>
+<li>特征选择</li>
+<li>决策树的生成</li>
+<li>决策树的剪枝</li>
+</ul>
+<p>常用的决策树算法有ID3，C4.5和CART。它们都是采用贪心（即非回溯的）方法，自顶向下递归的分治方法构造。这几个算法选择属性划分的方法各不相同，<strong>ID3使用的是信息增益，C4.5使用的是信息增益率，而CART使用的是Gini基尼指数</strong>。下面来简单介绍下决策树的理论知识。内容包含<strong>熵</strong>、<strong>信息增益</strong>、<strong>信息增益率</strong>以及<strong>Gini指数</strong>的概念及公式。</p>
+<table>
+<thead>
+<tr>
+<th>决策树算法</th>
+<th>特征选择方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID3</td>
+<td>信息增益</td>
+</tr>
+<tr>
+<td>C4.5</td>
+<td>信息增益比/增益率</td>
+</tr>
+<tr>
+<td>CART决策树</td>
+<td>分类树：基尼值；回归树：最小二程</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h1><blockquote>
+<p>熵度量了事物的不确定性，被用来衡量一个随机变量出现的期望值。熵越大，一个变量的不确定性就越大（也就是可取的值很多），把它搞清楚所需要的信息量也就越大，熵是整个系统的平均消息量。</p>
+<p>信息熵是信息论中用于度量信息量的一个概念。<strong>一个系统越是有序，信息熵就越低；反之，一个系统越是混乱，信息熵就越高</strong>。所以，信息熵也可以说是系统有序化程度的一个度量。</p>
+</blockquote>
+<p>设$X$是一个取有限个值的离散随机变量，其概率分布为：<br>$$<br>P(X=x_i)=p_i\\i=1,2,…n<br>$$<br>则随机变量$X$的熵定义为：<br>$$<br>Entropy=H(D)=E(I(D))=-\sum_{i=1}^{n} p_ilog_2(p_i)，p_i是D中任意元组属于类C_i非零概率<br>$$<br>结论：<strong>熵越大，说明系统越混乱，携带的信息就越少（为了确定$X$我们需要更多的信息）。熵越小，说明系统越有序，携带的信息就越多（更容易确定$X$）</strong>。</p>
+<p> 举例：当随机变量只取两个值，例如0，1时，参考《统计学习方法》P60</p>
+<hr>
+<h1 id="互信息-信息增益"><a href="#互信息-信息增益" class="headerlink" title="互信息=信息增益"></a>互信息=信息增益</h1><p>熟悉了一个变量X的熵，很容易推广到多个个变量的联合熵，这里给出两个变量X和Y的联合熵表达式：<br>$$<br>H(X,Y) = -\sum_{i=1}^{n}p(x_i,y_i)\log_2p(x_i,y_i)<br>$$<br>有了联合熵，又可以得到条件熵的表达式H(X|Y)，条件熵类似于条件概率,它度量了我们的X在知道Y以后剩下的不确定性。表达式如下：<br>$$<br>H(X|Y) = -\sum_{i=1}^{n}p(x_i,y_i)\log_2p(x_i|y_i) = \sum_{j=1}^{n}p(y_j)H(X|Y=y_j)<br>$$<br>问题来了:</p>
+<ul>
+<li>$H(X)$度量了$X$的不确定性</li>
+<li>条件熵$H(X|Y)$度量了我们在知道$Y$以后$X$剩下的不确定性</li>
+<li>那么$H(X)-H(X|Y)$呢？</li>
+</ul>
+<p>答案就是<strong>互信息</strong>【互信息=熵-条件熵】：它度量了$X$在知道$Y$以后不确定性减少程度！同时我们也可以把它记为$I(X,Y)$，称为<strong>信息增益</strong>。</p>
+<p>说直白点，$I(X,Y)$ 缩小了需要确定的X的范围，$Y$帮助了$X$ 的程度 ，减少了信息熵！</p>
+<p> <img src="/images/23.png" alt="23"></p>
+<hr>
+<h1 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h1><p>ID3算法就是用信息增益大小来判断当前节点应该用什么特征来构建决策树，用计算出的信息增益最大的特征来建立决策树的当前节点。</p>
+<p><a href="https://github.com/stream886/machinelearninginaction" target="_blank" rel="external">https://github.com/stream886/machinelearninginaction</a></p>
+<hr>
+<h1 id="ID3的不足"><a href="#ID3的不足" class="headerlink" title="ID3的不足"></a>ID3的不足</h1><ul>
+<li><p><strong>ID3没有考虑连续特征</strong>，比如长度，密度都是连续值，无法在ID3运用。这大大限制了ID3的用途。</p>
+</li>
+<li><p><strong>ID3偏好选择取值多的特征做分支</strong>，ID3采用信息增益大的特征优先建立决策树的节点。很快就被人发现，在相同条件下，取值比较多的特征比取值少的特征信息增益大。比如一个变量有2个值，各为1/2，另一个变量为3个值，各为1/3，其实他们都是完全不确定的变量，但是取3个值的比取2个值的信息增益大。<br>直白解释：取值比较多的特征，就可以分叉出更多的分支，分支更多，每个分支的纯度必然更高！</p>
+</li>
+<li><p><strong>ID3算法对于缺失值的情况没有做考虑</strong></p>
+</li>
+<li><p><strong>没有考虑过拟合的问题，即没有剪枝处理</strong></p>
+</li>
+</ul>
+<hr>
+<h1 id="信息增益率"><a href="#信息增益率" class="headerlink" title="信息增益率"></a>信息增益率</h1><p>它信息增益和特征熵的比值<br>$$<br>I_R(D,A) = \frac{I(A,D)}{H_A(D)}<br>$$<br>其中$D$为样本特征输出的集合，$A$为样本特征，对于特征熵$H_A(D)$, 表达式如下：<br>$$<br>H_A(D) = -\sum\limits_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}<br>$$<br>其中$n$为特征$A$的类别数， $D_i$为特征$A$的第$i$个取值对应的样本个数。$D$为样本个数。特征数越多的特征对应的特征熵越大，它作为分母，可以校正信息增益容易偏向于取值较多的特征的问题。</p>
+<hr>
+<h1 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h1><p>C4.5与ID3算法为同一作者，C4.5是ID3的改进，其建书思路基本一致，主要是改进是ID3的四点不足之处。</p>
+<ul>
+<li>对与 <strong>ID3没有考虑连续特征</strong><br>​    C4.5的思路是将连续的特征离散化。比如$m$个样本的连续特征$A$有$m$个，从小到大排列为$a_1,a_2,…,a_m$,则C4.5取相邻两样本值的中位数，一共取得$m-1$个划分点，其中第$i$个划分点$T_i$表示为：$T_i = \frac{a_i+a_{i+1}}{2}$。<u>对于这$m-1$个点，分别计算以该点作为二元分类点时的信息增益。选择信息增益最大的点作为该连续特征的二元离散分类点</u>。比如取到的增益最大的点$a_t$,则小于$a_t$的值为类别1，大于$a_t$的值为类别2，这样我们就做到了连续特征的离散化。要注意的是，与离散属性不同的是，如果当前节点为连续属性，则该属性后面还可以参与子节点的产生选择过程。</li>
+</ul>
+<ul>
+<li>对与 <strong>ID3偏好选择取值多的特征做分支</strong><br>​    改用信息增益率作为分支指标，因为特征数越多的特征对应的特征熵越大，它作为分母，可以校正信息增益容易偏向于取值较多的特征的问题。</li>
+</ul>
+<ul>
+<li>对与<strong>ID3算法对于缺失值的情况没有做考虑</strong><br>​    主要需要解决的是两个问题，一是在样本某些特征缺失的情况下选择划分的属性，二是选定了划分属性，对于在该属性上缺失特征的样本的处理。<br>​    对于第一个子问题，对于某一个有缺失特征值的特征A。C4.5的思路是将数据分成两部分，对每个样本设置一个权重（初始可以都为1），然后划分数据，一部分是有特征值A的数据D1，另一部分是没有特征A的数据D2. 然后对于没有缺失特征A的数据集D1来和对应的A特征的各个特征值一起计算加权重后的信息增益比，最后乘上一个系数，这个系数是无特征A缺失的样本加权后所占加权总样本的比例。<br>​    对于第二个子问题，可以将缺失特征的样本同时划分入所有的子节点，不过将该样本的权重按各个子节点样本的数量比例来分配。比如缺失特征A的样本a之前权重为1，特征A有3个特征值A1,A2,A3。 3个特征值对应的无缺失A特征的样本个数为2,3,4.则a同时划分入A1，A2，A3。对应权重调节为2/9,3/9, 4/9。</li>
+</ul>
+<ul>
+<li>对与<strong>**没有考虑过拟合的问题</strong><br>​    C4.5引入了正则化系数进行初步的剪枝。</li>
+</ul>
+<hr>
+<h1 id="C4-5的不足"><a href="#C4-5的不足" class="headerlink" title="C4.5的不足"></a>C4.5的不足</h1><ul>
+<li>由于决策树算法非常容易过拟合，因此对于生成的决策树必须要进行剪枝。剪枝的算法有非常多，C4.5的剪枝方法有优化的空间。思路主要是两种，一种是预剪枝，即在生成决策树的时候就决定是否剪枝。另一个是后剪枝，即先生成决策树，再通过交叉验证来剪枝。</li>
+<li>C4.5生成的是多叉树，即一个父节点可以有多个节点，效率低（二叉数效率才高）。</li>
+<li>C4.5只能用于分类。</li>
+<li>C4.5由于使用了熵模型，里面有大量的耗时的对数运算,如果是连续值还有大量的排序运算。</li>
+</ul>
+
       
     </div>
 
@@ -347,6 +507,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
       
 
       
@@ -412,8 +578,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -424,7 +599,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -466,6 +641,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#信息熵"><span class="nav-number">1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#互信息-信息增益"><span class="nav-number">2.</span> <span class="nav-text">互信息=信息增益</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ID3算法"><span class="nav-number">3.</span> <span class="nav-text">ID3算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ID3的不足"><span class="nav-number">4.</span> <span class="nav-text">ID3的不足</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息增益率"><span class="nav-number">5.</span> <span class="nav-text">信息增益率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C4-5算法"><span class="nav-number">6.</span> <span class="nav-text">C4.5算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C4-5的不足"><span class="nav-number">7.</span> <span class="nav-text">C4.5的不足</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -572,24 +763,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
 
 
 
@@ -611,6 +785,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 
