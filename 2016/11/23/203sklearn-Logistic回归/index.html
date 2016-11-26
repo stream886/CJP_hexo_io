@@ -1,0 +1,841 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="sklearn," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="抄袭/参考资料
+
+scikit-learn 逻辑回归类库使用小结
+
+
+在scikit-learn中，逻辑回归归属于线性模型模块中，但它实实在在是一个分类算法。其中与逻辑回归的算法有关的类与方法有四个：
+
+
+
+算法
+说明
+
+
+
+
+LogisticRegression
+常规
+
+
+LogisticRegressionCV
+使用了交叉验证来选择正则化系数$C$.
+
+
+logistic_regression">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn-Logistic回归">
+<meta property="og:url" content="http://yoursite.com/2016/11/23/203sklearn-Logistic回归/index.html">
+<meta property="og:site_name" content="还没决定">
+<meta property="og:description" content="抄袭/参考资料
+
+scikit-learn 逻辑回归类库使用小结
+
+
+在scikit-learn中，逻辑回归归属于线性模型模块中，但它实实在在是一个分类算法。其中与逻辑回归的算法有关的类与方法有四个：
+
+
+
+算法
+说明
+
+
+
+
+LogisticRegression
+常规
+
+
+LogisticRegressionCV
+使用了交叉验证来选择正则化系数$C$.
+
+
+logistic_regression">
+<meta property="og:updated_time" content="2016-11-25T19:17:58.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn-Logistic回归">
+<meta name="twitter:description" content="抄袭/参考资料
+
+scikit-learn 逻辑回归类库使用小结
+
+
+在scikit-learn中，逻辑回归归属于线性模型模块中，但它实实在在是一个分类算法。其中与逻辑回归的算法有关的类与方法有四个：
+
+
+
+算法
+说明
+
+
+
+
+LogisticRegression
+常规
+
+
+LogisticRegressionCV
+使用了交叉验证来选择正则化系数$C$.
+
+
+logistic_regression">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/23/203sklearn-Logistic回归/"/>
+
+
+
+
+
+  <title> sklearn-Logistic回归 | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59602475";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">还没决定</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/23/203sklearn-Logistic回归/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Chen_JC">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="还没决定">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="还没决定" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                sklearn-Logistic回归
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-23T15:55:51+08:00">
+                2016-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/skearn/" itemprop="url" rel="index">
+                    <span itemprop="name">skearn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>抄袭/参考资料</p>
+<ul>
+<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">scikit-learn 逻辑回归类库使用小结</a></li>
+</ul>
+<hr>
+<p>在scikit-learn中，逻辑回归归属于线性模型模块中，但它实实在在是一个分类算法。其中与逻辑回归的算法有关的类与方法有四个：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">算法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>LogisticRegression</strong></td>
+<td>常规</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>LogisticRegressionCV</strong></td>
+<td>使用了交叉验证来选择正则化系数$C$.</td>
+</tr>
+<tr>
+<td style="text-align:left">logistic_regression_path</td>
+<td>这个<strong>方法</strong>拟合数据后，不能直接来做预测，只能为拟合数据选择合适逻辑回归的系数和正则化系数。主要是用在模型选择的时候。<strong>一般情况用不到这个类</strong>。</td>
+</tr>
+<tr>
+<td style="text-align:left">RandomizedLogisticRegression</td>
+<td>虽然名字里有逻辑回归的词，但是主要是用L1正则化的逻辑回归来做特征选择的，属于维度规约的算法类，<strong>不属于我们常说的分类算法的范畴，用不到</strong>。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">linear_model</span>.<span class="title">LogisticRegression</span><span class="params">(fit_intercept=True, </span></span></div><div class="line">                                              intercept_scaling=<span class="number">1</span>,</div><div class="line">                                              penalty=<span class="string">'l2'</span>, </div><div class="line">                                              solver=<span class="string">'liblinear'</span>, </div><div class="line">                                              tol=<span class="number">0.0001</span>, </div><div class="line">                                              max_iter=<span class="number">100</span>, </div><div class="line">                                              multi_class=<span class="string">'ovr'</span>,</div><div class="line">                                              </div><div class="line">                                              C=<span class="number">1.0</span>,                                   </div><div class="line">                                              warm_start=False, </div><div class="line">                                              </div><div class="line">                                              dual=False, </div><div class="line">                                              class_weight=None, </div><div class="line">                                              verbose=<span class="number">0</span>, </div><div class="line">                                              random_state=None, </div><div class="line">                                              n_jobs=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">linear_model</span>.<span class="title">LogisticRegressionCV</span><span class="params">(fit_intercept=True, </span></span></div><div class="line">                                                intercept_scaling=<span class="number">1.0</span>, </div><div class="line">                                                penalty=<span class="string">'l2'</span>,</div><div class="line">                                                solver=<span class="string">'lbfgs'</span>,</div><div class="line">                                                tol=<span class="number">0.0001</span>, </div><div class="line">                                                max_iter=<span class="number">100</span>, </div><div class="line">                                                multi_class=<span class="string">'ovr'</span>, </div><div class="line">                                                </div><div class="line">                                                Cs=<span class="number">10</span>, </div><div class="line">                                                cv=None, </div><div class="line">                                                scoring=None,    </div><div class="line">                                                refit=True, </div><div class="line">                                                </div><div class="line">                                                dual=False,</div><div class="line">                                                class_weight=None,</div><div class="line">                                                verbose=<span class="number">0</span>,</div><div class="line">                                                random_state=None,</div><div class="line">                                                n_jobs=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<h1 id="参数说明："><a href="#参数说明：" class="headerlink" title="参数说明："></a>参数说明：</h1><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>penalty</strong></td>
+<td>正则化项：‘l1’ or ‘l2’</td>
+</tr>
+<tr>
+<td><strong>solver</strong></td>
+<td>优化算法：{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}</td>
+</tr>
+<tr>
+<td>multi_class</td>
+<td>分类方式：ovr和multinomial两个值可以选择，默认是 ovr</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="正则化选择参数：penalty"><a href="#正则化选择参数：penalty" class="headerlink" title="正则化选择参数：penalty"></a>正则化选择参数：<strong>penalty</strong></h2><p>　　　　LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
+<p>　　　　在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
+<p>　　　　penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{<code>‘newton-cg’</code>,<code>‘lbfgs’</code>,<code>‘liblinear’</code>, <code>‘sag’</code>}都可以选择。但是如果penalty是L1正则化的话，就只能选择<code>‘liblinear’</code>了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
+<h2 id="优化算法选择参数：solver"><a href="#优化算法选择参数：solver" class="headerlink" title="优化算法选择参数：solver"></a>优化算法选择参数：solver</h2><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
+<ul>
+<li><code>liblinear</code>：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</li>
+<li><code>lbfgs</code>：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</li>
+<li><code>newton-cg</code>：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</li>
+<li><p><code>sag</code>：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
+<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
+<p>​同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
+<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有<code>one-vs-rest(OvR)</code>和<code>many-vs-many(MvM)</code>两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
+</li>
+</ul>
+<h2 id="分类方式选择参数：multi-class"><a href="#分类方式选择参数：multi-class" class="headerlink" title="分类方式选择参数：multi_class"></a>分类方式选择参数：multi_class</h2><p>multi_class参数决定了我们分类方式的选择，有<code>ovr</code>和<code>multinomial</code>两个值可以选择，默认是 ovr。</p>
+<p>​    ovr即one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
+<p>​    OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
+<p>​    而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
+<p>​    从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
+<p>​    <strong>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了</strong>。</p>
+<h2 id="类型权重参数：-class-weight"><a href="#类型权重参数：-class-weight" class="headerlink" title="类型权重参数： class_weight"></a>类型权重参数： class_weight</h2><p>​    class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
+<p>​    如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
+<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
+<ul>
+<li><p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
+</li>
+<li><p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
+</li>
+</ul>
+<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。<br>当然，对于第二种样本失衡的情况，我们还可以考虑用下一节讲到的样本权重参数： sample_weight，而不使用class_weight。sample_weight在下一节讲。</p>
+<h2 id="样本权重参数：-sample-weight"><a href="#样本权重参数：-sample-weight" class="headerlink" title="样本权重参数： sample_weight"></a>样本权重参数： sample_weight</h2><p>​    上一节我们提到了样本不失衡的问题，由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
+<p>​    在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag"># sklearn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/23/205sklearn-决策树/" rel="next" title="sklearn-决策树">
+                <i class="fa fa-chevron-left"></i> sklearn-决策树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/202sklearn-线性回归/" rel="prev" title="sklearn-线性回归">
+                sklearn-线性回归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Chen_JC" />
+          <p class="site-author-name" itemprop="name">Chen_JC</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数说明："><span class="nav-number">1.</span> <span class="nav-text">参数说明：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化选择参数：penalty"><span class="nav-number">1.1.</span> <span class="nav-text">正则化选择参数：penalty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化算法选择参数：solver"><span class="nav-number">1.2.</span> <span class="nav-text">优化算法选择参数：solver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类方式选择参数：multi-class"><span class="nav-number">1.3.</span> <span class="nav-text">分类方式选择参数：multi_class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型权重参数：-class-weight"><span class="nav-number">1.4.</span> <span class="nav-text">类型权重参数： class_weight</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样本权重参数：-sample-weight"><span class="nav-number">1.5.</span> <span class="nav-text">样本权重参数： sample_weight</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen_JC</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

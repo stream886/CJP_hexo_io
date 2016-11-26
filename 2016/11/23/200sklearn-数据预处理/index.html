@@ -1,0 +1,1306 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="sklearn," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="抄袭/参考资料
+
+使用sklearn做单机特征工程
+sckearn中文
+
+
+提要未经处理的特征，进行建模往往会有以下问题：
+
+不属于同一量纲：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。
+信息冗余：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或不“及格”，那么需要将定量的考分，转换成“1”和“0”表示及格和未及格。二值化可以解决这一问题。
+定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn-数据预处理">
+<meta property="og:url" content="http://yoursite.com/2016/11/23/200sklearn-数据预处理/index.html">
+<meta property="og:site_name" content="还没决定">
+<meta property="og:description" content="抄袭/参考资料
+
+使用sklearn做单机特征工程
+sckearn中文
+
+
+提要未经处理的特征，进行建模往往会有以下问题：
+
+不属于同一量纲：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。
+信息冗余：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或不“及格”，那么需要将定量的考分，转换成“1”和“0”表示及格和未及格。二值化可以解决这一问题。
+定">
+<meta property="og:updated_time" content="2016-11-26T03:44:11.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn-数据预处理">
+<meta name="twitter:description" content="抄袭/参考资料
+
+使用sklearn做单机特征工程
+sckearn中文
+
+
+提要未经处理的特征，进行建模往往会有以下问题：
+
+不属于同一量纲：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。
+信息冗余：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或不“及格”，那么需要将定量的考分，转换成“1”和“0”表示及格和未及格。二值化可以解决这一问题。
+定">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/23/200sklearn-数据预处理/"/>
+
+
+
+
+
+  <title> sklearn-数据预处理 | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59602475";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">还没决定</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/23/200sklearn-数据预处理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Chen_JC">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="还没决定">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="还没决定" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                sklearn-数据预处理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-23T11:56:36+08:00">
+                2016-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/skearn/" itemprop="url" rel="index">
+                    <span itemprop="name">skearn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>抄袭/参考资料</p>
+<ul>
+<li><a href="http://www.cnblogs.com/jasonfreak/p/5448385.html" target="_blank" rel="external">使用sklearn做单机特征工程</a></li>
+<li><a href="http://sklearn.lzjqsdd.com/modules/preprocessing.html#preprocessing" target="_blank" rel="external">sckearn中文</a></li>
+</ul>
+<hr>
+<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>未经处理的特征，进行建模往往会有以下问题：</p>
+<ul>
+<li>不属于同一量纲：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。</li>
+<li>信息冗余：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或不“及格”，那么需要将定量的考分，转换成“1”和“0”表示及格和未及格。二值化可以解决这一问题。</li>
+<li>定性特征不能直接使用：某些机器学习算法和模型只能接受定量特征的输入，那么需要将定性特征转换为定量特征。最简单的方式是为每一种定性值指定一个定量值，但是这种方式过于灵活，增加了调参的工作。<a href="http://www.ats.ucla.edu/stat/mult_pkg/faq/general/dummy.htm" target="_blank" rel="external">通常使用哑编码的方式将定性特征转换为定量特征</a>：假设有N种定性值，则将这一个特征扩展为N种特征，当原始特征值为第i种定性值时，第i个扩展特征赋值为1，其他扩展特征赋值为0。哑编码的方式相比直接指定的方式，不用增加调参的工作，对于线性模型来说，使用哑编码后的特征可达到非线性的效果。</li>
+<li>存在缺失值：缺失值需要补充。</li>
+<li>信息利用率低：不同的机器学习算法和模型对数据中信息的利用是不同的，之前提到在线性模型中，使用对定性特征哑编码可以达到非线性的效果。类似地，对定量变量多项式化，或者进行其他的转换，都能达到非线性的效果。</li>
+</ul>
+<p>sklearn中的数据预处理库(preprocessing)里提供了以下这些<strong>类class</strong>对数据预处理</p>
+<table>
+<thead>
+<tr>
+<th>class</th>
+<th>功能</th>
+<th>说明</th>
+<th>行/列</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StandardScaler</td>
+<td>无量纲化</td>
+<td>标准化，将特征值转换至服从标准正态分布</td>
+<td>列0</td>
+</tr>
+<tr>
+<td>MinMaxScaler</td>
+<td>无量纲化</td>
+<td>区间缩放，基于最大最小值，将特征值转换到[0, 1]区间上</td>
+<td>列0</td>
+</tr>
+<tr>
+<td>Normalizer</td>
+<td>归一化</td>
+<td>基于特征矩阵的行，将样本向量转换为“单位向量”</td>
+<td>行1</td>
+</tr>
+<tr>
+<td>Binarizer</td>
+<td>二值化</td>
+<td>基于给定阈值，将定量特征按阈值划分</td>
+<td>列0</td>
+</tr>
+<tr>
+<td>OneHotEncoder</td>
+<td>哑编码</td>
+<td>将定性数据编码为定量数据</td>
+<td>列0</td>
+</tr>
+<tr>
+<td>Imputer</td>
+<td>缺失值填充</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>PolynomialFeatures</td>
+<td>多项式数据转换</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>FunctionTransformer</td>
+<td>自定义单元数据转换</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="使用策略"><a href="#使用策略" class="headerlink" title="使用策略"></a>使用策略</h1><p>以上的几个预处理类使用接口与模型接口一致</p>
+<ul>
+<li><strong>fit()</strong><br>使用fit训练出一个容器，使该容器含有对数据进行处理的参数。</li>
+<li><strong>transfrom()</strong><br>使用容器对数据进行处理，处理过程使用的参数（如方差、均值等）是之前用于fit()训练的数据集的属性，而不是本次处理数据集的属性，这样可以确保每次使用该容器处理出来的数据都是一致（经过同样的加工）。</li>
+<li><strong>fit_transfrom()</strong><br>把fit()训练用的数据集，在训练后容器后，直接用该容易处理这个样本急，减少计算和代码量。</li>
+</ul>
+<p>注意点：后续建模中使用的 trina set 和 test set 必选保持处理的一致性，所以才有了先fit()后transfrom()的策略。</p>
+<hr>
+<h1 id="标准化Standardization"><a href="#标准化Standardization" class="headerlink" title="标准化Standardization"></a>标准化Standardization</h1><p>标准化是<strong>依照特征矩阵的列处理数据</strong></p>
+<h2 id="Zero-mean-normalization"><a href="#Zero-mean-normalization" class="headerlink" title="Zero-mean normalization"></a>Zero-mean normalization</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p><strong>Z-score 标准化</strong> ，也叫<strong>标准差标准化</strong>，经过处理的数据符合<strong>均值为0，标准差为1的标准正态分布</strong>。下面是计算公式，其中$μ$为所有样本数据的均值，$σ$为所有样本数据的标准差。<br>$$<br>x=\frac{x-u}{\alpha }<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># StandardScaler</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">StandardScaler</span><span class="params">(copy=True, with_mean=True, with_std=True)</span></span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>格式</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>copy</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+<tr>
+<td>with_mean</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+<tr>
+<td>with_std</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p><strong>df1</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>15</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td>20</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>df2</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>3</td>
+<td>11</td>
+<td>55</td>
+<td>22</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>26</td>
+<td>36</td>
+<td>37</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>16</td>
+<td>62</td>
+<td>13</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>46</td>
+<td>83</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</div><div class="line">ss = StandardScaler()</div><div class="line">ss.fit_transform(df1)</div><div class="line">ss.transform(df2)</div></pre></td></tr></table></figure>
+<p>Z-score处理后的数据如下，注意看df1和df2各自的A列，结果很清楚，df1的按自己的属性进行处理，而df2是按df1的属性进行处理。</p>
+<table>
+<thead>
+<tr>
+<th>t-df1</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>t-df2</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.0</td>
+<td>-1.414214</td>
+<td>-1.341641</td>
+<td>-1.341641</td>
+<td></td>
+<td>1.0</td>
+<td>11.313708</td>
+<td>7.602631</td>
+<td>17.441330</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>-0.447214</td>
+<td>-0.447214</td>
+<td></td>
+<td>1.0</td>
+<td>32.526912</td>
+<td>4.203808</td>
+<td>30.857738</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>0.447214</td>
+<td>0.447214</td>
+<td></td>
+<td>1.0</td>
+<td>18.384776</td>
+<td>8.854829</td>
+<td>9.391486</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.0</td>
+<td>1.414214</td>
+<td>1.341641</td>
+<td>1.341641</td>
+<td></td>
+<td>1.0</td>
+<td>60.811183</td>
+<td>12.611423</td>
+<td>38.013156</td>
+</tr>
+</tbody>
+</table>
+<h2 id="0-1-normalization"><a href="#0-1-normalization" class="headerlink" title="0-1 normalization"></a>0-1 normalization</h2><h3 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h3><p><strong>0-1标准化</strong>，或叫<strong>离差标准化</strong>，0-1标准化对原始数据的线性变换，使结果落到[0,1]区间。下面是计算公式，其中max为样本数据的最大值，min为样本数据的最小值。<br>$$<br>x=\frac{x-\min}{\max-\min }<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># MinMaxScaler</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">MinMaxScaler</span><span class="params">(feature_range=<span class="params">(<span class="number">0</span>, <span class="number">1</span>)</span>, copy=True)</span></span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>格式</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>feature_range</strong></td>
+<td>tuple(min,max)</td>
+<td>(0,1)</td>
+<td>-转化范围</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>feature_range可以选择转化的范围大小，单一般不用改动它，默认的0到1很好。</p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line">ms = MinMaxScaler()</div><div class="line">ms.fit_transform(df1)</div><div class="line">ms.transform(df2)</div></pre></td></tr></table></figure>
+<p>输出结果也很明显，df1用自己的属性（所以范围在0到1内），df2是用df1的属性。</p>
+<table>
+<thead>
+<tr>
+<th>t-df1</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>t-df2</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td></td>
+<td>1.0</td>
+<td>4.5</td>
+<td>3.333333</td>
+<td>7.000000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.0</td>
+<td>0.5</td>
+<td>0.333333</td>
+<td>0.333333</td>
+<td></td>
+<td>1.0</td>
+<td>12.0</td>
+<td>2.066667</td>
+<td>12.000000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.0</td>
+<td>0.5</td>
+<td>0.666667</td>
+<td>0.666667</td>
+<td></td>
+<td>1.0</td>
+<td>7.0</td>
+<td>3.800000</td>
+<td>4.000000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td></td>
+<td>1.0</td>
+<td>22.0</td>
+<td>5.200000</td>
+<td>14.666667</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="规范化Normalization"><a href="#规范化Normalization" class="headerlink" title="规范化Normalization"></a>规范化Normalization</h1><h2 id="说明-2"><a href="#说明-2" class="headerlink" title="说明"></a>说明</h2><p>规范化/归一化/正则化<br>是<strong>依照特征矩阵的行处理数据</strong>，其目的在于样本向量在点乘运算或其他核函数计算相似性时，拥有统一的标准，也就是说都转化为“单位向量”（使单个样本具有单位范数的缩放操作）。<br>规则为$l_2$的公式（默认为$l_2$）如下：<br>$$<br>x=\frac{x}{\sqrt{\sum_{j}^{d}({x_{j}})^2}}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># normalize</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">normalize</span><span class="params">(X, norm=<span class="string">'l2'</span>, axis=<span class="number">1</span>, copy=True, return_norm=False)</span></span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>格式</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>X</strong></td>
+<td>-</td>
+<td>-</td>
+<td>处理的数据集</td>
+</tr>
+<tr>
+<td><strong>norm</strong></td>
+<td><em>**</em> ‘l1’, ‘l2’, or ‘max’</td>
+<td>‘l2’</td>
+<td></td>
+</tr>
+<tr>
+<td>axis</td>
+<td>0 or 1</td>
+<td>1</td>
+<td>默认对行，sample进行处理</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+<tr>
+<td>return_norm</td>
+<td>boolean</td>
+<td>False</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Normalizer</div><div class="line">NL = Normalizer()</div><div class="line">NL.fit_transform(df1)</div><div class="line">NL.transform(df2)</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>t-df1</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>t-df2</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.342997</td>
+<td>0.342997</td>
+<td>0.857493</td>
+<td>0.171499</td>
+<td></td>
+<td>0.049731</td>
+<td>0.182348</td>
+<td>0.911741</td>
+<td>0.364697</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.184900</td>
+<td>0.277350</td>
+<td>0.924500</td>
+<td>0.184900</td>
+<td></td>
+<td>0.051832</td>
+<td>0.449212</td>
+<td>0.621985</td>
+<td>0.639263</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.127257</td>
+<td>0.190885</td>
+<td>0.954427</td>
+<td>0.190885</td>
+<td></td>
+<td>0.045867</td>
+<td>0.244624</td>
+<td>0.947919</td>
+<td>0.198757</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.095783</td>
+<td>0.191565</td>
+<td>0.957826</td>
+<td>0.191565</td>
+<td></td>
+<td>0.028553</td>
+<td>0.437817</td>
+<td>0.789975</td>
+<td>0.428300</td>
+</tr>
+</tbody>
+</table>
+<p>其实Normalizer是都行，即对sample进行处理的，所以fit()这个动作对其是没有用的，有这一个接口的原因是为了接口的整齐统一，方便后期操作，不信可以看看下面这句代码，结果说明fit()是无用的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NL.fit_transform(df1)</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>t-df2</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.049731</td>
+<td>0.182348</td>
+<td>0.911741</td>
+<td>0.364697</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.051832</td>
+<td>0.449212</td>
+<td>0.621985</td>
+<td>0.639263</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.045867</td>
+<td>0.244624</td>
+<td>0.947919</td>
+<td>0.198757</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.028553</td>
+<td>0.437817</td>
+<td>0.789975</td>
+<td>0.428300</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="二值化Binarization"><a href="#二值化Binarization" class="headerlink" title="二值化Binarization"></a>二值化Binarization</h1><h2 id="说明-3"><a href="#说明-3" class="headerlink" title="说明"></a>说明</h2><p>定量特征二值化的核心在于设定一个阈值，大于阈值的赋值为1，小于等于阈值的赋值为0，公式表达如下：<br>$$<br>x=\left\{\begin{matrix}<br>1 , x&gt; threshold\ <br>0,x\leqslant threshold<br>\end{matrix}\right.<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Binarizer</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">Binarizer</span><span class="params">(threshold=<span class="number">0.0</span>, copy=True)</span></span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>格式</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>threshold</strong></td>
+<td>float</td>
+<td>0.0</td>
+<td>阈值</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h2><hr>
+<h1 id="哑编码Encoding-categorical-features"><a href="#哑编码Encoding-categorical-features" class="headerlink" title="哑编码Encoding categorical features"></a>哑编码Encoding categorical features</h1><h2 id="说明-4"><a href="#说明-4" class="headerlink" title="说明"></a>说明</h2><p>哑编码是对分类特征（定性特征）进行标准化处理的一种方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># OneHotEncoder</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">OneHotEncoder</span><span class="params">(n_values=<span class="string">'auto'</span>, categorical_features=<span class="string">'all'</span>, dtype=&lt;type <span class="string">'numpy.float64'</span>&gt;, sparse=True, handle_unknown=<span class="string">'error'</span>)</span></span></div></pre></td></tr></table></figure>
+<h2 id="使用-4"><a href="#使用-4" class="headerlink" title="使用"></a>使用</h2><h2 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h2><p>pandas.get_dummies()</p>
+<hr>
+<h1 id="缺失值Imputation-of-missing-values"><a href="#缺失值Imputation-of-missing-values" class="headerlink" title="缺失值Imputation of missing values"></a>缺失值Imputation of missing values</h1><h2 id="说明-5"><a href="#说明-5" class="headerlink" title="说明"></a>说明</h2><p>Imputer类提供了缺失数值处理的基本策略，比如使用缺失数值所在行或列的均值、中位数、众数来替代缺失值。<br>该类也兼容不同的缺失值编码：missing_values的值可以为NaN，也可以为0。前者对缺失值填充，后者对0值进行填充。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Imputer</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">Imputer</span><span class="params">(missing_values=<span class="string">'NaN'</span>, strategy=<span class="string">'mean'</span>, axis=<span class="number">0</span>, verbose=<span class="number">0</span>, copy=True)</span></span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>格式</th>
+<th>默认值</th>
+<th>具体说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>missing_values</td>
+<td>integer or “NaN”</td>
+<td>“NaN”</td>
+<td>缺失值的格式，一般是：“NaN” or integer，默认“NaN”</td>
+</tr>
+<tr>
+<td>strategy</td>
+<td>string</td>
+<td>“mean”</td>
+<td>填充方式，“mean”，“median”，“most_frequent”</td>
+</tr>
+<tr>
+<td>axis</td>
+<td>integer</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>verbose</td>
+<td>integer</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>boolean</td>
+<td>True</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用-5"><a href="#使用-5" class="headerlink" title="使用"></a>使用</h2><h2 id="实际使用-1"><a href="#实际使用-1" class="headerlink" title="实际使用"></a>实际使用</h2><p>fillna()</p>
+<hr>
+<h1 id="多项式Generating-polynomial-features"><a href="#多项式Generating-polynomial-features" class="headerlink" title="多项式Generating polynomial features"></a>多项式Generating polynomial features</h1><p>很多情况下，考虑输入数据中的非线性特征来增加模型的复杂性是非常有效的。一个简单常用的方法就是使用多项式特征，它能捕捉到特征中高阶和相互作用的项。可以使用<a href="http://scikit-learn.org/0.17/modules/generated/sklearn.preprocessing.PolynomialFeatures.html#sklearn.preprocessing.PolynomialFeatures" target="_blank" rel="external"><code>preprocessing.PolynomialFeatures</code></a> 类进行多项式转换。听说用的少，就不写了！</p>
+<hr>
+<h1 id="自定义Custom-transformers"><a href="#自定义Custom-transformers" class="headerlink" title="自定义Custom transformers"></a>自定义Custom transformers</h1><p>你可能经常需要将一个已经存在的python函数转换成转换器以便于在数据清理和预处理当中使用。你可以通过 <a href="http://scikit-learn.org/0.17/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" target="_blank" rel="external"><code>preprocessing.FunctionTransformer</code></a> 类将任意一个函数转换成转换器。听说也用的少，就不写了！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag"># sklearn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/19/002Logistic回归/" rel="next" title="Logistic回归">
+                <i class="fa fa-chevron-left"></i> Logistic回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/205sklearn-决策树/" rel="prev" title="sklearn-决策树">
+                sklearn-决策树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Chen_JC" />
+          <p class="site-author-name" itemprop="name">Chen_JC</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提要"><span class="nav-number">1.</span> <span class="nav-text">提要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用策略"><span class="nav-number">2.</span> <span class="nav-text">使用策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准化Standardization"><span class="nav-number">3.</span> <span class="nav-text">标准化Standardization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Zero-mean-normalization"><span class="nav-number">3.1.</span> <span class="nav-text">Zero-mean normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.1.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">3.1.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1-normalization"><span class="nav-number">3.2.</span> <span class="nav-text">0-1 normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#规范化Normalization"><span class="nav-number">4.</span> <span class="nav-text">规范化Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明-2"><span class="nav-number">4.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-2"><span class="nav-number">4.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二值化Binarization"><span class="nav-number">5.</span> <span class="nav-text">二值化Binarization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明-3"><span class="nav-number">5.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-3"><span class="nav-number">5.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哑编码Encoding-categorical-features"><span class="nav-number">6.</span> <span class="nav-text">哑编码Encoding categorical features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明-4"><span class="nav-number">6.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-4"><span class="nav-number">6.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际使用"><span class="nav-number">6.3.</span> <span class="nav-text">实际使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缺失值Imputation-of-missing-values"><span class="nav-number">7.</span> <span class="nav-text">缺失值Imputation of missing values</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明-5"><span class="nav-number">7.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-5"><span class="nav-number">7.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际使用-1"><span class="nav-number">7.3.</span> <span class="nav-text">实际使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多项式Generating-polynomial-features"><span class="nav-number">8.</span> <span class="nav-text">多项式Generating polynomial features</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义Custom-transformers"><span class="nav-number">9.</span> <span class="nav-text">自定义Custom transformers</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen_JC</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
