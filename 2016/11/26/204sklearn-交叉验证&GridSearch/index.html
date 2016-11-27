@@ -1,0 +1,733 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="sklearn," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="交叉验证，sklearn0.17版本将其独立封装在cross_validation模块中，0.18后就做了调整，但不要去管它了，用法思路是一样的。
+最简单的数据集划分：train_test_split最单纯的训练集和测试集划分使用的train_test_split 方法 ，单局限平时练手用，用法固定：12345from sklearn import cross_validationX_train,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn-交叉验证&GridSearch">
+<meta property="og:url" content="http://yoursite.com/2016/11/26/204sklearn-交叉验证&GridSearch/index.html">
+<meta property="og:site_name" content="还没决定">
+<meta property="og:description" content="交叉验证，sklearn0.17版本将其独立封装在cross_validation模块中，0.18后就做了调整，但不要去管它了，用法思路是一样的。
+最简单的数据集划分：train_test_split最单纯的训练集和测试集划分使用的train_test_split 方法 ，单局限平时练手用，用法固定：12345from sklearn import cross_validationX_train,">
+<meta property="og:updated_time" content="2016-11-27T06:40:29.695Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn-交叉验证&GridSearch">
+<meta name="twitter:description" content="交叉验证，sklearn0.17版本将其独立封装在cross_validation模块中，0.18后就做了调整，但不要去管它了，用法思路是一样的。
+最简单的数据集划分：train_test_split最单纯的训练集和测试集划分使用的train_test_split 方法 ，单局限平时练手用，用法固定：12345from sklearn import cross_validationX_train,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/26/204sklearn-交叉验证&GridSearch/"/>
+
+
+
+
+
+  <title> sklearn-交叉验证&GridSearch | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59602475";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">还没决定</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学习笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/26/204sklearn-交叉验证&GridSearch/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Chen_JC">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="还没决定">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="还没决定" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                sklearn-交叉验证&GridSearch
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-26T11:59:56+08:00">
+                2016-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/skearn/" itemprop="url" rel="index">
+                    <span itemprop="name">skearn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>交叉验证，sklearn0.17版本将其独立封装在<code>cross_validation</code>模块中，0.18后就做了调整，但不要去管它了，用法思路是一样的。</p>
+<h1 id="最简单的数据集划分：train-test-split"><a href="#最简单的数据集划分：train-test-split" class="headerlink" title="最简单的数据集划分：train_test_split"></a>最简单的数据集划分：train_test_split</h1><p>最单纯的训练集和测试集划分使用的<code>train_test_split</code> 方法 ，单局限平时练手用，用法固定：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> cross_validation</div><div class="line">X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, </div><div class="line">                                                                     y, </div><div class="line">                                                                     test_size=<span class="number">0.3</span>, </div><div class="line">                                                                     random_state=<span class="number">0</span>)</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="K折交叉检验"><a href="#K折交叉检验" class="headerlink" title="K折交叉检验"></a>K折交叉检验</h1><p>常规对数据集的使用方法如下：</p>
+<ol>
+<li>在<strong>训练集合</strong>上训练</li>
+<li>之后再<strong>验证集合</strong>上评估</li>
+<li>完成实验后， 最终在<strong>测试集合</strong>上进行评价</li>
+</ol>
+<p>然而，将可用的数据分为三个部分后，可以用于模型训练的样例数量被大大降低了，而且结果会受到随机选择的（训练，验证）集合的影响。 于是交叉检验出场了：</p>
+<ol>
+<li>将训练集划分为K份</li>
+<li>使用K-1份的数据集合训练模型</li>
+<li>使用余下的那一份作为检验集合</li>
+<li>循环K次，计算均值</li>
+<li>使用测试集合评价</li>
+</ol>
+<p>sklearn有K折交叉验证的两个方法：</p>
+<ul>
+<li><p>计算交叉验证指标</p>
+<p> <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.cross_val_score.html#sklearn.cross_validation.cross_val_score" target="_blank" rel="external"><code>cross_val_score</code></a> ：当 <code>cv</code> 参数是一个整数时，默认地使用 <code>KFold</code> 或者 <code>StratifiedKFold</code> 策略；也可以通过传入一个交叉验证迭代器来使用其他的交叉验证策略</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sklearn.cross_validation.cross_val_score(estimator,        <span class="comment"># 估计器/模型</span></div><div class="line">                                         X, </div><div class="line">                                         y=<span class="keyword">None</span>, </div><div class="line">                                         scoring=<span class="keyword">None</span>,     <span class="comment"># </span></div><div class="line">                                         cv=<span class="keyword">None</span>,          <span class="comment"># 交叉验证迭代器</span></div><div class="line">                                         n_jobs=<span class="number">1</span>, </div><div class="line">                                         verbose=<span class="number">0</span>, </div><div class="line">                                         fit_params=<span class="keyword">None</span>, </div><div class="line">                                         pre_dispatch=<span class="string">'2*n_jobs'</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过交叉验证获得预测</p>
+<p> <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.cross_val_predict.html#sklearn.cross_validation.cross_val_predict" target="_blank" rel="external"><code>cross_val_predict</code></a> ：具有和 <code>cross_val_score</code>相同的接口， 对于每一个输入的元素，如果其在测试集合中，将会得到预测结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sklearn.cross_validation.cross_val_predict(estimator, </div><div class="line">                                           X, </div><div class="line">                                           y=<span class="keyword">None</span>, </div><div class="line">                                           cv=<span class="keyword">None</span>, </div><div class="line">                                           n_jobs=<span class="number">1</span>, </div><div class="line">                                           verbose=<span class="number">0</span>, </div><div class="line">                                           fit_params=<span class="keyword">None</span>, </div><div class="line">                                           pre_dispatch=<span class="string">'2*n_jobs'</span>)</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<hr>
+<h1 id="交叉验证迭代器"><a href="#交叉验证迭代器" class="headerlink" title="交叉验证迭代器"></a>交叉验证迭代器</h1><p>在使用K折交叉检验之前，先了解交叉检验迭代器，即划分K份数据集合的方法。<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.KFold.html#sklearn.cross_validation.KFold" target="_blank" rel="external"><code>KFold</code></a> ：将所有的样例<strong>随机</strong>划分为$k$个组，称为折叠 (fold) （如果 $k=n$， 这等价于 Leave One Out 留一策略）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">cross_validation</span>.<span class="title">KFold</span><span class="params">(n,                 # Total number of elements</span></span></div><div class="line">                                     n_folds=<span class="number">3</span>,         # 折数</div><div class="line">                                     shuffle=False,     # 是否进行打散</div><div class="line">                                     random_state=None  # 伪随机种子</div><div class="line">                                    )</div></pre></td></tr></table></figure>
+<p><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.StratifiedKFold.html#sklearn.cross_validation.StratifiedKFold" target="_blank" rel="external"><code>StratifiedKFold</code></a> ：是 <em>k-fold</em> 的变种，会返回<strong>分层</strong>的折叠：每个小集合中， <u>各个类别的样例比例大致和完整数据集中相同</u> 。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> StratifiedKFold</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>labels = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</div><div class="line"><span class="comment"># 下面划分好的训练集和测试集的比例 与 labels中的基本一致</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>skf = StratifiedKFold(labels, <span class="number">3</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> train, test <span class="keyword">in</span> skf:</div><div class="line"><span class="meta">... </span>    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line">[<span class="number">2</span> <span class="number">3</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span>] [<span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">5</span>]</div><div class="line">[<span class="number">0</span> <span class="number">1</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">8</span> <span class="number">9</span>] [<span class="number">2</span> <span class="number">6</span> <span class="number">7</span>]</div><div class="line">[<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span>] [<span class="number">3</span> <span class="number">8</span> <span class="number">9</span>]</div></pre></td></tr></table></figure></p>
+<p><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LabelKFold.html#sklearn.cross_validation.LabelKFold" target="_blank" rel="external"><code>LabelKFold</code></a> 也是一个 <em>k-fold</em> 的变种（最重要），它会保证相同的 label 不会同时属于测试和训练集合。有label字样的，就是把不同的label在训练集和测试集分开，不分层，与StratifiedKFold 是反义词。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> LabelKFold</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>labels = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</div><div class="line"><span class="comment"># 下面划分好的训练集和测试集，是根据labels进行切割的（一种label不会同时存在于训练集与测试集）</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>lkf = LabelKFold(labels, n_folds=<span class="number">3</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> train, test <span class="keyword">in</span> lkf:</div><div class="line"><span class="meta">... </span>    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line">[<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span>] [<span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span>]</div><div class="line">[<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span>] [<span class="number">3</span> <span class="number">4</span> <span class="number">5</span>]</div><div class="line">[<span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span>] [<span class="number">0</span> <span class="number">1</span> <span class="number">2</span>]</div></pre></td></tr></table></figure>
+<p>下面这几个，看看就好，感觉用不上<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LeaveOneOut.html#sklearn.cross_validation.LeaveOneOut" target="_blank" rel="external"><code>LeaveOneOut</code></a>(LOO) 留一法<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LeavePOut.html#sklearn.cross_validation.LeavePOut" target="_blank" rel="external"><code>LeavePOut</code></a>(LPO) 留P法<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LeaveOneLabelOut.html#sklearn.cross_validation.LeaveOneLabelOut" target="_blank" rel="external"><code>LeaveOneLabelOut</code></a> (LOLO)<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LeavePLabelOut.html#sklearn.cross_validation.LeavePLabelOut" target="_blank" rel="external"><code>LeavePLabelOut</code></a>(LPLO)</p>
+<hr>
+<h1 id="数据划分类"><a href="#数据划分类" class="headerlink" title="数据划分类"></a>数据划分类</h1><p><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.ShuffleSplit.html#sklearn.cross_validation.ShuffleSplit" target="_blank" rel="external"><code>ShuffleSplit</code></a> 迭代器 将会生成一个用户给定数量的独立的训练/测试数据划分。样例首先被打散然后划分为一对训练测试集合。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">cross_validation</span>.<span class="title">ShuffleSplit</span><span class="params">(n, n_iter=<span class="number">10</span>, test_size=<span class="number">0.1</span>, </span></span></div><div class="line">                                            train_size=None, random_state=None)</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>ss = cross_validation.ShuffleSplit(<span class="number">5</span>, n_iter=<span class="number">3</span>, test_size=<span class="number">0.25</span>,random_state=<span class="number">0</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> ss:</div><div class="line"><span class="meta">... </span>    print(<span class="string">"%s %s"</span> % (train_index, test_index))</div><div class="line">...</div><div class="line">[<span class="number">1</span> <span class="number">3</span> <span class="number">4</span>] [<span class="number">2</span> <span class="number">0</span>]</div><div class="line">[<span class="number">1</span> <span class="number">4</span> <span class="number">3</span>] [<span class="number">0</span> <span class="number">2</span>]</div><div class="line">[<span class="number">4</span> <span class="number">0</span> <span class="number">2</span>] [<span class="number">1</span> <span class="number">3</span>]</div></pre></td></tr></table></figure>
+<p><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.LabelShuffleSplit.html#sklearn.cross_validation.LabelShuffleSplit" target="_blank" rel="external"><code>LabelShuffleSplit</code></a> 迭代器是 ShuffleSplit 和 LeavePLabelsOut 的组合。就是多一步先打散数据。<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html#sklearn.cross_validation.StratifiedShuffleSplit" target="_blank" rel="external"><code>StratifiedShuffleSplit</code></a> 迭代器是 ShuffleSplit 和 StratifiedKFold 的组合。就是多一步先打散数据。<br><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.cross_validation.PredefinedSplit.html#sklearn.cross_validation.PredefinedSplit" target="_blank" rel="external"><code>PredefinedSplit</code></a> 不懂</p>
+<hr>
+<h1 id="关于打散数据顺序"><a href="#关于打散数据顺序" class="headerlink" title="关于打散数据顺序"></a>关于打散数据顺序</h1><p>打不打散数据根据实际情况判断，其实<strong>大部分的交叉验证迭代器都内建一个划分数据前进行数据索引打散的选项</strong>，而<code>train_test_split</code> 方法内部使用的就是交叉验证迭代器，所以上面几个数据划分类在练手使用阶段几乎用不上。</p>
+<ul>
+<li>这种方式仅需要很少的内存就可以打散数据。</li>
+<li>默认不会进行打散，包括设置 <code>cv=some_integer</code> （直接）k 折叠交叉验证的 <code>cross_val_score</code> 会返回一个随机的划分。</li>
+<li>参数 <code>random_state</code> 默认设置为 <code>None</code>，这意为着每次进行<code>KFold(..., shuffle=True)</code> 时，打散都是不同的。 然而，<code>GridSearchCV</code> 通过调用 <code>fit</code> 方法验证时，将会使用相同的打散来训练每一组参数。</li>
+<li>为了保证结果的可重复性（<em>在相同的平台上</em>），应该给 <code>random_state</code> 设定一个固定的值。</li>
+<li><strong>如果数据集具有时间性，千万不要打散数据再划分！</strong></li>
+</ul>
+<hr>
+<h1 id="GridSearch贪婪搜索"><a href="#GridSearch贪婪搜索" class="headerlink" title="GridSearch贪婪搜索"></a>GridSearch贪婪搜索</h1><p>在sklearn在cv参数填整数的，都是默认使用分层划分<code>StratifiedKFold</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 全模式搜索</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">grid_search</span>.<span class="title">GridSearchCV</span><span class="params">(estimator,     # 估计器/模型   </span></span></div><div class="line">                                       param_grid,    # 参数网格</div><div class="line">                                       cv=None,       # 交叉验证迭代器</div><div class="line">                                       scoring=None,  # 检验指标</div><div class="line">                                       refit=True,    # True:搜索后,模型以最佳参数fit好了</div><div class="line">                                       iid=True,	  # 样本为独立同分布</div><div class="line">                                       fit_params=None, </div><div class="line">                                       n_jobs=<span class="number">1</span>, </div><div class="line">                                       verbose=<span class="number">0</span>,     # <span class="number">1</span>:打印信息</div><div class="line">                                       pre_dispatch=<span class="string">'2*n_jobs'</span>, </div><div class="line">                                       # 报错，当参数网格中有某个参数有问题，建议不要用默认的</div><div class="line">                                       error_score=<span class="string">'raise'</span>  </div><div class="line">                                      )</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 随机搜索：指定参数的范围和分布，抽取个数</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">grid_search</span>.<span class="title">RandomizedSearchCV</span><span class="params">(estimator, </span></span></div><div class="line">                                             param_distributions, </div><div class="line">                                             cv=None,</div><div class="line">                                             n_iter=<span class="number">10</span>, </div><div class="line">                                             scoring=None, </div><div class="line">                                             refit=True, </div><div class="line">                                             iid=True,</div><div class="line">                                             fit_params=None,                           </div><div class="line">                                             n_jobs=<span class="number">1</span>, </div><div class="line">                                             verbose=<span class="number">0</span>, </div><div class="line">                                             pre_dispatch=<span class="string">'2*n_jobs'</span>, </div><div class="line">                                             random_state=None, </div><div class="line">                                             error_score=<span class="string">'raise'</span>)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag"># sklearn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/25/201sklearn-特征选择/" rel="next" title="sklearn-特征选择">
+                <i class="fa fa-chevron-left"></i> sklearn-特征选择
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/26/006随机森林/" rel="prev" title="随机森林">
+                随机森林 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Chen_JC" />
+          <p class="site-author-name" itemprop="name">Chen_JC</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最简单的数据集划分：train-test-split"><span class="nav-number">1.</span> <span class="nav-text">最简单的数据集划分：train_test_split</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K折交叉检验"><span class="nav-number">2.</span> <span class="nav-text">K折交叉检验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交叉验证迭代器"><span class="nav-number">3.</span> <span class="nav-text">交叉验证迭代器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据划分类"><span class="nav-number">4.</span> <span class="nav-text">数据划分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于打散数据顺序"><span class="nav-number">5.</span> <span class="nav-text">关于打散数据顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GridSearch贪婪搜索"><span class="nav-number">6.</span> <span class="nav-text">GridSearch贪婪搜索</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen_JC</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

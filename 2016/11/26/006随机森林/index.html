@@ -84,52 +84,42 @@
 
 
 
-<meta name="description" content="什么是Logistic回归抄袭/参考资料
+<meta name="description" content="抄袭/参考资料
 
-台湾大学《机器学习技法》视频
-
-李航《统计学习方法》
-
-深入浅出ML之Regression家族
-
-Logistic Regression Theory
+随机森林
 
 
+在随机森林中，我们将生成很多的决策树CART。当在基于某些属性对一个新的对象进行分类判别时，随机森林中的每一棵树都会给出自己的分类选择，并由此进行“投票”，森林整体的输出结果将会是票数最多的分类选项；而在回归问题中，随机森林的输出将会是所有决策树输出的平均值。
+在随机森林中，每一个决策树“种植”（双随机）和“生长”的规则如下所示：
 
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
+假设我们设定训练集中的样本个数为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Logistic回归">
-<meta property="og:url" content="http://yoursite.com/2016/11/19/Logistic回归/index.html">
+<meta property="og:title" content="随机森林">
+<meta property="og:url" content="http://yoursite.com/2016/11/26/006随机森林/index.html">
 <meta property="og:site_name" content="还没决定">
-<meta property="og:description" content="什么是Logistic回归抄袭/参考资料
+<meta property="og:description" content="抄袭/参考资料
 
-台湾大学《机器学习技法》视频
-
-李航《统计学习方法》
-
-深入浅出ML之Regression家族
-
-Logistic Regression Theory
+随机森林
 
 
+在随机森林中，我们将生成很多的决策树CART。当在基于某些属性对一个新的对象进行分类判别时，随机森林中的每一棵树都会给出自己的分类选择，并由此进行“投票”，森林整体的输出结果将会是票数最多的分类选项；而在回归问题中，随机森林的输出将会是所有决策树输出的平均值。
+在随机森林中，每一个决策树“种植”（双随机）和“生长”的规则如下所示：
 
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
-<meta property="og:updated_time" content="2016-11-21T13:08:21.607Z">
+假设我们设定训练集中的样本个数为">
+<meta property="og:image" content="http://yoursite.com/images/30.png">
+<meta property="og:updated_time" content="2016-11-26T06:35:04.765Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Logistic回归">
-<meta name="twitter:description" content="什么是Logistic回归抄袭/参考资料
+<meta name="twitter:title" content="随机森林">
+<meta name="twitter:description" content="抄袭/参考资料
 
-台湾大学《机器学习技法》视频
-
-李航《统计学习方法》
-
-深入浅出ML之Regression家族
-
-Logistic Regression Theory
+随机森林
 
 
+在随机森林中，我们将生成很多的决策树CART。当在基于某些属性对一个新的对象进行分类判别时，随机森林中的每一棵树都会给出自己的分类选择，并由此进行“投票”，森林整体的输出结果将会是票数最多的分类选项；而在回归问题中，随机森林的输出将会是所有决策树输出的平均值。
+在随机森林中，每一个决策树“种植”（双随机）和“生长”的规则如下所示：
 
-回顾一下，一般化的广义线性回归形式是：$$g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)$$这个函数$g(.)$我们通常称为联系函数。现在我们使用sigmoid函数作为联系函数$g(.)$">
+假设我们设定训练集中的样本个数为">
+<meta name="twitter:image" content="http://yoursite.com/images/30.png">
 
 
 
@@ -157,13 +147,13 @@ Logistic Regression Theory
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/19/Logistic回归/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/26/006随机森林/"/>
 
 
 
 
 
-  <title> Logistic回归 | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 随机森林 | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -207,7 +197,7 @@ Logistic Regression Theory
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">学习笔记</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -293,7 +283,7 @@ Logistic Regression Theory
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/19/Logistic回归/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/26/006随机森林/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Chen_JC">
@@ -317,7 +307,7 @@ Logistic Regression Theory
             
             
               
-                Logistic回归
+                随机森林
               
             
           </h1>
@@ -330,8 +320,8 @@ Logistic Regression Theory
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-19T22:44:12+08:00">
-                2016-11-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-26T14:31:54+08:00">
+                2016-11-26
               </time>
             
 
@@ -384,60 +374,33 @@ Logistic Regression Theory
       
 
       
-        <h1 id="什么是Logistic回归"><a href="#什么是Logistic回归" class="headerlink" title="什么是Logistic回归"></a>什么是Logistic回归</h1><p>抄袭/参考资料</p>
+        <p>抄袭/参考资料</p>
 <ul>
-<li><p>台湾大学《机器学习技法》视频</p>
-</li>
-<li><p>李航《统计学习方法》</p>
-</li>
-<li><p><a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">深入浅出ML之Regression家族</a></p>
-</li>
-<li><p><a href="http://www.csuldw.com/2016/09/19/2016-09-19-logistic-regression-theory/" target="_blank" rel="external">Logistic Regression Theory</a></p>
-</li>
+<li><a href="http://www.cnblogs.com/emanlee/p/4851555.html" target="_blank" rel="external">随机森林</a></li>
 </ul>
 <hr>
-<p>回顾一下，一般化的广义线性回归形式是：<br>$$<br>g(Y)=Xw^T 或者 Y=g^{−1}(Xw^T)<br>$$<br>这个函数$g(.)$我们通常称为联系函数。<br>现在我们使用sigmoid函数作为联系函数$g(.)$ 推导出一个最常用的广义线性回归——Logistic回归<br><strong>sigmoid函数：</strong></p>
-<p>$$<br>{\rm{g}}(z) = {1 \over {1 + {e^{ - z}}}}<br>$$</p>
-<p>它是一个可导函数，定义域为$(−∞,+∞)$，值域为$[0, 1]$，其导数为：</p>
-<p>$$<br>g′(z)=g(z)(1−g(z))<br>$$</p>
-<p><strong>线性回归基本模型</strong>（区别就在$w_0$和b）</p>
-<p>$$<br>h_{w}(x)=\sum_{i=0}^{m}w_{i}x_{i}=w^{T}x=w_0+w_1x_1+⋯+w_nx_n \\<br>h_{w}(x)=\sum_{i=1}^{m}w_{i}x_{i}+b=w^{T}x+b=w_1x_1+w_2x_2+⋯+w_nx_n+b<br>$$</p>
-<p><strong>Logistic回归模型</strong>：</p>
-<p>$$<br>{h_w}(x) = g(w^Tx)={1 \over {1 + {e^{ - {w^T}x}}}}<br>$$</p>
-<p>其中x为样本输入，$h_w(x)$为模型输出，可以理解为某一分类的概率大小。而$w$为分类模型的要求出的模型参数。对于模型输出$h_w(x)$，我们让它和我们的二元样本输出$y$（假设为0和1）有这样的对应关系:</p>
-<ul>
-<li>如果$h_w(x)&gt;0.5$，即$w^Tx&gt;0$, 则$y$为1</li>
-<li>如果$h_w(x)&lt;0.5$，即$w^Tx&lt;0$, 则$y$为0</li>
-<li>$h_w(x)=0.5$是临界情况，此时$w^Tx=0$， 从逻辑回归模型本身无法确定分类</li>
-</ul>
+<p>在随机森林中，我们将生成很多的决策树CART。当在基于某些属性对一个新的对象进行分类判别时，随机森林中的每一棵树都会给出自己的分类选择，并由此进行“投票”，森林整体的输出结果将会是票数最多的分类选项；而在回归问题中，随机森林的输出将会是所有决策树输出的平均值。</p>
+<p>在随机森林中，每一个决策树“种植”（<strong>双随机</strong>）和“生长”的规则如下所示：</p>
+<ol>
+<li>假设我们设定训练集中的样本个数为N，然后通过有重置的重复多次抽样（<strong>Bootstrap</strong>）来获得这N个样本，这样的抽样结果将作为我们生成决策树的训练集；</li>
+<li>如果有M个输入变量，每个节点都将<strong>随机选择m(m&lt;M)个特定的变量</strong>，然后运用这m个变量来确定最佳的分裂点。在决策树的生成过程中，m的值是保持不变的；</li>
+<li>每棵决策树都最大可能地进行生长而<strong>不进行剪枝</strong>；</li>
+<li>通过对所有的决策树进行加总来预测新的数据（在分类时采用多数投票，在回归时采用平均）。</li>
+</ol>
+<p><img src="/images/30.png" alt="30"></p>
+<h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><ol>
+<li>正如上文所述，随机森林算法能解决分类与回归两种类型的问题，并在这两个方面都有相当好的估计表现；</li>
+<li>随机森林对于高维数据集的处理能力令人兴奋，它可以处理成千上万的输入变量，并确定最重要的变量，因此被认为是一个不错的降维方法。此外，该模型能够输出变量的重要性程度，这是一个非常便利的功能；</li>
+<li>在对缺失数据进行估计时，随机森林是一个十分有效的方法。就算存在大量的数据缺失，随机森林也能较好地保持精确性；</li>
+<li>当存在分类不平衡的情况时，随机森林能够提供平衡数据集误差的有效方法；</li>
+<li>模型的上述性能可以被扩展运用到未标记的数据集中，用于引导无监督聚类、数据透视和异常检测；</li>
+<li>随机森林算法中包含了对输入数据的重复自抽样过程，即所谓的bootstrap抽样。这样一来，数据集中大约三分之一将没有用于模型的训练而是用于测试，这样的数据被称为out of bag samples，通过这些样本估计的误差被称为out of bag error。研究表明，这种out of bag方法的与测试集规模同训练集一致的估计方法有着相同的精确程度，因此在随机森林中我们无需再对测试集进行另外的设置。</li>
+</ol>
 <hr>
-<h1 id="为什么叫对数几率函数"><a href="#为什么叫对数几率函数" class="headerlink" title="为什么叫对数几率函数"></a>为什么叫对数几率函数</h1><p>假设我们的样本输出是0或者1两类。那么我们有：</p>
-<p>$$<br>P(y=1|x,w)=h_w(x)\\<br>P(y=0|x,w)=1−h_w(x)<br>$$</p>
-<p>我们利用Logistic回归模型${h_w}(x) = {1 \over {1 + {e^{ - {w^T}x}}}}$求出的既是样本为<strong>正类的概率</strong> ！</p>
-<p>什么是<strong>几率（odds）</strong>？<br>一个事件的几率是指该事件发生的概率与该事件不发生的概率的比值。<br>很显然Logistic回归可以轻易的转化出<strong>对数几率</strong>（又变回线性回归模型的值）<br>$$<br>ln\frac{P(y=1|x)}{P(y=0|x)}=\frac{h_w(x)}{1-h_w(x)}=w^Tx<br>$$</p>
-<hr>
-<h1 id="损失函数-优化目标"><a href="#损失函数-优化目标" class="headerlink" title="损失函数/优化目标"></a>损失函数/优化目标</h1><p>首先，讲$P(y=1|x,w)$和$P(y=0|x,w)$合并：</p>
-<p>$$<br>P(y|x)=h_w(x)^y(1−h_w(x))^{1−y}<br>$$</p>
-<p>根据上面的式子，给定一定的样本之后，我们可以构造出似然函数，然后可以使用极大似然估计MLE的思想来求解参数。但是，为了满足最小化风险理论，我们可以将MLE的思想转化为最小化风险化理论，最大化似然函数其实就等价于最小化负的似然函数。</p>
-<p>对于MLE，<strong>就是利用已知的样本分布，找到最有可能（即最大概率）导致这种分布的参数值；或者说是什么样的参数才能使我们观测到目前这组数据的概率最大</strong>。使用MLE推导LR的loss function的过程如下</p>
-<p>首先，根据上面的假设，写出相应的极大似然函数（假定有m个样本）：</p>
-<p>$$<br>L(w)=\prod_{i=1}^{m}P(y^{(i)}|x^{(i)};w)  \\<br>        =\prod_{i=1}^{m}h_w(x^{(i)})^{y^{(i)}}(1-h_w(x^{(i)}))^{1-y^{(i)}}<br>$$<br>直接对上面的式子求导会不方便，因此，为了便于计算，我们可以<strong>对似然函数取对数</strong>，经过化简可以得到下式的推导结果：<br>$$<br>\log L(w)  =\sum_{i=1}^{m}\log\left [ h_w\left(x^{(i)}\right)^{y^{(i)}}\left(1-h_w(x^{(i)})\right)^{1-y^{(i)}} \right ] \\<br>           =\sum_{i=1}^{m}\left [{y^{(i)}} \log{h_w(x^{(i)})}+{(1-y^{(i)})}\log\left(1-h_w(x^{(i)})\right) \right ]<br>$$<br>因此，<strong>损失函数</strong>可以通过<strong>最小化负的似然函数</strong>得到，即下式：<br>$$<br>J(w)=-\frac{1}{m}\sum_{i=1}^{m}\left [{y^{(i)}} \log{h_w(x^{(i)})}+{(1-y^{(i)})}\log\left(1-h_w(x^{(i)})\right) \right ]<br>$$</p>
-<hr>
-<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h2 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h2><p>梯度下降法又叫做最速下降法，为了求解使损失函数$J(w)$最小时的参数$w$，这里就以<strong>梯度下降</strong>为例进行求解，其迭代公式的推导过程如下：<br>$$<br>\frac{\partial }{\partial w_j}J(w)=-\frac{1}{m}\sum_{i=1}^{m}\left [{y^{(i)}} \left(1-h_w(x^{(i)})\right)\cdot (x^{(i)}_j)+{(1-y^{(i)})}h_w(x^{(i)})\cdot (-x^{(i)}_j)   \right] \\<br>  =-\frac{1}{m}\sum_{i=1}^{m}({y^{(i)}} - h_w(x^{(i)})\cdot (x^{(i)}_j) \\<br>  =\frac{1}{m}\sum_{i=1}^{m}(h_w(x^{(i)})-{y^{(i)}})\cdot (x^{(i)}_j)<br>$$<br>通过上面结果，可以得到最后的迭代式子（<strong>其中$α$是步长</strong>）：<br>$$<br>{w_j} = {w_j} - \alpha  \cdot \frac{1}{m}\sum_{i=1}^{m}(h_w(x^{(i)})-{y^{(i)}})\cdot (x^{(i)}_j)<br>$$<br>该式子与线性回归模型的平方损失函数求导后非常相似，当两者是不同的，因为${h_w}({x^{(i)})}$ 是完全不同的。</p>
-<p>最优化算法并不限于梯度下降，还有：</p>
-<ul>
-<li>Newton Method（牛顿法）</li>
-<li>Conjugate gradient method(共轭梯度法)</li>
-<li>Quasi-Newton Method(拟牛顿法)</li>
-<li>BFGS Method</li>
-<li>L-BFGS(Limited-memory BFGS)</li>
-</ul>
-<p>参考：<a href="http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/" target="_blank" rel="external">http://www.52caml.com/head_first_ml/ml-chapter1-regression-family/</a></p>
-<hr>
-<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><p>线性回归可以通过加正则项避免过拟合，Logistic回归属于广义线性回归，同样可以加上相同的正则项，加入正则项相当于对参数加入了一个先验分布，常用的有L1和L2正则。</p>
-<blockquote>
-<p>正则化项本质上是一种先验信息，整个最优化问题从贝叶斯观点来看是一种<strong>贝叶斯最大后验估计</strong>，其中正则化项对应后验估计中的先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式，如果将这个贝叶斯最大后验估计的形式取对数，即进行极大似然估计，你就会发现问题立马变成了损失函数+正则化项的最优化问题形式。</p>
-</blockquote>
+<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><ol>
+<li>随机森林在解决回归问题时并没有像它在分类中表现的那么好，这是因为它并不能给出一个连续型的输出。当进行回归时，随机森林不能够作出超越训练集数据范围的预测，这可能导致在对某些还有特定噪声的数据进行建模时出现过度拟合。</li>
+<li>对于许多统计建模者来说，随机森林给人的感觉像是一个黑盒子——你几乎无法控制模型内部的运行，只能在不同的参数和随机种子之间进行尝试。</li>
+</ol>
 
       
     </div>
@@ -470,8 +433,8 @@ Logistic Regression Theory
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/19/线性回归/" rel="next" title="线性回归">
-                <i class="fa fa-chevron-left"></i> 线性回归
+              <a href="/2016/11/26/204sklearn-交叉验证&GridSearch/" rel="next" title="sklearn-交叉验证&GridSearch">
+                <i class="fa fa-chevron-left"></i> sklearn-交叉验证&GridSearch
               </a>
             
           </div>
@@ -480,8 +443,8 @@ Logistic Regression Theory
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/21/数据预处理sklrean-preprocessing/" rel="prev" title="数据预处理sklrean.preprocessing">
-                数据预处理sklrean.preprocessing <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/01/笔记目录/" rel="prev" title="笔记目录">
+                笔记目录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -550,7 +513,7 @@ Logistic Regression Theory
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -558,7 +521,7 @@ Logistic Regression Theory
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -567,7 +530,7 @@ Logistic Regression Theory
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -602,7 +565,7 @@ Logistic Regression Theory
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Logistic回归"><span class="nav-number">1.</span> <span class="nav-text">什么是Logistic回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么叫对数几率函数"><span class="nav-number">2.</span> <span class="nav-text">为什么叫对数几率函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数-优化目标"><span class="nav-number">3.</span> <span class="nav-text">损失函数/优化目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化算法"><span class="nav-number">4.</span> <span class="nav-text">优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降"><span class="nav-number">4.1.</span> <span class="nav-text">梯度下降</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化"><span class="nav-number">5.</span> <span class="nav-text">正则化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优点"><span class="nav-number">1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缺点"><span class="nav-number">2.</span> <span class="nav-text">缺点</span></a></li></ol></div>
             
 
           </div>

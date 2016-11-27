@@ -110,7 +110,7 @@ sckearn中文
 
 特征是否发散：如果一个特征不发散，例如方差接近于0，也就是说样本在这个特征上基本上没有差异，这个特征对于样本的区分并没有什么用。
 特征与目标的相关性：这点比较显见，与目标相关性高的特征，">
-<meta property="og:updated_time" content="2016-11-26T03:52:39.891Z">
+<meta property="og:updated_time" content="2016-11-27T06:18:21.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sklearn-特征选择">
 <meta name="twitter:description" content="抄袭/参考资料
@@ -201,7 +201,7 @@ sckearn中文
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">学习笔记</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -396,15 +396,46 @@ sckearn中文
 <li><strong>Wrapper：包装法</strong>，根据目标函数（通常是预测效果评分），每次选择若干特征，或者排除若干特征。</li>
 <li><strong>Embedded：嵌入法</strong>，先使用某些机器学习的算法和模型进行训练，得到各个特征的权值系数，根据系数从大到小选择特征。类似于Filter方法，但是是通过训练来确定特征的优劣。</li>
 </ul>
-<p>我们使用sklearn中的feature_selection库来进行特征选择。</p>
+<p>我们使用sklearn中的<code>feature_selection</code>库来进行特征选择。</p>
 <h1 id="Filter：过滤法"><a href="#Filter：过滤法" class="headerlink" title="Filter：过滤法"></a>Filter：过滤法</h1><h2 id="方差选择法"><a href="#方差选择法" class="headerlink" title="方差选择法"></a>方差选择法</h2><p><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold" target="_blank" rel="external"><code>VarianceThreshold</code></a> 是特征选择中的一项基本方法。它会移除所有方差不满足阈值的特征。默认设置下，它将移除所有方差为0的特征，即那些在所有样本中数值完全相同的特征。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VarianceThreshold</div></pre></td></tr></table></figure>
-<h2 id="相关系数法"><a href="#相关系数法" class="headerlink" title="相关系数法"></a>相关系数法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SelectKBest</div></pre></td></tr></table></figure>
-<h2 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h2><h2 id="互信息法"><a href="#互信息法" class="headerlink" title="互信息法"></a>互信息法</h2><h1 id="Wrapper：包装法"><a href="#Wrapper：包装法" class="headerlink" title="Wrapper：包装法"></a>Wrapper：包装法</h1><h2 id="递归特征消除法"><a href="#递归特征消除法" class="headerlink" title="递归特征消除法"></a>递归特征消除法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RFE</div></pre></td></tr></table></figure>
-<h1 id="Embedded：嵌入法"><a href="#Embedded：嵌入法" class="headerlink" title="Embedded：嵌入法"></a>Embedded：嵌入法</h1><h2 id="基于惩罚项的特征选择法"><a href="#基于惩罚项的特征选择法" class="headerlink" title="基于惩罚项的特征选择法"></a>基于惩罚项的特征选择法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SelectFromModel</div></pre></td></tr></table></figure>
-<h2 id="基于树模型的特征选择法"><a href="#基于树模型的特征选择法" class="headerlink" title="基于树模型的特征选择法"></a>基于树模型的特征选择法</h2><ul>
-<li>​</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> VarianceThreshold</div><div class="line"><span class="comment"># 设置方差阈值为100</span></div><div class="line">sel = VarianceThreshold(threshold=<span class="number">100</span>)</div><div class="line">sel.fit_transform(X)</div></pre></td></tr></table></figure>
+<h2 id="单变量特征选择"><a href="#单变量特征选择" class="headerlink" title="单变量特征选择"></a>单变量特征选择</h2><p>单变量特征选择<strong>基于单变量的统计测试来选择最佳特征</strong>。它可以看作预测模型的一项预处理。Scikit-learn将特征选择程序用包含transform 函数的对象来展现：</p>
+<ul>
+<li><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest" target="_blank" rel="external"><code>SelectKBest</code></a> 移除得分前 $k$ 名以外的所有特征</li>
+<li><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectPercentile.html#sklearn.feature_selection.SelectPercentile" target="_blank" rel="external"><code>SelectPercentile</code></a> 移除得分在用户指定百分比以后的特征</li>
+<li>对每个特征使用通用的单变量统计测试： 假正率(false positive rate) <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectFpr.html#sklearn.feature_selection.SelectFpr" target="_blank" rel="external"><code>SelectFpr</code></a>, 伪发现率(false discovery rate) <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectFdr.html#sklearn.feature_selection.SelectFdr" target="_blank" rel="external"><code>SelectFdr</code></a>, 或族系误差率 <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectFwe.html#sklearn.feature_selection.SelectFwe" target="_blank" rel="external"><code>SelectFwe</code></a>.</li>
+<li><a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html#sklearn.feature_selection.GenericUnivariateSelect" target="_blank" rel="external"><code>GenericUnivariateSelect</code></a> 可以设置不同的策略来进行单变量特征选择。同时不同的选择策略也能够使用超参数寻优，从而让我们找到最佳的单变量特征选择策略。</li>
 </ul>
+<p>这些作为打分函数输入的对象（同样位于<code>feature_selection</code>模块中），返回单变量的概率值：</p>
+<blockquote>
+<ul>
+<li>用于回归: <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.f_regression.html#sklearn.feature_selection.f_regression" target="_blank" rel="external"><code>f_regression</code></a></li>
+<li>用于分类: <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.chi2.html#sklearn.feature_selection.chi2" target="_blank" rel="external"><code>chi2</code></a> （卡方）or <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.f_classif.html#sklearn.feature_selection.f_classif" target="_blank" rel="external"><code>f_classif</code></a></li>
+</ul>
+</blockquote>
+<h3 id="相关系数法"><a href="#相关系数法" class="headerlink" title="相关系数法"></a>相关系数法</h3><h3 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h3><h3 id="互信息法"><a href="#互信息法" class="headerlink" title="互信息法"></a>互信息法</h3><hr>
+<h1 id="Wrapper：包装法"><a href="#Wrapper：包装法" class="headerlink" title="Wrapper：包装法"></a>Wrapper：包装法</h1><h2 id="递归特征消除法"><a href="#递归特征消除法" class="headerlink" title="递归特征消除法"></a>递归特征消除法</h2><p>递归消除特征法使用一个基模型来进行多轮训练，每轮训练后，消除若干权值系数的特征，再基于新的特征集进行下一轮训练。</p>
+<hr>
+<h1 id="Embedded：嵌入法-基于模型进行特征选择"><a href="#Embedded：嵌入法-基于模型进行特征选择" class="headerlink" title="Embedded：嵌入法 / 基于模型进行特征选择"></a>Embedded：嵌入法 / 基于模型进行特征选择</h1><h2 id="基于惩罚项的特征选择法"><a href="#基于惩罚项的特征选择法" class="headerlink" title="基于惩罚项的特征选择法"></a>基于惩罚项的特征选择法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">feature_selection</span>.<span class="title">SelectFromModel</span><span class="params">(estimator, </span></span></div><div class="line">                                                threshold=None, </div><div class="line">                                                prefit=False)</div></pre></td></tr></table></figure>
+<p>使用L1范数作为惩罚项的:ref:Linear models会得到稀疏解：大部分特征对应的系数为0。当你希望减少特征的维度以用于其它分类器时，可以通过 <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectFromModel.html#sklearn.feature_selection.SelectFromModel" target="_blank" rel="external"><code>feature_selection.SelectFromModel</code></a> 来选择不为0的系数。特别指出，常用于此目的的稀疏预测模型有：</p>
+<ul>
+<li>回归： <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.linear_model.Lasso.html#sklearn.linear_model.Lasso" target="_blank" rel="external"><code>linear_model.Lasso</code></a> <ul>
+<li>对于Lasso，<u>参数$alpha$越大，被选中的特征越少</u> 。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>分类： <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression" target="_blank" rel="external"><code>linear_model.LogisticRegression</code></a> 和 <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC" target="_blank" rel="external"><code>svm.LinearSVC</code></a> <ul>
+<li>对于SVM和逻辑回归，<u>参数$C$控制稀疏性：$C$越小，被选中的特征越少</u>。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Lasso</div><div class="line"></div><div class="line">lr = Lasso(alpha=<span class="number">10</span>)</div><div class="line">lr.fit(X,y)</div><div class="line"></div><div class="line"><span class="comment">#带L1惩罚项的逻辑回归作为基模型的特征选择</span></div><div class="line">model = SelectFromModel(lr, prefit=<span class="keyword">True</span>)</div><div class="line">model.transform(X)</div></pre></td></tr></table></figure>
+<h2 id="基于树模型的特征选择法"><a href="#基于树模型的特征选择法" class="headerlink" title="基于树模型的特征选择法"></a>基于树模型的特征选择法</h2><p>基于树的预测模型（见 <a href="http://sklearn.lzjqsdd.com/modules/classes.html#module-sklearn.tree" target="_blank" rel="external"><code>sklearn.tree</code></a> 模块，森林见 <a href="http://sklearn.lzjqsdd.com/modules/classes.html#module-sklearn.ensemble" target="_blank" rel="external"><code>sklearn.ensemble</code></a> 模块）能够用来计算特征的重要程度，因此能用来去除不相关的特征（结合 <a href="http://sklearn.lzjqsdd.com/modules/generated/sklearn.feature_selection.SelectFromModel.html#sklearn.feature_selection.SelectFromModel" target="_blank" rel="external"><code>sklearn.feature_selection.SelectFromModel</code></a> ）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingRegressor</div><div class="line"></div><div class="line">gbdt = GradientBoostingRegressor()</div><div class="line">gbdt.fit(X,y)</div><div class="line"></div><div class="line"><span class="comment">#GBDT作为基模型的特征选择</span></div><div class="line">model = SelectFromModel(gbdt, prefit=<span class="keyword">True</span>)</div><div class="line">model.transform(X)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><h2 id="主成分分析法（PCA）"><a href="#主成分分析法（PCA）" class="headerlink" title="主成分分析法（PCA）"></a>主成分分析法（PCA）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA </div><div class="line"></div><div class="line"><span class="comment">#主成分分析法，返回降维后的数据</span></div><div class="line"><span class="comment">#参数n_components为主成分数目</span></div><div class="line">PCA(n_components=<span class="number">2</span>).fit_transform(iris.data)</div></pre></td></tr></table></figure>
+<h2 id="线性判别分析法（LDA）"><a href="#线性判别分析法（LDA）" class="headerlink" title="线性判别分析法（LDA）"></a>线性判别分析法（LDA）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.lda <span class="keyword">import</span> LDA</div><div class="line"></div><div class="line"><span class="comment">#线性判别分析法，返回降维后的数据</span></div><div class="line"><span class="comment">#参数n_components为降维后的维数</span></div><div class="line">LDA(n_components=<span class="number">2</span>).fit_transform(iris.data, iris.target)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -437,8 +468,8 @@ sckearn中文
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/25/sklearn-特征选择/" rel="next" title="sklearn-特征选择">
-                <i class="fa fa-chevron-left"></i> sklearn-特征选择
+              <a href="/2016/11/25/007AdaBoost/" rel="next" title="AdaBoost">
+                <i class="fa fa-chevron-left"></i> AdaBoost
               </a>
             
           </div>
@@ -447,7 +478,7 @@ sckearn中文
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/26/204sklearn-交叉验证-GridSearch/" rel="prev" title="sklearn-交叉验证&GridSearch">
+              <a href="/2016/11/26/204sklearn-交叉验证&GridSearch/" rel="prev" title="sklearn-交叉验证&GridSearch">
                 sklearn-交叉验证&GridSearch <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -525,7 +556,7 @@ sckearn中文
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -534,7 +565,7 @@ sckearn中文
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -569,7 +600,7 @@ sckearn中文
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Filter：过滤法"><span class="nav-number">1.</span> <span class="nav-text">Filter：过滤法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方差选择法"><span class="nav-number">1.1.</span> <span class="nav-text">方差选择法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关系数法"><span class="nav-number">1.2.</span> <span class="nav-text">相关系数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卡方检验"><span class="nav-number">1.3.</span> <span class="nav-text">卡方检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互信息法"><span class="nav-number">1.4.</span> <span class="nav-text">互信息法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Wrapper：包装法"><span class="nav-number">2.</span> <span class="nav-text">Wrapper：包装法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归特征消除法"><span class="nav-number">2.1.</span> <span class="nav-text">递归特征消除法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Embedded：嵌入法"><span class="nav-number">3.</span> <span class="nav-text">Embedded：嵌入法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于惩罚项的特征选择法"><span class="nav-number">3.1.</span> <span class="nav-text">基于惩罚项的特征选择法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于树模型的特征选择法"><span class="nav-number">3.2.</span> <span class="nav-text">基于树模型的特征选择法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Filter：过滤法"><span class="nav-number">1.</span> <span class="nav-text">Filter：过滤法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方差选择法"><span class="nav-number">1.1.</span> <span class="nav-text">方差选择法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单变量特征选择"><span class="nav-number">1.2.</span> <span class="nav-text">单变量特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关系数法"><span class="nav-number">1.2.1.</span> <span class="nav-text">相关系数法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卡方检验"><span class="nav-number">1.2.2.</span> <span class="nav-text">卡方检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互信息法"><span class="nav-number">1.2.3.</span> <span class="nav-text">互信息法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Wrapper：包装法"><span class="nav-number">2.</span> <span class="nav-text">Wrapper：包装法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归特征消除法"><span class="nav-number">2.1.</span> <span class="nav-text">递归特征消除法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Embedded：嵌入法-基于模型进行特征选择"><span class="nav-number">3.</span> <span class="nav-text">Embedded：嵌入法 / 基于模型进行特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于惩罚项的特征选择法"><span class="nav-number">3.1.</span> <span class="nav-text">基于惩罚项的特征选择法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于树模型的特征选择法"><span class="nav-number">3.2.</span> <span class="nav-text">基于树模型的特征选择法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降维"><span class="nav-number">4.</span> <span class="nav-text">降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分分析法（PCA）"><span class="nav-number">4.1.</span> <span class="nav-text">主成分分析法（PCA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析法（LDA）"><span class="nav-number">4.2.</span> <span class="nav-text">线性判别分析法（LDA）</span></a></li></ol></li></ol></div>
             
 
           </div>
