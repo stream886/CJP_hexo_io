@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="R," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="数据分析常用操作的笔记，R语言版本。
+数据操作：使用dplyr包(plyr包)、data.table包
+数据整合：使用reshape2包、tidyr包
+以下为原生R语言的数据处理(不涉及第三方R包)。
+读取数据12# 读取文件数据后形成数据框对象&amp;gt; df &amp;lt;- read.csv(&apos;adultTest.csv&apos;)
+数据探索123456789101112131415161718192021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R-base">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/R-base/index.html">
+<meta property="og:site_name" content="还没决定">
+<meta property="og:description" content="数据分析常用操作的笔记，R语言版本。
+数据操作：使用dplyr包(plyr包)、data.table包
+数据整合：使用reshape2包、tidyr包
+以下为原生R语言的数据处理(不涉及第三方R包)。
+读取数据12# 读取文件数据后形成数据框对象&amp;gt; df &amp;lt;- read.csv(&apos;adultTest.csv&apos;)
+数据探索123456789101112131415161718192021">
+<meta property="og:updated_time" content="2016-12-20T02:45:10.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R-base">
+<meta name="twitter:description" content="数据分析常用操作的笔记，R语言版本。
+数据操作：使用dplyr包(plyr包)、data.table包
+数据整合：使用reshape2包、tidyr包
+以下为原生R语言的数据处理(不涉及第三方R包)。
+读取数据12# 读取文件数据后形成数据框对象&amp;gt; df &amp;lt;- read.csv(&apos;adultTest.csv&apos;)
+数据探索123456789101112131415161718192021">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/20/R-base/"/>
+
+
+
+
+
+  <title> R-base | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59602475";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">还没决定</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学习笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/20/R-base/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Chen_JC">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="还没决定">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="还没决定" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                R-base
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T10:43:43+08:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数据分析<strong>常用操作</strong>的笔记，R语言版本。</p>
+<p>数据操作：使用dplyr包(plyr包)、data.table包</p>
+<p>数据整合：使用reshape2包、tidyr包</p>
+<p>以下为原生R语言的数据处理(不涉及第三方R包)。</p>
+<h1 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 读取文件数据后形成数据框对象</span></div><div class="line">&gt; df &lt;- read.csv(<span class="string">'adultTest.csv'</span>)</div></pre></td></tr></table></figure>
+<h1 id="数据探索"><a href="#数据探索" class="headerlink" title="数据探索"></a>数据探索</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 当前工作区间的对象列表</span></div><div class="line">&gt; ls()</div><div class="line">[<span class="number">1</span>] <span class="string">"df"</span>  <span class="string">"slice01"</span>  <span class="string">"slice02"</span></div><div class="line"></div><div class="line"><span class="comment"># 删除指定对象</span></div><div class="line">&gt; rm(df)</div><div class="line"><span class="comment"># 删除当前工作环境中所有对象</span></div><div class="line">&gt; rm(list=ls())</div><div class="line"></div><div class="line"><span class="comment"># 编辑对象</span></div><div class="line">&gt; fix(df)</div><div class="line"><span class="comment"># 编辑对象并另存为newobjext</span></div><div class="line">&gt; newdf &lt;- edit(df)</div><div class="line"></div><div class="line"><span class="comment"># 数据框大小，对象的维度</span></div><div class="line">&gt; dim(df)</div><div class="line">[<span class="number">1</span>] <span class="number">32561</span>    <span class="number">15</span></div><div class="line"></div><div class="line"><span class="comment"># 显示某对象的结构</span></div><div class="line">&gt; str(df)</div><div class="line"></div><div class="line"><span class="comment"># 对象类型，相当于py的type()</span></div><div class="line">&gt; class(df)</div><div class="line">[<span class="number">1</span>] <span class="string">"data.frame"</span></div><div class="line"></div><div class="line"><span class="comment"># 对象模式</span></div><div class="line">&gt; mode(df)</div><div class="line">[<span class="number">1</span>] <span class="string">"list"</span></div><div class="line"></div><div class="line"><span class="comment"># 显示对象中各成分的名称，相当于py的columns</span></div><div class="line">&gt; names(df)</div><div class="line"> [<span class="number">1</span>] <span class="string">"age"</span>    <span class="string">"workclass"</span>   <span class="string">"fnlwgt"</span>    <span class="string">"education"</span>   <span class="string">"education.num"</span> <span class="string">"marital.status"</span></div><div class="line"> [<span class="number">7</span>] <span class="string">"occupation"</span>   <span class="string">"relationship"</span>   <span class="string">"race"</span>   <span class="string">"sex"</span>  </div><div class="line"></div><div class="line"><span class="comment"># 特征数量</span></div><div class="line">&gt; length(df)</div><div class="line">[<span class="number">1</span>] <span class="number">15</span></div><div class="line"></div><div class="line"><span class="comment"># 特征数量单独计数</span></div><div class="line">&gt; lengths(df)</div><div class="line">           age      workclass         fnlwgt      education  education.num </div><div class="line">         <span class="number">32561</span>          <span class="number">32561</span>          <span class="number">32561</span>          <span class="number">32561</span>          <span class="number">32561</span> </div><div class="line"></div><div class="line"><span class="comment"># 对象的头尾记录</span></div><div class="line">&gt; head(df)</div><div class="line">&gt; tail(df)</div><div class="line"></div><div class="line"><span class="comment"># 数据描述</span></div><div class="line">&gt; summary(df)</div><div class="line">       ID          Treatment      Sex          Age          Improved </div><div class="line"> Min.   : <span class="number">1.00</span>   Placebo:<span class="number">43</span>   Female:<span class="number">59</span>   Min.   :<span class="number">23.00</span>   None  :<span class="number">42</span>  </div><div class="line"> 1st Qu.:<span class="number">21.75</span>   Treated:<span class="number">41</span>   Male  :<span class="number">25</span>   1st Qu.:<span class="number">46.00</span>   Some  :<span class="number">14</span>  </div><div class="line"> Median :<span class="number">42.50</span>                            Median :<span class="number">57.00</span>   Marked:<span class="number">28</span>  </div><div class="line"> Mean   :<span class="number">42.50</span>                            Mean   :<span class="number">53.36</span>              </div><div class="line"> 3rd Qu.:<span class="number">63.25</span>                            3rd Qu.:<span class="number">63.00</span>              </div><div class="line"> Max.   :<span class="number">84.00</span></div></pre></td></tr></table></figure>
+<h1 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h1><p>类型转换</p>
+<table>
+<thead>
+<tr>
+<th>判断</th>
+<th>转化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is.numeric(df%A)</td>
+<td>as.numeric()</td>
+</tr>
+<tr>
+<td>is.charachter()</td>
+<td>as.charachter()</td>
+</tr>
+<tr>
+<td>is.vector()</td>
+<td>as.vector()</td>
+</tr>
+<tr>
+<td>is.matrix()</td>
+<td>as.matrix()</td>
+</tr>
+<tr>
+<td>is.data.frame()</td>
+<td>as.data.frame()</td>
+</tr>
+<tr>
+<td>is.factor()</td>
+<td>as.factor()</td>
+</tr>
+<tr>
+<td>is.logical()</td>
+<td>as.logical()</td>
+</tr>
+</tbody>
+</table>
+<p>缺失值</p>
+<p>注意：R中NA为缺失值，与NAN是不同的，而Inf和-Inf是正负无穷</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 缺失值判断，返回布尔向量/矩阵</span></div><div class="line">&gt; y &lt;- c(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="literal">NA</span>)</div><div class="line">&gt; is.na(y)</div><div class="line">[<span class="number">1</span>] <span class="literal">FALSE</span> <span class="literal">FALSE</span> <span class="literal">FALSE</span>  <span class="literal">TRUE</span> </div><div class="line"></div><div class="line"><span class="comment"># 在分析中排斥缺失值</span></div><div class="line">&gt; sum(y, na.rm = <span class="literal">TRUE</span>)</div><div class="line"></div><div class="line"><span class="comment"># 缺失值排除，任意一行有NA就整列丢弃</span></div><div class="line">&gt; na.omit(df)</div></pre></td></tr></table></figure>
+<p>日期格式</p>
+<h1 id="修改表结构"><a href="#修改表结构" class="headerlink" title="修改表结构"></a>修改表结构</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建新变量new(以旧的特征A和B)</span></div><div class="line">&gt; df$new &lt;- df$A + df$B</div><div class="line"></div><div class="line">&gt; df &lt;- transform(df, </div><div class="line">                  new1 = A + B, </div><div class="line">                  new2 = (A+B)/<span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="comment"># 连续型变量转化分类变量</span></div><div class="line"><span class="comment"># 麻烦方法一</span></div><div class="line">&gt; df$agecat[df$age &gt; <span class="number">75</span>] &lt;- <span class="string">"Elder"</span></div><div class="line">&gt; df$agecat[df$age &gt;= <span class="number">55</span> &amp; df$age &lt;<span class="number">75</span>=] &lt;- <span class="string">"Middle"</span></div><div class="line">&gt; df$agecat[df$age &lt; <span class="number">55</span>] &lt;- <span class="string">"Young"</span></div><div class="line"><span class="comment"># 方法二 within()与with()类似，但允许修改数据框</span></div><div class="line">&gt; df &lt;- within(df,&#123;agecat &lt;- <span class="literal">NA</span> </div><div class="line">                   agecat[age&gt;<span class="number">75</span>] &lt;- <span class="string">"Elder"</span> </div><div class="line">                   agecat[age&gt;=<span class="number">55</span> &amp; age&lt;=<span class="number">75</span>] &lt;- <span class="string">"Middle"</span> </div><div class="line">                   agecat[age&lt;<span class="number">55</span>] &lt;- <span class="string">"Young"</span>&#125;)</div><div class="line"></div><div class="line"><span class="comment"># 字符串切分创建新变量</span></div><div class="line">&gt; name &lt;- strsplit((df$name),<span class="string">" "</span>)</div><div class="line"><span class="comment"># 等价于 unlist(name)[2]，不是从0开始</span></div><div class="line">&gt; Lastname &lt;- sapply(name,<span class="string">"["</span>,<span class="number">2</span>)</div><div class="line">&gt; Firstname &lt;- sapply(name,<span class="string">"["</span>,<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 修改特征名(列名)</span></div><div class="line"><span class="comment"># 方法一</span></div><div class="line">&gt; fix(df)</div><div class="line"><span class="comment"># 方法二</span></div><div class="line">&gt; names(df)[<span class="number">2</span>] &lt;- <span class="string">"newcname"</span></div><div class="line">&gt; names(df)[<span class="number">6</span>:<span class="number">7</span>] &lt;- c(<span class="string">"name1"</span>,<span class="string">"name2"</span>)</div><div class="line"><span class="comment"># 方法三：plyr包</span></div><div class="line">&gt; <span class="keyword">library</span>(plyr)</div><div class="line">&gt; df &lt;- rename(df, c(oldname1=<span class="string">"newname1"</span>, </div><div class="line">                     oldname2=<span class="string">"newname2"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 排序order()</span></div><div class="line"><span class="comment"># 创建一个新数据集，依A特征升序排序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A),]</div><div class="line"><span class="comment"># 依A特征升序，A相同的再依B特征升序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A, df$B),]</div><div class="line"><span class="comment"># 加上符号-就是降序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A, -df$B),]</div></pre></td></tr></table></figure>
+<h1 id="数据切片"><a href="#数据切片" class="headerlink" title="数据切片"></a>数据切片</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 基本切片</span></div><div class="line">&gt; newdf &lt;- df[,c(<span class="number">6</span>:<span class="number">10</span>)]</div><div class="line"></div><div class="line">&gt; myvars &lt;- c(<span class="string">"A"</span>,<span class="string">"B"</span>,<span class="string">"C"</span>,<span class="string">"D"</span>)</div><div class="line">&gt; newdf &lt;- df[myvars]</div><div class="line"></div><div class="line"><span class="comment"># 剔除（丢弃）变量</span></div><div class="line">&gt; myvars &lt;- names(df) %<span class="keyword">in</span>% c(<span class="string">"A"</span>,<span class="string">"B"</span>)</div><div class="line">&gt; newdf &lt;- df[!myvars]</div><div class="line">&gt; newdf &lt;- df[c(-<span class="number">8</span>,-<span class="number">9</span>)] <span class="comment"># 负号万能</span></div><div class="line"></div><div class="line"><span class="comment"># 选取1到3行</span></div><div class="line">&gt; df[<span class="number">1</span>:<span class="number">3</span>,]</div><div class="line"><span class="comment"># 特征条件选取</span></div><div class="line">&gt; df[df$A==<span class="string">"M"</span> &amp; df$age&gt;<span class="number">30</span>]</div><div class="line"></div><div class="line"><span class="comment"># subet()</span></div><div class="line"><span class="comment"># 用条件筛选完行后，再筛选列</span></div><div class="line">&gt; df &lt;- subset(df, </div><div class="line">               age&gt;=<span class="number">25</span> &amp; gender==<span class="string">"M"</span>, </div><div class="line">               select=c(<span class="string">"A"</span>,<span class="string">"B"</span>,<span class="string">"C"</span>))</div></pre></td></tr></table></figure>
+<h1 id="表格整合"><a href="#表格整合" class="headerlink" title="表格整合"></a>表格整合</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 内联结 inner join</span></div><div class="line">&gt; total &lt;- merge(df1,df2,by=<span class="string">"ID"</span>])</div><div class="line">&gt; total &lt;- merge(df1,df2,by=c[<span class="string">"ID"</span>,<span class="string">"Country"</span>])</div><div class="line"></div><div class="line"><span class="comment"># 上下拼接，要确保df1和df2有相同的特征(列)，并且顺序一致</span></div><div class="line">&gt; total &lt;- cbind(df1,df2)</div><div class="line"></div><div class="line"><span class="comment"># 左右拼接，待试验</span></div><div class="line">&gt; total &lt;- rbind(df1,df2)</div></pre></td></tr></table></figure>
+<h1 id="数据聚合-amp-分组运算"><a href="#数据聚合-amp-分组运算" class="headerlink" title="数据聚合&amp;分组运算"></a>数据聚合&amp;分组运算</h1><p>使用reshape2包</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; library(<span class="name">reshape2</span>)</div><div class="line">&gt; melt()</div><div class="line">&gt; dcast()</div></pre></td></tr></table></figure>
+<h1 id="数据透视表"><a href="#数据透视表" class="headerlink" title="数据透视表"></a>数据透视表</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 频数列联表，相当于pd.crosstab()</span></div><div class="line">&gt; table(df$A)</div></pre></td></tr></table></figure>
+<h1 id="数据导出"><a href="#数据导出" class="headerlink" title="数据导出"></a>数据导出</h1><h1 id="R数据处理函数"><a href="#R数据处理函数" class="headerlink" title="R数据处理函数"></a>R数据处理函数</h1><ul>
+<li>数学函数</li>
+<li>统计函数</li>
+<li>概率函数</li>
+<li>字符串处理函数</li>
+<li>其他</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/18/数据分析常用操作笔记——Python之Pandas包/" rel="next" title="数据分析常用操作笔记——Python之Pandas包">
+                <i class="fa fa-chevron-left"></i> 数据分析常用操作笔记——Python之Pandas包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/20/R-dplyr/" rel="prev" title="R-dplyr">
+                R-dplyr <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Chen_JC" />
+          <p class="site-author-name" itemprop="name">Chen_JC</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#读取数据"><span class="nav-number">1.</span> <span class="nav-text">读取数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据探索"><span class="nav-number">2.</span> <span class="nav-text">数据探索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据清洗"><span class="nav-number">3.</span> <span class="nav-text">数据清洗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改表结构"><span class="nav-number">4.</span> <span class="nav-text">修改表结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据切片"><span class="nav-number">5.</span> <span class="nav-text">数据切片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表格整合"><span class="nav-number">6.</span> <span class="nav-text">表格整合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据聚合-amp-分组运算"><span class="nav-number">7.</span> <span class="nav-text">数据聚合&分组运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据透视表"><span class="nav-number">8.</span> <span class="nav-text">数据透视表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据导出"><span class="nav-number">9.</span> <span class="nav-text">数据导出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R数据处理函数"><span class="nav-number">10.</span> <span class="nav-text">R数据处理函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen_JC</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

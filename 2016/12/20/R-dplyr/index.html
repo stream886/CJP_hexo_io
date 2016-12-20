@@ -1,0 +1,709 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="R," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="​    dplyr 是一个做数据框处理和汇总的包, 有着更简单的语法和更快的处理速度, 功能十分强大. dplyr 的目的就是设计一个数据处理的语法, 通过这个语法可以设计一些简单的操作方式, 针对data.frame 或者一个数据库中的数据进行同样的数据操作。
+​    dplyr 把大部分数据处理的形式写成了一些基本函数, 我们能够很容易的调用它, 并且提供了简单的处理语法, 便于快速编写R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R-dplyr">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/R-dplyr/index.html">
+<meta property="og:site_name" content="还没决定">
+<meta property="og:description" content="​    dplyr 是一个做数据框处理和汇总的包, 有着更简单的语法和更快的处理速度, 功能十分强大. dplyr 的目的就是设计一个数据处理的语法, 通过这个语法可以设计一些简单的操作方式, 针对data.frame 或者一个数据库中的数据进行同样的数据操作。
+​    dplyr 把大部分数据处理的形式写成了一些基本函数, 我们能够很容易的调用它, 并且提供了简单的处理语法, 便于快速编写R">
+<meta property="og:updated_time" content="2016-12-20T02:45:46.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R-dplyr">
+<meta name="twitter:description" content="​    dplyr 是一个做数据框处理和汇总的包, 有着更简单的语法和更快的处理速度, 功能十分强大. dplyr 的目的就是设计一个数据处理的语法, 通过这个语法可以设计一些简单的操作方式, 针对data.frame 或者一个数据库中的数据进行同样的数据操作。
+​    dplyr 把大部分数据处理的形式写成了一些基本函数, 我们能够很容易的调用它, 并且提供了简单的处理语法, 便于快速编写R">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/20/R-dplyr/"/>
+
+
+
+
+
+  <title> R-dplyr | 还没决定 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59602475";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">还没决定</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学习笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/20/R-dplyr/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Chen_JC">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="还没决定">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="还没决定" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                R-dplyr
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T10:43:58+08:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    dplyr 是一个做数据框处理和汇总的包, 有着更简单的语法和更快的处理速度, 功能十分强大. dplyr 的目的就是设计一个数据处理的语法, 通过这个语法可以设计一些简单的操作方式, 针对data.frame 或者一个数据库中的数据进行同样的数据操作。</p>
+<p>​    dplyr 把大部分数据处理的形式写成了一些基本函数, 我们能够很容易的调用它, 并且提供了简单的处理语法, 便于快速编写R 代码, 同时它能够快速完成计算。</p>
+<p>​    dplyr 定义的数据类型是tbl, 也可以接受data.frame, cube, sql 对象. tbl 对象的特征将结合例子进行说明.首先进行安装: install.packages(“dplyr”).</p>
+<p>​    tbl可以当作date.frame操作，反之不可。</p>
+<hr>
+<p>数据对象：tbl对象<br>使用dplyr包预处理时建议使用tbl_df()或tbl_cube()或tbl_sql()函数将原数据转换为tbl对象</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用dplyr 包中的函数, 均需提前调入dplyr包</span></div><div class="line">&gt; <span class="keyword">library</span>(dplyr)</div><div class="line">&gt; df_tbl &lt;- tbl_df(df)</div><div class="line"><span class="comment"># df_tbl 既是data.frame 格式的数据, 同时又有tbl 格式的特点</span></div><div class="line">&gt; class(df_tbl)</div><div class="line">[<span class="number">1</span>] <span class="string">"tbl_df"</span> <span class="string">"tbl"</span> <span class="string">"data.frame"</span></div></pre></td></tr></table></figure>
+<hr>
+<p>​    dplyr 的基本函数有五个, 分别为filter(), select(), arrange(),mutate(), 和summarise(). 这五个数据函数有相同的输入模式, 第一个选项为数据框或者tbl 对象, 之后选项为筛选(运算) 条件, 最后输出的结果和输入的数据的类型相同.</p>
+<p>select：用于选取一列或者多列</p>
+<p>filter：用于选取特定条件下的某些行</p>
+<p>arrange：用于实现数据一列或多列的升降排序</p>
+<p>mutate：用于在数据集中添加列</p>
+<p>summarise：用于实现数据汇总(配合group_by使用效果更佳)</p>
+<hr>
+<h1 id="筛选-filter"><a href="#筛选-filter" class="headerlink" title="筛选:filter()"></a>筛选:filter()</h1><p> <strong>对列条件刷选 返回满足观测条件的观测值</strong> ：按给定的逻辑判断筛选出符合要求的子数据集, 类似于 base里面subset() 函数</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt; filter(mtcars,am==<span class="number">1</span>,mpg &lt;<span class="number">20</span>)  <span class="comment"># 且的关系（筛选条件可无限增加）,使用逗号，注意！</span></div><div class="line">&gt; filter(mtcars,am==<span class="number">1</span>|mpg &lt;<span class="number">20</span>)  <span class="comment"># 或的关系</span></div><div class="line">&gt; filter(dftbl,x %<span class="keyword">in</span>% c(<span class="string">"a"</span>,<span class="string">"b"</span>))  <span class="comment"># 单变量的或，相当于py的isin()</span></div><div class="line">-------------------------------------------------------------------------------------</div><div class="line"><span class="comment"># base中的subet()</span></div><div class="line"><span class="comment"># 用条件筛选完行后，再筛选列</span></div><div class="line">&gt; df &lt;- subset(df, </div><div class="line">               age&gt;=<span class="number">25</span> &amp; gender==<span class="string">"M"</span>, </div><div class="line">               select=c(<span class="string">"A"</span>,<span class="string">"B"</span>,<span class="string">"C"</span>))</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="选择-select"><a href="#选择-select" class="headerlink" title="选择:select()"></a>选择:select()</h1><p><strong>用列名作参数来选择子数据集</strong></p>
+<p>select()函数可以筛选指定的变量，而且选择变量时也可以重新命名变量。如果要剔除某些变量，只需要在变量前加上负号”-“.<br>select()函数，传递的参数：<br>starts_with(“x”,ignore.case = TRUE)  # 选择以字符x开头的变量 , 默认忽略大小写<br>ends_with(“x”)  # 选择以字符x结尾的变量<br>contains(“x”)     #选择所有包含x的变量<br>matches(“x”)    #选择匹配正则表达式的变量<br>num_range(“x”,1:5,width = 2)       #选择从x01到x05的数值型变量<br>one_of(“x”,”y”,”z”)                            #选择包含在声明变量中的变量<br>everything()                                     #选择所有变量，一般调整数据集中变量顺序时使用</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 选取部分列构建新表</span></div><div class="line">&gt; select(mtcars,mpg,am)</div><div class="line"><span class="comment"># 把列名按数字对待：选取mtcars数据集中am至carb列</span></div><div class="line">&gt; select(mtcars,am:carb)</div><div class="line"><span class="comment"># 排除列，负号</span></div><div class="line">&gt; select(mtcars,-(am:carb))</div><div class="line"></div><div class="line"><span class="comment"># 将dftbl数据集中的y变量放到x变量之前</span></div><div class="line">select(dftbl,everything())</div><div class="line"></div><div class="line"><span class="comment"># 筛选变量的同时，重新命名变量</span></div><div class="line">select(dftbl,x1 = <span class="number">1</span>,y1 = y)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="排列-arrange"><a href="#排列-arrange" class="headerlink" title="排列 arrange()"></a>排列 arrange()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt; arrange(mtcars,am,gear,carb)   <span class="comment"># 全部默认正序排列</span></div><div class="line">&gt; arrange(mtcars,am,desc(gear))  <span class="comment"># desc()部分倒序排列</span></div><div class="line">--------------------------------------------------------------------------</div><div class="line"><span class="comment"># base里使用order()排序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A),]        <span class="comment"># 创建一个新数据集，依A特征升序排序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A, df$B),]  <span class="comment"># 依A特征升序，A相同的再依B特征升序</span></div><div class="line">&gt; newdf &lt;- df[order(df$A, -df$B),] <span class="comment"># 加上符号-就是降序</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="变形-mutate"><a href="#变形-mutate" class="headerlink" title="变形 mutate()"></a>变形 mutate()</h1><p>与 base::transform() 相似, 优势在于可以在同一语句中对刚增加的列进行操作</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 原数据集新增加一列num，为mpg与hp之和</span></div><div class="line">&gt; mutate(mtcars,num=mpg+hp)</div><div class="line"><span class="comment"># 在同一语句中对刚增加的列进行操作:</span></div><div class="line">&gt; mutate(mtcars,num1=mpg+hp,num2=num1-qsec)</div><div class="line">----------------------------------------------------------------------------------------</div><div class="line"><span class="comment"># 第二个新变量使用了第一个新变量gain，虽然更power了，但感觉实际操作影响不大</span></div><div class="line">&gt; mutate(hflights_df, gain = ArrDelay - DepDelay, gain_per_hour = gain / (AirTime / <span class="number">60</span>))</div><div class="line"><span class="comment"># 而同样操作用R自带函数 transform() 的话就会报错:</span></div><div class="line">&gt; transform(hflights, gain = ArrDelay - DepDelay, gain_per_hour = gain / (AirTime / <span class="number">60</span>))</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="汇总：summarise"><a href="#汇总：summarise" class="headerlink" title="汇总：summarise()"></a>汇总：summarise()</h1><p>在使用时需注意, summarise() 的汇总函数是以向量为输入, 单一值为输出的函数</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; summarise(df_tbl,ID_mean=mean(ID), Age_mean=mean(Age,na.rm = <span class="literal">TRUE</span>))</div><div class="line"><span class="comment"># A tibble: 1 × 2</span></div><div class="line">  ID_mean  Age_mean</div><div class="line">    &lt;dbl&gt;     &lt;dbl&gt;</div><div class="line"><span class="number">1</span>    <span class="number">42.5</span>  <span class="number">53.35714</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="分组：group-by"><a href="#分组：group-by" class="headerlink" title="分组：group_by()"></a>分组：group_by()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt; summarise(group_by(df_tbl,Sex),</div><div class="line">            Age_mean=mean(Age,na.rm = <span class="literal">TRUE</span>),</div><div class="line">            Age_min=min(Age),</div><div class="line">            Age_max=max(Age),</div><div class="line">            n_distinct(Improved))  <span class="comment"># 计算唯一值的个数</span></div><div class="line"><span class="comment"># A tibble: 2 × 5</span></div><div class="line">     Sex Age_mean Age_min Age_max `n_distinct(Improved)`</div><div class="line">  &lt;fctr&gt;    &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;                  &lt;int&gt;</div><div class="line"><span class="number">1</span> Female <span class="number">53.50847</span>      <span class="number">23</span>      <span class="number">74</span>                      <span class="number">3</span></div><div class="line"><span class="number">2</span>   Male <span class="number">53.00000</span>      <span class="number">27</span>      <span class="number">70</span>                      <span class="number">3</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="变量重命名-rename"><a href="#变量重命名-rename" class="headerlink" title="变量重命名 rename()"></a>变量重命名 rename()</h1><figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; rename(<span class="name">tbl_mtcars</span>,mpg1=mpg)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="选取行：随机sample-amp-非随机slice"><a href="#选取行：随机sample-amp-非随机slice" class="headerlink" title="选取行：随机sample()&amp;非随机slice()"></a>选取行：随机sample()&amp;非随机slice()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">## 非随机性选取部分列：slice()</span></div><div class="line">&gt; slice(mtcars,<span class="number">1</span>:<span class="number">10</span>)</div><div class="line"></div><div class="line"><span class="comment"># 随机选取样本：sample_n()</span></div><div class="line"><span class="comment"># 选取10个样本</span></div><div class="line">&gt; sample_n(mtcars,<span class="number">10</span>)</div><div class="line"><span class="comment"># 选取10%的样本</span></div><div class="line">&gt; sample_frac(mtcars,<span class="number">0.1</span>)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="数据关联-join"><a href="#数据关联-join" class="headerlink" title="数据关联 join()"></a>数据关联 join()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">内联：inner_join        </div><div class="line">左联：left_join</div><div class="line">右联：right_join        </div><div class="line">全联：full_join</div><div class="line">semi_join：返回能够与y表匹配的x表的所有记录</div><div class="line">anti_join：返回无法与y表匹配的x表的所有记录</div><div class="line"></div><div class="line">inner_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, suffix = c(<span class="string">".x"</span>, <span class="string">".y"</span>), <span class="keyword">...</span>)</div><div class="line">left_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, suffix = c(<span class="string">".x"</span>, <span class="string">".y"</span>), <span class="keyword">...</span>)</div><div class="line">right_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, suffix = c(<span class="string">".x"</span>, <span class="string">".y"</span>), <span class="keyword">...</span>)</div><div class="line">full_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, suffix = c(<span class="string">".x"</span>, <span class="string">".y"</span>), <span class="keyword">...</span>)</div><div class="line">semi_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, <span class="keyword">...</span>)</div><div class="line">anti_join(x, y, by = <span class="literal">NULL</span>, copy = <span class="literal">FALSE</span>, <span class="keyword">...</span>)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="数据合并-bind-cols-amp-bind-rows"><a href="#数据合并-bind-cols-amp-bind-rows" class="headerlink" title="数据合并 bind_cols() &amp; bind_rows()"></a>数据合并 bind_cols() &amp; bind_rows()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 数据表需要有相同的列数</span></div><div class="line">&gt; bind_rows(data1, data2)</div><div class="line"></div><div class="line"><span class="comment"># 数据表需要有相同的行数</span></div><div class="line">&gt; bind_cols(data1, data2)</div></pre></td></tr></table></figure>
+<h1 id="计数函数：count"><a href="#计数函数：count" class="headerlink" title="计数函数：count()"></a>计数函数：count()</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 对Sex特征的分类计数</span></div><div class="line">&gt; count(df_tbl,Sex)</div><div class="line"><span class="comment"># A tibble: 2 × 2</span></div><div class="line">     Sex     n</div><div class="line">  &lt;fctr&gt; &lt;int&gt;</div><div class="line"><span class="number">1</span> Female    <span class="number">59</span></div><div class="line"><span class="number">2</span>   Male    <span class="number">25</span></div><div class="line"></div><div class="line"><span class="comment"># 多层的分类计数</span></div><div class="line">&gt; count(df_tbl,Sex,Improved)</div><div class="line">Source: local data frame [<span class="number">6</span> x <span class="number">3</span>]</div><div class="line">Groups: Sex [?]</div><div class="line">     Sex Improved     n</div><div class="line">  &lt;fctr&gt;    &lt;ord&gt; &lt;int&gt;</div><div class="line"><span class="number">1</span> Female     None    <span class="number">25</span></div><div class="line"><span class="number">2</span> Female     Some    <span class="number">12</span></div><div class="line"><span class="number">3</span> Female   Marked    <span class="number">22</span></div><div class="line"><span class="number">4</span>   Male     None    <span class="number">17</span></div><div class="line"><span class="number">5</span>   Male     Some     <span class="number">2</span></div><div class="line"><span class="number">6</span>   Male   Marked     <span class="number">6</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="管道函数-gt"><a href="#管道函数-gt" class="headerlink" title="管道函数 %&gt;%"></a>管道函数 %&gt;%</h1><p>dplyr包特有，即通过<strong>%&gt;%</strong>将上一个函数的输出作为下一个函数的输入，免写数据名。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt; summarise(group_by(df_tbl,Sex),</div><div class="line">            Age_mean=mean(Age,na.rm = <span class="literal">TRUE</span>),</div><div class="line">            Age_min=min(Age),</div><div class="line">            Age_max=max(Age),</div><div class="line">            n_distinct(Improved))</div><div class="line"><span class="comment"># 使用管道函数如下，在函数需要多句合并才使用比较好，一般情况下用不上</span></div><div class="line">group_by(df_tbl,Sex) %&gt;% summarise(Age_mean=mean(Age,na.rm = <span class="literal">TRUE</span>),</div><div class="line">                                   Age_min=min(Age),</div><div class="line">                                   Age_max=max(Age),</div><div class="line">                                   n_distinct(Improved))</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="小技巧函数"><a href="#小技巧函数" class="headerlink" title="小技巧函数"></a>小技巧函数</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 计算唯一值的个数</span></div><div class="line">&gt; n_distinct(df$Sex)</div><div class="line">[<span class="number">1</span>] <span class="number">2</span></div><div class="line"></div><div class="line">min(),max(),mean()…等统计量，以及IQR() <span class="comment">#返回四分位极差 </span></div><div class="line"></div><div class="line">n() <span class="comment"># 返回观测个数 </span></div><div class="line"></div><div class="line">n_distinct() <span class="comment">#返回不同的观测个数 </span></div><div class="line"></div><div class="line">first() <span class="comment"># 返回第一个观测 </span></div><div class="line"></div><div class="line">last() <span class="comment">#返回最后一个观测 </span></div><div class="line"></div><div class="line">nth() <span class="comment">#返回n个观测</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h1><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 如果需要获取MySQL数据库中的数据时,可以直接使用dplyr包中的src_mysql()函数</span></div><div class="line">&gt; src &lt;- src_mysql(dbname,host = <span class="literal">NULL</span>,</div><div class="line">                   port = <span class="number">0L</span>,</div><div class="line">                   user = “root”,</div><div class="line">                   password = “”,</div><div class="line">                   …) </div><div class="line"><span class="comment"># 通过以上方式连接MySQL数据库后,使用tbl()函数获取数据集,tbl()函数语法如下： </span></div><div class="line">tbl(src,from =<span class="string">" "</span>) </div><div class="line"><span class="comment"># src为src_mysql()函数对象 </span></div><div class="line"><span class="comment"># from为SQL语句</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/R-base/" rel="next" title="R-base">
+                <i class="fa fa-chevron-left"></i> R-base
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/01/笔记目录/" rel="prev" title="笔记目录">
+                笔记目录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Chen_JC" />
+          <p class="site-author-name" itemprop="name">Chen_JC</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#筛选-filter"><span class="nav-number">1.</span> <span class="nav-text">筛选:filter()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择-select"><span class="nav-number">2.</span> <span class="nav-text">选择:select()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排列-arrange"><span class="nav-number">3.</span> <span class="nav-text">排列 arrange()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变形-mutate"><span class="nav-number">4.</span> <span class="nav-text">变形 mutate()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#汇总：summarise"><span class="nav-number">5.</span> <span class="nav-text">汇总：summarise()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分组：group-by"><span class="nav-number">6.</span> <span class="nav-text">分组：group_by()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量重命名-rename"><span class="nav-number">7.</span> <span class="nav-text">变量重命名 rename()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选取行：随机sample-amp-非随机slice"><span class="nav-number">8.</span> <span class="nav-text">选取行：随机sample()&非随机slice()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据关联-join"><span class="nav-number">9.</span> <span class="nav-text">数据关联 join()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据合并-bind-cols-amp-bind-rows"><span class="nav-number">10.</span> <span class="nav-text">数据合并 bind_cols() & bind_rows()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计数函数：count"><span class="nav-number">11.</span> <span class="nav-text">计数函数：count()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管道函数-gt"><span class="nav-number">12.</span> <span class="nav-text">管道函数 %>%</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小技巧函数"><span class="nav-number">13.</span> <span class="nav-text">小技巧函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接数据库"><span class="nav-number">14.</span> <span class="nav-text">连接数据库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen_JC</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -110,7 +110,7 @@ sckearn中文
 不属于同一量纲：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。
 信息冗余：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或不“及格”，那么需要将定量的考分，转换成“1”和“0”表示及格和未及格。二值化可以解决这一问题。
 定">
-<meta property="og:updated_time" content="2016-11-26T03:44:11.314Z">
+<meta property="og:updated_time" content="2016-11-27T13:50:50.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sklearn-数据预处理">
 <meta name="twitter:description" content="抄袭/参考资料
@@ -407,31 +407,31 @@ sckearn中文
 <td>StandardScaler</td>
 <td>无量纲化</td>
 <td>标准化，将特征值转换至服从标准正态分布</td>
-<td>列0</td>
+<td>列</td>
 </tr>
 <tr>
 <td>MinMaxScaler</td>
 <td>无量纲化</td>
 <td>区间缩放，基于最大最小值，将特征值转换到[0, 1]区间上</td>
-<td>列0</td>
+<td>列</td>
 </tr>
 <tr>
 <td>Normalizer</td>
 <td>归一化</td>
 <td>基于特征矩阵的行，将样本向量转换为“单位向量”</td>
-<td>行1</td>
+<td>行</td>
 </tr>
 <tr>
 <td>Binarizer</td>
 <td>二值化</td>
 <td>基于给定阈值，将定量特征按阈值划分</td>
-<td>列0</td>
+<td>列</td>
 </tr>
 <tr>
 <td>OneHotEncoder</td>
 <td>哑编码</td>
 <td>将定性数据编码为定量数据</td>
-<td>列0</td>
+<td>列</td>
 </tr>
 <tr>
 <td>Imputer</td>
@@ -770,7 +770,7 @@ sckearn中文
 <td>axis</td>
 <td>0 or 1</td>
 <td>1</td>
-<td>默认对行，sample进行处理</td>
+<td>默认对行，sample进行处理，pandas和sklearn对axis的数据好像是相反的</td>
 </tr>
 <tr>
 <td>copy</td>
@@ -1089,7 +1089,7 @@ sckearn中文
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1106,7 +1106,7 @@ sckearn中文
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
